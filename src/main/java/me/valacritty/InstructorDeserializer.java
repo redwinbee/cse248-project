@@ -12,6 +12,7 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.Arrays;
 import java.util.HashSet;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 public class InstructorDeserializer extends StdDeserializer<Instructor> {
@@ -76,9 +77,9 @@ public class InstructorDeserializer extends StdDeserializer<Instructor> {
 
     private HashSet<String> parseCourses(JsonNode node) {
         String rawCourses = node.get("Courses").asText();
-        return (HashSet<String>) Arrays.stream(rawCourses.split(" "))
-                .collect(Collectors.toSet());
+        return Arrays.stream(rawCourses.split("\\s+")).collect(Collectors.toCollection(HashSet::new));
     }
+
 
     private boolean parseCanTeachOnline(JsonNode node) {
         String rawCanOnline = node.get("ONL").asText();
