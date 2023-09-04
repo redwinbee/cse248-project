@@ -11,8 +11,6 @@ import java.util.List;
 
 public class Main {
     public static void main(String[] args) {
-        System.out.println("Hello world!");
-
         // register our custom deserializer
         ObjectMapper mapper = new ObjectMapper();
         SimpleModule module = new SimpleModule();
