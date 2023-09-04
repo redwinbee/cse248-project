@@ -15,15 +15,15 @@ public class Instructor {
     private HashSet<String> courses;
     private String rank;
     private boolean canTeachOnline;
-    private ArrayList<Character> campuses;
+    private HashSet<Campus> campuses;
     private boolean canTeachSecondCourse;
     private boolean canTeachThirdCourse;
     private int numEves;
-    private ArrayList<String> availableEarlyMornings;
-    private ArrayList<String> availableMornings;
-    private ArrayList<String> availableEarlyEvenings;
-    private ArrayList<String> availableEvenings;
-    private ArrayList<String> availableWeekends;
+    private ArrayList<Day> availableEarlyMornings;
+    private ArrayList<Day> availableMornings;
+    private ArrayList<Day> availableEarlyEvenings;
+    private ArrayList<Day> availableEvenings;
+    private ArrayList<Day> availableWeekends;
 
     public String getId() {
         return id;
@@ -81,11 +81,11 @@ public class Instructor {
         this.dateHired = dateHired;
     }
 
-    public HashSet getCourses() {
+    public HashSet<String> getCourses() {
         return courses;
     }
 
-    public void setCourses(HashSet courses) {
+    public void setCourses(HashSet<String> courses) {
         this.courses = courses;
     }
 
@@ -105,11 +105,11 @@ public class Instructor {
         this.canTeachOnline = canTeachOnline;
     }
 
-    public ArrayList<Character> getCampuses() {
+    public HashSet<Campus> getCampuses() {
         return campuses;
     }
 
-    public void setCampuses(ArrayList<Character> campuses) {
+    public void setCampuses(HashSet<Campus> campuses) {
         this.campuses = campuses;
     }
 
@@ -137,43 +137,43 @@ public class Instructor {
         this.numEves = numEves;
     }
 
-    public ArrayList<String> getAvailableEarlyMornings() {
+    public ArrayList<Day> getAvailableEarlyMornings() {
         return availableEarlyMornings;
     }
 
-    public void setAvailableEarlyMornings(ArrayList<String> availableEarlyMornings) {
+    public void setAvailableEarlyMornings(ArrayList<Day> availableEarlyMornings) {
         this.availableEarlyMornings = availableEarlyMornings;
     }
 
-    public ArrayList<String> getAvailableMornings() {
+    public ArrayList<Day> getAvailableMornings() {
         return availableMornings;
     }
 
-    public void setAvailableMornings(ArrayList<String> availableMornings) {
+    public void setAvailableMornings(ArrayList<Day> availableMornings) {
         this.availableMornings = availableMornings;
     }
 
-    public ArrayList<String> getAvailableEarlyEvenings() {
+    public ArrayList<Day> getAvailableEarlyEvenings() {
         return availableEarlyEvenings;
     }
 
-    public void setAvailableEarlyEvenings(ArrayList<String> availableEarlyEvenings) {
+    public void setAvailableEarlyEvenings(ArrayList<Day> availableEarlyEvenings) {
         this.availableEarlyEvenings = availableEarlyEvenings;
     }
 
-    public ArrayList<String> getAvailableEvenings() {
+    public ArrayList<Day> getAvailableEvenings() {
         return availableEvenings;
     }
 
-    public void setAvailableEvenings(ArrayList<String> availableEvenings) {
+    public void setAvailableEvenings(ArrayList<Day> availableEvenings) {
         this.availableEvenings = availableEvenings;
     }
 
-    public ArrayList<String> getAvailableWeekends() {
+    public ArrayList<Day> getAvailableWeekends() {
         return availableWeekends;
     }
 
-    public void setAvailableWeekends(ArrayList<String> availableWeekends) {
+    public void setAvailableWeekends(ArrayList<Day> availableWeekends) {
         this.availableWeekends = availableWeekends;
     }
 
