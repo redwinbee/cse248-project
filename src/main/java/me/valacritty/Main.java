@@ -5,11 +5,12 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.module.SimpleModule;
 import javafx.application.Application;
-import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import me.valacritty.models.Instructor;
+import me.valacritty.utils.ViewFinder;
+import me.valacritty.utils.ViewMap;
 
 import java.io.File;
 import java.io.IOException;
@@ -21,9 +22,9 @@ public class Main extends Application {
     }
 
     @Override
-    public void start(Stage primaryStage) throws Exception {
+    public void start(Stage primaryStage) {
         Application.setUserAgentStylesheet(new PrimerLight().getUserAgentStylesheet());
-        Parent parent = FXMLLoader.load(getClass().getResource("/fxml/main.fxml"));
+        Parent parent = ViewFinder.loadView(ViewMap.HOME);
         Scene scene = new Scene(parent, 320, 240);
         primaryStage.setTitle("Project01");
         primaryStage.setScene(scene);
