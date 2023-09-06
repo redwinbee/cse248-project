@@ -1,4 +1,5 @@
-1.  The data was manipulated entirely using ChatGPT where I had to explain the context of what each entry meant, and
+# CSE248 Project
+3. The data was manipulated entirely using ChatGPT where I had to explain the context of what each entry meant, and
     how they related to each other. It took some time, but eventually I was able to have ChatGPT produce a table that
     I could visually inspect for errors, and once it was okay, I told it to give me the data in JSON format.
 
