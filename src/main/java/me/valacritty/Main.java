@@ -14,7 +14,7 @@ import me.valacritty.utils.ViewMap;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.List;
+import java.util.TreeSet;
 
 public class Main extends Application {
     public static void main(String[] args) {
@@ -42,7 +42,7 @@ public class Main extends Application {
 
         // deserialize
         try {
-            List<Instructor> instructors = mapper.readValue(new File("instructors.json"), new TypeReference<>() {
+            TreeSet<Instructor> instructors = mapper.readValue(new File("instructors.json"), new TypeReference<>() {
             });
             for (Instructor ins : instructors) {
                 System.out.println(ins.toString());
