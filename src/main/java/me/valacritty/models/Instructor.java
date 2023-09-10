@@ -4,9 +4,9 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.HashSet;
 
-public class Instructor {
+public class Instructor implements Comparable<Instructor> {
     private String id;
-    private String fullName;
+    private String name;
     private Campus homeCampus;
     private String homePhone;
     private String workPhone;
@@ -15,7 +15,7 @@ public class Instructor {
     private HashSet<String> courses;
     private String rank;
     private boolean canTeachOnline;
-    private HashSet<Campus> campuses;
+    private HashSet<Campus> preferredCampuses;
     private boolean canTeachSecondCourse;
     private boolean canTeachThirdCourse;
     private int numEves;
@@ -33,12 +33,12 @@ public class Instructor {
         this.id = id;
     }
 
-    public String getFullName() {
-        return fullName;
+    public String getName() {
+        return name;
     }
 
-    public void setFullName(String fullName) {
-        this.fullName = fullName;
+    public void setName(String name) {
+        this.name = name;
     }
 
     public Campus getHomeCampus() {
@@ -105,12 +105,12 @@ public class Instructor {
         this.canTeachOnline = canTeachOnline;
     }
 
-    public HashSet<Campus> getCampuses() {
-        return campuses;
+    public HashSet<Campus> getPreferredCampuses() {
+        return preferredCampuses;
     }
 
-    public void setCampuses(HashSet<Campus> campuses) {
-        this.campuses = campuses;
+    public void setPreferredCampuses(HashSet<Campus> preferredCampuses) {
+        this.preferredCampuses = preferredCampuses;
     }
 
     public boolean isCanTeachSecondCourse() {
@@ -181,7 +181,7 @@ public class Instructor {
     public String toString() {
         final StringBuilder sb = new StringBuilder("Instructor{");
         sb.append("id='").append(id).append('\'');
-        sb.append(", fullName='").append(fullName).append('\'');
+        sb.append(", fullName='").append(name).append('\'');
         sb.append(", homeCampus='").append(homeCampus).append('\'');
         sb.append(", homePhone='").append(homePhone).append('\'');
         sb.append(", workPhone='").append(workPhone).append('\'');
@@ -190,7 +190,7 @@ public class Instructor {
         sb.append(", courses=").append(courses);
         sb.append(", rank='").append(rank).append('\'');
         sb.append(", canTeachOnline=").append(canTeachOnline);
-        sb.append(", campuses=").append(campuses);
+        sb.append(", campuses=").append(preferredCampuses);
         sb.append(", canTeachSecondCourse=").append(canTeachSecondCourse);
         sb.append(", canTeachThirdCourse=").append(canTeachThirdCourse);
         sb.append(", numEves=").append(numEves);
@@ -201,5 +201,10 @@ public class Instructor {
         sb.append(", availableWeekends=").append(availableWeekends);
         sb.append('}');
         return sb.toString();
+    }
+
+    @Override
+    public int compareTo(Instructor o) {
+        return this.getId().compareTo(o.getId());
     }
 }

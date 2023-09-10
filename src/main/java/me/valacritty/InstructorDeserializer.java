@@ -37,7 +37,7 @@ public class InstructorDeserializer extends StdDeserializer<Instructor> {
         String rank = node.get("Rank").asText();
 
         instructor.setId(id);
-        instructor.setFullName(name);
+        instructor.setName(name);
         instructor.setWorkPhone(workPhone);
         instructor.setHomePhone(homePhone);
         instructor.setAddress(address);
@@ -66,7 +66,7 @@ public class InstructorDeserializer extends StdDeserializer<Instructor> {
         instructor.setDateHired(hiredDate);
         instructor.setCanTeachOnline(canTeachOnline);
         instructor.setCourses(courses);
-        instructor.setCampuses(campuses);
+        instructor.setPreferredCampuses(campuses);
         instructor.setCanTeachSecondCourse(secondThirdCourse[0]);
         instructor.setCanTeachThirdCourse(secondThirdCourse[1]);
         instructor.setAvailableMornings(morningAvail);
@@ -188,7 +188,7 @@ public class InstructorDeserializer extends StdDeserializer<Instructor> {
             case 'E' -> {
                 return Campus.EAST;
             }
-            case 'W' -> {
+            case 'W', 'G' -> {
                 return Campus.GRANT;
             }
             case 'O' -> {

@@ -17,15 +17,21 @@ import java.io.IOException;
 import java.util.TreeSet;
 
 public class Main extends Application {
+    private static TreeSet<Instructor> instructors;
+
     public static void main(String[] args) {
         launch(args);
+    }
+
+    public static TreeSet<Instructor> getInstructors() {
+        return instructors;
     }
 
     @Override
     public void start(Stage primaryStage) {
         Application.setUserAgentStylesheet(new PrimerLight().getUserAgentStylesheet());
         Parent parent = ViewFinder.loadView(ViewMap.HOME);
-        Scene scene = new Scene(parent, 320, 240);
+        Scene scene = new Scene(parent);
         primaryStage.setTitle("Project01");
         primaryStage.setScene(scene);
         primaryStage.show();
@@ -42,7 +48,7 @@ public class Main extends Application {
 
         // deserialize
         try {
-            TreeSet<Instructor> instructors = mapper.readValue(new File("instructors.json"), new TypeReference<>() {
+            instructors = mapper.readValue(new File("instructors.json"), new TypeReference<>() {
             });
             for (Instructor ins : instructors) {
                 System.out.println(ins.toString());
