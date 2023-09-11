@@ -181,7 +181,7 @@ public class Instructor implements Comparable<Instructor> {
     public String toString() {
         final StringBuilder sb = new StringBuilder("Instructor{");
         sb.append("id='").append(id).append('\'');
-        sb.append(", fullName='").append(name).append('\'');
+        sb.append(", name='").append(name).append('\'');
         sb.append(", homeCampus='").append(homeCampus).append('\'');
         sb.append(", homePhone='").append(homePhone).append('\'');
         sb.append(", workPhone='").append(workPhone).append('\'');

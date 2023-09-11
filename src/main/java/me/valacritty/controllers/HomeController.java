@@ -46,10 +46,10 @@ public class HomeController implements Initializable {
     @FXML
     public void onSearch() {
         if (!queryField.getText().isBlank()) {
-            String query = queryField.getText();
+            String query = queryField.getText().toLowerCase().trim();
             instructorData.clear(); // Clear the existing data
             Main.getInstructors().stream()
-                    .filter(instructor -> instructor.toString().contains(query))
+                    .filter(instructor -> instructor.getName().toLowerCase().contains(query) || instructor.getId().contains(query))
                     .forEach(instructorData::add); // Add filtered instructors to the list
         }
     }
