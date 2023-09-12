@@ -42,6 +42,16 @@ public class HomeController implements Initializable {
     @FXML
     public TableColumn<Instructor, Boolean> thirdCourseCol;
     @FXML
+    public TableColumn<Instructor, ArrayList<String>> earlyWeekdayCol;
+    @FXML
+    public TableColumn<Instructor, ArrayList<String>> weekdayCol;
+    @FXML
+    public TableColumn<Instructor, ArrayList<String>> earlyEveningCol;
+    @FXML
+    public TableColumn<Instructor, ArrayList<String>> eveningCol;
+    @FXML
+    public TableColumn<Instructor, ArrayList<String>> weekendsCol;
+    @FXML
     private TextField queryField;
 
     @Override
@@ -55,6 +65,11 @@ public class HomeController implements Initializable {
         coursesCol.setCellValueFactory(new PropertyValueFactory<>("courses"));
         secondCourseCol.setCellValueFactory(new PropertyValueFactory<>("canTeachSecondCourse"));
         thirdCourseCol.setCellValueFactory(new PropertyValueFactory<>("canTeachThirdCourse"));
+        earlyWeekdayCol.setCellValueFactory(new PropertyValueFactory<>("availableEarlyMornings"));
+        weekdayCol.setCellValueFactory(new PropertyValueFactory<>("availableMornings"));
+        earlyEveningCol.setCellValueFactory(new PropertyValueFactory<>("availableEarlyEvenings"));
+        eveningCol.setCellValueFactory(new PropertyValueFactory<>("availableEvenings"));
+        weekendsCol.setCellValueFactory(new PropertyValueFactory<>("availableWeekends"));
 
         setBooleanColumnCellFactory(onlCertifiedCol);
         setBooleanColumnCellFactory(secondCourseCol);
@@ -73,6 +88,7 @@ public class HomeController implements Initializable {
                     .forEach(instructorData::add); // Add filtered instructors to the list
         }
     }
+
     private void setBooleanColumnCellFactory(TableColumn<Instructor, Boolean> column) {
         column.setCellFactory(new Callback<>() {
             @Override
