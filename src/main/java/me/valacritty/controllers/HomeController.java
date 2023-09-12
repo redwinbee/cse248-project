@@ -4,15 +4,18 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.util.Callback;
 import me.valacritty.Main;
 import me.valacritty.models.Campus;
 import me.valacritty.models.Instructor;
 
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.ResourceBundle;
 
@@ -31,6 +34,14 @@ public class HomeController implements Initializable {
     @FXML
     public TableColumn<Instructor, HashSet<Campus>> prefCampusCol;
     @FXML
+    public TableColumn<Instructor, Boolean> onlCertifiedCol;
+    @FXML
+    public TableColumn<Instructor, ArrayList<String>> coursesCol;
+    @FXML
+    public TableColumn<Instructor, Boolean> secondCourseCol;
+    @FXML
+    public TableColumn<Instructor, Boolean> thirdCourseCol;
+    @FXML
     private TextField queryField;
 
     @Override
@@ -40,6 +51,15 @@ public class HomeController implements Initializable {
         rankCol.setCellValueFactory(new PropertyValueFactory<>("rank"));
         homeCampusCol.setCellValueFactory(new PropertyValueFactory<>("homeCampus"));
         prefCampusCol.setCellValueFactory(new PropertyValueFactory<>("preferredCampuses"));
+        onlCertifiedCol.setCellValueFactory(new PropertyValueFactory<>("canTeachOnline"));
+        coursesCol.setCellValueFactory(new PropertyValueFactory<>("courses"));
+        secondCourseCol.setCellValueFactory(new PropertyValueFactory<>("canTeachSecondCourse"));
+        thirdCourseCol.setCellValueFactory(new PropertyValueFactory<>("canTeachThirdCourse"));
+
+        setBooleanColumnCellFactory(onlCertifiedCol);
+        setBooleanColumnCellFactory(secondCourseCol);
+        setBooleanColumnCellFactory(thirdCourseCol);
+
         instructorView.setItems(instructorData);
     }
 
@@ -52,5 +72,30 @@ public class HomeController implements Initializable {
                     .filter(instructor -> instructor.getName().toLowerCase().contains(query) || instructor.getId().contains(query))
                     .forEach(instructorData::add); // Add filtered instructors to the list
         }
+    }
+    private void setBooleanColumnCellFactory(TableColumn<Instructor, Boolean> column) {
+        column.setCellFactory(new Callback<>() {
+            @Override
+            public TableCell<Instructor, Boolean> call(TableColumn<Instructor, Boolean> param) {
+                return new TableCell<>() {
+                    @Override
+                    protected void updateItem(Boolean item, boolean empty) {
+                        super.updateItem(item, empty);
+                        if (empty || item == null) {
+                            setText(null);
+                            setStyle(""); // Reset the cell's style
+                        } else {
+                            setText(item.toString());
+
+                            if (item) {
+                                setStyle("-fx-background-color: #c2ffc2;");
+                            } else {
+                                setStyle("-fx-background-color: #ffcccc;");
+                            }
+                        }
+                    }
+                };
+            }
+        });
     }
 }
