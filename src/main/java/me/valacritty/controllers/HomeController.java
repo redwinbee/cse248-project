@@ -88,9 +88,9 @@ public class HomeController implements Initializable {
                             setText(item.toString());
 
                             if (item) {
-                                setStyle("-fx-background-color: #c2ffc2;");
+                                setStyle("-fx-background-color: #e3ffe3;");
                             } else {
-                                setStyle("-fx-background-color: #ffcccc;");
+                                setStyle("-fx-background-color: #ffe6e6;");
                             }
                         }
                     }
