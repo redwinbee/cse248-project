@@ -34,9 +34,10 @@ public class Main extends Application {
         Scene scene = new Scene(parent);
         primaryStage.setTitle("Project01");
         primaryStage.setScene(scene);
-        primaryStage.show();
-
+        String styleSheet = getClass().getResource("/styles.css").toExternalForm();
+        primaryStage.getScene().getStylesheets().add(styleSheet);
         deserializeData();
+        primaryStage.show();
     }
 
     private void deserializeData() {
