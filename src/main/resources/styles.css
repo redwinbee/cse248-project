@@ -1,6 +1,8 @@
-@import url('https://fonts.googleapis.com/css2?family=Recursive&display=swap');
+@font-face {
+    src: url('RecursiveSansLnrSt-Regular.ttf') format('truetype');
+}
 
 * {
-    -fx-font-family: 'Recursive', casual;
-    -fx-font-size:  13;
+    -fx-font-family: 'Recursive Sans Linear Static', casual;
+    -fx-font-size: 13;
 }

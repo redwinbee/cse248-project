@@ -31,12 +31,12 @@ public class Main extends Application {
     public void start(Stage primaryStage) {
         Application.setUserAgentStylesheet(new PrimerLight().getUserAgentStylesheet());
         Parent parent = ViewFinder.loadView(ViewMap.HOME);
+        deserializeData();
         Scene scene = new Scene(parent);
         primaryStage.setTitle("Project01");
         primaryStage.setScene(scene);
         String styleSheet = getClass().getResource("/styles.css").toExternalForm();
         primaryStage.getScene().getStylesheets().add(styleSheet);
-        deserializeData();
         primaryStage.show();
     }
 
