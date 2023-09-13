@@ -1,5 +1,6 @@
-@import url('https://fonts.googleapis.com/css2?family=Josefin+Sans&family=Recursive:wght@500&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Recursive&display=swap');
 
 * {
-    -fx-font-family: 'Josefin Sans', sans-serif;
+    -fx-font-family: 'Recursive', casual;
+    -fx-font-size:  13;
 }
