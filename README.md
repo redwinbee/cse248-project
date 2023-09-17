@@ -9,7 +9,7 @@
 5. Finally, it should show in the "Projects" the `pom.xml` file which means it imported correct
 6. Click finish
 
-## Running: This project uses the maven build system. Please use `mvn javafx:run` to properly start the application.
+## Running: This project uses the maven build system. Please use `mvn javafx:run@release` to run the program normally, or `mvn javafx:run@debug` and attach a debugger.
 
 1. The data was manipulated entirely using ChatGPT where I had to explain the context of what each entry meant, and
    how they related to each other. It took some time, but eventually I was able to have ChatGPT produce a table that
