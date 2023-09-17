@@ -18,10 +18,10 @@ public class Instructor implements Comparable<Instructor> {
     private HashSet<Campus> preferredCampuses;
     private boolean canTeachSecondCourse;
     private boolean canTeachThirdCourse;
-    private int numEves;
     private ArrayList<Day> availableEarlyMornings;
     private ArrayList<Day> availableMornings;
-    private ArrayList<Day> availableEarlyEvenings;
+    private ArrayList<Day> availableEarlyAfternoons;
+    private ArrayList<Day> availableAfternoons;
     private ArrayList<Day> availableEvenings;
     private ArrayList<Day> availableWeekends;
 
@@ -129,14 +129,6 @@ public class Instructor implements Comparable<Instructor> {
         this.canTeachThirdCourse = canTeachThirdCourse;
     }
 
-    public int getNumEves() {
-        return numEves;
-    }
-
-    public void setNumEves(int numEves) {
-        this.numEves = numEves;
-    }
-
     public ArrayList<Day> getAvailableEarlyMornings() {
         return availableEarlyMornings;
     }
@@ -153,12 +145,20 @@ public class Instructor implements Comparable<Instructor> {
         this.availableMornings = availableMornings;
     }
 
-    public ArrayList<Day> getAvailableEarlyEvenings() {
-        return availableEarlyEvenings;
+    public ArrayList<Day> getAvailableEarlyAfternoons() {
+        return availableEarlyAfternoons;
     }
 
-    public void setAvailableEarlyEvenings(ArrayList<Day> availableEarlyEvenings) {
-        this.availableEarlyEvenings = availableEarlyEvenings;
+    public void setAvailableEarlyAfternoons(ArrayList<Day> availableEarlyAfternoons) {
+        this.availableEarlyAfternoons = availableEarlyAfternoons;
+    }
+
+    public ArrayList<Day> getAvailableAfternoons() {
+        return availableAfternoons;
+    }
+
+    public void setAvailableAfternoons(ArrayList<Day> availableAfternoons) {
+        this.availableAfternoons = availableAfternoons;
     }
 
     public ArrayList<Day> getAvailableEvenings() {
@@ -182,7 +182,7 @@ public class Instructor implements Comparable<Instructor> {
         final StringBuilder sb = new StringBuilder("Instructor{");
         sb.append("id='").append(id).append('\'');
         sb.append(", name='").append(name).append('\'');
-        sb.append(", homeCampus='").append(homeCampus).append('\'');
+        sb.append(", homeCampus=").append(homeCampus);
         sb.append(", homePhone='").append(homePhone).append('\'');
         sb.append(", workPhone='").append(workPhone).append('\'');
         sb.append(", address='").append(address).append('\'');
@@ -190,13 +190,13 @@ public class Instructor implements Comparable<Instructor> {
         sb.append(", courses=").append(courses);
         sb.append(", rank='").append(rank).append('\'');
         sb.append(", canTeachOnline=").append(canTeachOnline);
-        sb.append(", campuses=").append(preferredCampuses);
+        sb.append(", preferredCampuses=").append(preferredCampuses);
         sb.append(", canTeachSecondCourse=").append(canTeachSecondCourse);
         sb.append(", canTeachThirdCourse=").append(canTeachThirdCourse);
-        sb.append(", numEves=").append(numEves);
         sb.append(", availableEarlyMornings=").append(availableEarlyMornings);
         sb.append(", availableMornings=").append(availableMornings);
-        sb.append(", availableEarlyEvenings=").append(availableEarlyEvenings);
+        sb.append(", availableEarlyAfternoons=").append(availableEarlyAfternoons);
+        sb.append(", availableAfternoons=").append(availableAfternoons);
         sb.append(", availableEvenings=").append(availableEvenings);
         sb.append(", availableWeekends=").append(availableWeekends);
         sb.append('}');

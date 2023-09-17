@@ -12,6 +12,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.util.Callback;
 import me.valacritty.Main;
 import me.valacritty.models.Campus;
+import me.valacritty.models.Day;
 import me.valacritty.models.Instructor;
 
 import java.net.URL;
@@ -42,15 +43,17 @@ public class HomeController implements Initializable {
     @FXML
     public TableColumn<Instructor, Boolean> thirdCourseCol;
     @FXML
-    public TableColumn<Instructor, ArrayList<String>> earlyWeekdayCol;
+    public TableColumn<Instructor, ArrayList<Day>> earlyMorningCol;
     @FXML
-    public TableColumn<Instructor, ArrayList<String>> weekdayCol;
+    public TableColumn<Instructor, ArrayList<Day>> morningCol;
     @FXML
-    public TableColumn<Instructor, ArrayList<String>> earlyEveningCol;
+    public TableColumn<Instructor, ArrayList<Day>> earlyAfternoonCol;
     @FXML
-    public TableColumn<Instructor, ArrayList<String>> eveningCol;
+    public TableColumn<Instructor, ArrayList<Day>> afternoonCol;
     @FXML
-    public TableColumn<Instructor, ArrayList<String>> weekendsCol;
+    public TableColumn<Instructor, ArrayList<Day>> eveningCol;
+    @FXML
+    public TableColumn<Instructor, ArrayList<Day>> weekendCol;
     @FXML
     private TextField queryField;
 
@@ -65,11 +68,12 @@ public class HomeController implements Initializable {
         coursesCol.setCellValueFactory(new PropertyValueFactory<>("courses"));
         secondCourseCol.setCellValueFactory(new PropertyValueFactory<>("canTeachSecondCourse"));
         thirdCourseCol.setCellValueFactory(new PropertyValueFactory<>("canTeachThirdCourse"));
-        earlyWeekdayCol.setCellValueFactory(new PropertyValueFactory<>("availableEarlyMornings"));
-        weekdayCol.setCellValueFactory(new PropertyValueFactory<>("availableMornings"));
-        earlyEveningCol.setCellValueFactory(new PropertyValueFactory<>("availableEarlyEvenings"));
+        earlyMorningCol.setCellValueFactory(new PropertyValueFactory<>("availableEarlyMornings"));
+        morningCol.setCellValueFactory(new PropertyValueFactory<>("availableMornings"));
+        earlyAfternoonCol.setCellValueFactory(new PropertyValueFactory<>("availableEarlyAfternoons"));
+        afternoonCol.setCellValueFactory(new PropertyValueFactory<>("availableAfternoons"));
         eveningCol.setCellValueFactory(new PropertyValueFactory<>("availableEvenings"));
-        weekendsCol.setCellValueFactory(new PropertyValueFactory<>("availableWeekends"));
+        weekendCol.setCellValueFactory(new PropertyValueFactory<>("availableWeekends"));
 
         setBooleanColumnCellFactory(onlCertifiedCol);
         setBooleanColumnCellFactory(secondCourseCol);

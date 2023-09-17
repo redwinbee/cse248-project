@@ -27,11 +27,12 @@
                         <TableColumn fx:id="coursesCol" prefWidth="81.0" text="Courses"/>
                         <TableColumn fx:id="secondCourseCol" prefWidth="81.0" text="2nd Course"/>
                         <TableColumn fx:id="thirdCourseCol" prefWidth="81.0" text="3rd Course"/>
-                        <TableColumn fx:id="earlyWeekdayCol" prefWidth="81.0" text="7AM-8AM"/>
-                        <TableColumn fx:id="weekdayCol" prefWidth="81.0" text="8AM-3PM"/>
-                        <TableColumn fx:id="earlyEveningCol" prefWidth="81.0" text="3PM-4PM"/>
-                        <TableColumn fx:id="eveningCol" prefWidth="81.0" text="4PM-8PM"/>
-                        <TableColumn fx:id="weekendsCol" prefWidth="81.0" text="Weekends"/>
+                        <TableColumn fx:id="earlyMorningCol" prefWidth="81.0" text="7AM-8AM"/>
+                        <TableColumn fx:id="morningCol" prefWidth="81.0" text="8AM-12PM"/>
+                        <TableColumn fx:id="earlyAfternoonCol" prefWidth="81.0" text="12PM-3PM"/>
+                        <TableColumn fx:id="afternoonCol" prefWidth="81.0" text="3PM-4PM"/>
+                        <TableColumn fx:id="eveningCol" prefWidth="81.0" text="4PM-9PM"/>
+                        <TableColumn fx:id="weekendCol" prefWidth="81.0" text="Weekends"/>
                     </columns>
                     <columnResizePolicy>
                         <TableView fx:constant="CONSTRAINED_RESIZE_POLICY"/>
