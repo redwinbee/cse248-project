@@ -10,16 +10,16 @@ import me.valacritty.utils.Parser;
 import me.valacritty.utils.ViewFinder;
 import me.valacritty.utils.ViewMap;
 
-import java.util.LinkedList;
+import java.util.TreeSet;
 
 public class Main extends Application {
-    private static LinkedList<Instructor> instructors;
+    private static TreeSet<Instructor> instructors;
 
     public static void main(String[] args) {
         launch(args);
     }
 
-    public static LinkedList<Instructor> getInstructors() {
+    public static TreeSet<Instructor> getInstructors() {
         return instructors;
     }
 

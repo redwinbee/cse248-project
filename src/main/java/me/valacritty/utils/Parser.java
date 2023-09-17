@@ -89,7 +89,7 @@ public class Parser {
         return instance;
     }
 
-    public LinkedList<Instructor> parse() {
+    public TreeSet<Instructor> parse() {
         List<List<String>> data = new LinkedList<>();
         try (CSVReader reader = new CSVReader(new FileReader(PATH))) {
             List<String> csvData = reader.readAll().stream().flatMap(Arrays::stream).toList();
@@ -99,7 +99,7 @@ public class Parser {
         }
 
         // create instructors out of the data and save them to the list
-        LinkedList<Instructor> instructors = new LinkedList<>();
+        TreeSet<Instructor> instructors = new TreeSet<>();
         for (List<String> ins : data) {
             if (ins.isEmpty())
                 continue;
