@@ -1,7 +1,7 @@
 package me.valacritty.models;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
+import java.util.EnumSet;
 import java.util.HashSet;
 
 public class Instructor implements Comparable<Instructor> {
@@ -15,15 +15,15 @@ public class Instructor implements Comparable<Instructor> {
     private HashSet<String> courses;
     private String rank;
     private boolean canTeachOnline;
-    private HashSet<Campus> preferredCampuses;
+    private EnumSet<Campus> preferredCampuses;
     private boolean canTeachSecondCourse;
     private boolean canTeachThirdCourse;
-    private ArrayList<Day> availableEarlyMornings;
-    private ArrayList<Day> availableMornings;
-    private ArrayList<Day> availableEarlyAfternoons;
-    private ArrayList<Day> availableAfternoons;
-    private ArrayList<Day> availableEvenings;
-    private ArrayList<Day> availableWeekends;
+    private EnumSet<Day> availableEarlyMornings;
+    private EnumSet<Day> availableMornings;
+    private EnumSet<Day> availableEarlyAfternoons;
+    private EnumSet<Day> availableAfternoons;
+    private EnumSet<Day> availableEvenings;
+    private EnumSet<Day> availableWeekends;
 
     public String getId() {
         return id;
@@ -105,11 +105,11 @@ public class Instructor implements Comparable<Instructor> {
         this.canTeachOnline = canTeachOnline;
     }
 
-    public HashSet<Campus> getPreferredCampuses() {
+    public EnumSet<Campus> getPreferredCampuses() {
         return preferredCampuses;
     }
 
-    public void setPreferredCampuses(HashSet<Campus> preferredCampuses) {
+    public void setPreferredCampuses(EnumSet<Campus> preferredCampuses) {
         this.preferredCampuses = preferredCampuses;
     }
 
@@ -129,51 +129,51 @@ public class Instructor implements Comparable<Instructor> {
         this.canTeachThirdCourse = canTeachThirdCourse;
     }
 
-    public ArrayList<Day> getAvailableEarlyMornings() {
+    public EnumSet<Day> getAvailableEarlyMornings() {
         return availableEarlyMornings;
     }
 
-    public void setAvailableEarlyMornings(ArrayList<Day> availableEarlyMornings) {
+    public void setAvailableEarlyMornings(EnumSet<Day> availableEarlyMornings) {
         this.availableEarlyMornings = availableEarlyMornings;
     }
 
-    public ArrayList<Day> getAvailableMornings() {
+    public EnumSet<Day> getAvailableMornings() {
         return availableMornings;
     }
 
-    public void setAvailableMornings(ArrayList<Day> availableMornings) {
+    public void setAvailableMornings(EnumSet<Day> availableMornings) {
         this.availableMornings = availableMornings;
     }
 
-    public ArrayList<Day> getAvailableEarlyAfternoons() {
+    public EnumSet<Day> getAvailableEarlyAfternoons() {
         return availableEarlyAfternoons;
     }
 
-    public void setAvailableEarlyAfternoons(ArrayList<Day> availableEarlyAfternoons) {
+    public void setAvailableEarlyAfternoons(EnumSet<Day> availableEarlyAfternoons) {
         this.availableEarlyAfternoons = availableEarlyAfternoons;
     }
 
-    public ArrayList<Day> getAvailableAfternoons() {
+    public EnumSet<Day> getAvailableAfternoons() {
         return availableAfternoons;
     }
 
-    public void setAvailableAfternoons(ArrayList<Day> availableAfternoons) {
+    public void setAvailableAfternoons(EnumSet<Day> availableAfternoons) {
         this.availableAfternoons = availableAfternoons;
     }
 
-    public ArrayList<Day> getAvailableEvenings() {
+    public EnumSet<Day> getAvailableEvenings() {
         return availableEvenings;
     }
 
-    public void setAvailableEvenings(ArrayList<Day> availableEvenings) {
+    public void setAvailableEvenings(EnumSet<Day> availableEvenings) {
         this.availableEvenings = availableEvenings;
     }
 
-    public ArrayList<Day> getAvailableWeekends() {
+    public EnumSet<Day> getAvailableWeekends() {
         return availableWeekends;
     }
 
-    public void setAvailableWeekends(ArrayList<Day> availableWeekends) {
+    public void setAvailableWeekends(EnumSet<Day> availableWeekends) {
         this.availableWeekends = availableWeekends;
     }
 

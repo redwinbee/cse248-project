@@ -91,8 +91,8 @@ public class Parser {
         return out;
     }
 
-    private ArrayList<Day> parseDays(String charStr) {
-        ArrayList<Day> out = new ArrayList<>(7);
+    private EnumSet<Day> parseDays(String charStr) {
+        EnumSet<Day> out = EnumSet.noneOf(Day.class);
         boolean sawTuesday = false;
         for (String day : charStr.chars().mapToObj(Character::toString).toList()) {
             switch (day) {
@@ -136,8 +136,8 @@ public class Parser {
         }
     }
 
-    private ArrayList<Day> parseAvailableWeekends(String weekendsStr) {
-        ArrayList<Day> out = new ArrayList<>(2);
+    private EnumSet<Day> parseAvailableWeekends(String weekendsStr) {
+        EnumSet<Day> out = EnumSet.noneOf(Day.class);
         String[] split = weekendsStr.split("(?=(Sun))");
         for (String day : split) {
             switch (day) {
@@ -149,15 +149,15 @@ public class Parser {
         return out;
     }
 
-    private ArrayList<Day> parseAvailableWeekdays(String availabilityStr) {
+    private EnumSet<Day> parseAvailableWeekdays(String availabilityStr) {
         String cleaned = removeAsterisks(availabilityStr);
         return parseDays(cleaned);
     }
 
-    private HashSet<Campus> parsePreferredCampuses(String parsePreferredCampusesStr) {
+    private EnumSet<Campus> parsePreferredCampuses(String parsePreferredCampusesStr) {
         return Arrays.stream(parsePreferredCampusesStr.split("\\s+"))
                 .map(this::parseCampus)
-                .collect(Collectors.toCollection(HashSet::new));
+                .collect(Collectors.toCollection(() -> EnumSet.noneOf(Campus.class)));
     }
 
     private boolean parseCanTeachOnline(String canTeachOnlineStr) {
