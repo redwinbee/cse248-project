@@ -4,24 +4,30 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.util.Callback;
+import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.GridPane;
+import javafx.scene.layout.Region;
+import javafx.scene.layout.StackPane;
 import me.valacritty.Main;
 import me.valacritty.models.Campus;
 import me.valacritty.models.Day;
 import me.valacritty.models.Instructor;
+import me.valacritty.models.TimeOfDay;
 
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.EnumSet;
 import java.util.HashSet;
 import java.util.ResourceBundle;
 
 public class HomeController implements Initializable {
     private final ObservableList<Instructor> instructorData = FXCollections.observableArrayList();
+    private final String validColour = "-fx-background-color: #e3ffe3;";
+    private final String invalidColour = "-fx-background-color: #ffe6e6;";
     @FXML
     public TableView<Instructor> instructorView;
     @FXML
@@ -55,10 +61,88 @@ public class HomeController implements Initializable {
     @FXML
     public TableColumn<Instructor, ArrayList<Day>> weekendCol;
     @FXML
+    public Region sunEarlyMorning;
+    @FXML
+    public Region monEarlyMorning;
+    @FXML
+    public Region tueEarlyMorning;
+    @FXML
+    public Region wedEarlyMorning;
+    @FXML
+    public Region thurEarlyMorning;
+    @FXML
+    public Region friEarlyMorning;
+    @FXML
+    public Region satEarlyMorning;
+    @FXML
+    public Region sunMorning;
+    @FXML
+    public Region monMorning;
+    @FXML
+    public Region tueMorning;
+    @FXML
+    public Region wedMorning;
+    @FXML
+    public Region thurMorning;
+    @FXML
+    public Region friMorning;
+    @FXML
+    public Region satMorning;
+    @FXML
+    public Region sunEarlyAfternoon;
+    @FXML
+    public Region monEarlyAfternoon;
+    @FXML
+    public Region tueEarlyAfternoon;
+    @FXML
+    public Region wedEarlyAfternoon;
+    @FXML
+    public Region thurEarlyAfternoon;
+    @FXML
+    public Region friEarlyAfternoon;
+    @FXML
+    public Region satEarlyAfternoon;
+    @FXML
+    public Region sunAfternoon;
+    @FXML
+    public Region monAfternoon;
+    @FXML
+    public Region tueAfternoon;
+    @FXML
+    public Region wedAfternoon;
+    @FXML
+    public Region thurAfternoon;
+    @FXML
+    public Region friAfternoon;
+    @FXML
+    public Region satAfternoon;
+    @FXML
+    public Region sunEvening;
+    @FXML
+    public Region monEvening;
+    @FXML
+    public Region tueEvening;
+    @FXML
+    public Region wedEvening;
+    @FXML
+    public Region thurEvening;
+    @FXML
+    public Region friEvening;
+    @FXML
+    public Region satEvening;
+    @FXML
+    public StackPane availabilitiesPane;
+    @FXML
+    public AnchorPane availabilitiesNotSelectedPane;
+    @FXML
+    public GridPane availabilitiesGrid;
+    @FXML
     private TextField queryField;
+    private Instructor currentSelection;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        // configure cell value factories
         idCol.setCellValueFactory(new PropertyValueFactory<>("id"));
         nameCol.setCellValueFactory(new PropertyValueFactory<>("name"));
         rankCol.setCellValueFactory(new PropertyValueFactory<>("rank"));
@@ -68,17 +152,25 @@ public class HomeController implements Initializable {
         coursesCol.setCellValueFactory(new PropertyValueFactory<>("courses"));
         secondCourseCol.setCellValueFactory(new PropertyValueFactory<>("canTeachSecondCourse"));
         thirdCourseCol.setCellValueFactory(new PropertyValueFactory<>("canTeachThirdCourse"));
-        earlyMorningCol.setCellValueFactory(new PropertyValueFactory<>("availableEarlyMornings"));
-        morningCol.setCellValueFactory(new PropertyValueFactory<>("availableMornings"));
-        earlyAfternoonCol.setCellValueFactory(new PropertyValueFactory<>("availableEarlyAfternoons"));
-        afternoonCol.setCellValueFactory(new PropertyValueFactory<>("availableAfternoons"));
-        eveningCol.setCellValueFactory(new PropertyValueFactory<>("availableEvenings"));
-        weekendCol.setCellValueFactory(new PropertyValueFactory<>("availableWeekends"));
 
-        setBooleanColumnCellFactory(onlCertifiedCol);
-        setBooleanColumnCellFactory(secondCourseCol);
-        setBooleanColumnCellFactory(thirdCourseCol);
+        // TODO remove all this later
+        earlyMorningCol.setVisible(false);
+        morningCol.setVisible(false);
+        earlyAfternoonCol.setVisible(false);
+        afternoonCol.setVisible(false);
+        eveningCol.setVisible(false);
+        weekendCol.setVisible(false);
+//        earlyMorningCol.setCellValueFactory(new PropertyValueFactory<>("availableEarlyMornings"));
+//        morningCol.setCellValueFactory(new PropertyValueFactory<>("availableMornings"));
+//        earlyAfternoonCol.setCellValueFactory(new PropertyValueFactory<>("availableEarlyAfternoons"));
+//        afternoonCol.setCellValueFactory(new PropertyValueFactory<>("availableAfternoons"));
+//        eveningCol.setCellValueFactory(new PropertyValueFactory<>("availableEvenings"));
+//        weekendCol.setCellValueFactory(new PropertyValueFactory<>("availableWeekends"));
 
+        // configure cell value listeners
+        setCellSelectionListener();
+
+        // set the view to the observable list
         instructorView.setItems(instructorData);
     }
 
@@ -93,29 +185,108 @@ public class HomeController implements Initializable {
         }
     }
 
-    private void setBooleanColumnCellFactory(TableColumn<Instructor, Boolean> column) {
-        column.setCellFactory(new Callback<>() {
-            @Override
-            public TableCell<Instructor, Boolean> call(TableColumn<Instructor, Boolean> param) {
-                return new TableCell<>() {
-                    @Override
-                    protected void updateItem(Boolean item, boolean empty) {
-                        super.updateItem(item, empty);
-                        if (empty || item == null) {
-                            setText(null);
-                            setStyle(""); // Reset the cell's style
-                        } else {
-                            setText(item.toString());
+    private void setCellSelectionListener() {
+        instructorView.setOnMouseClicked(event -> {
+            clearAvailabilitiesGrid();
+            Instructor selected = instructorView.getSelectionModel().getSelectedItem();
+            if (selected != null) {
+                // only make updates when an instructor is actually selected
+                currentSelection = selected;
+                updateAvailabilitiesGrid(selected);
+                updateAvailabilitiesVisibility(true);
+                return;
+            }
 
-                            if (item) {
-                                setStyle("-fx-background-color: #e3ffe3;");
-                            } else {
-                                setStyle("-fx-background-color: #ffe6e6;");
-                            }
+            updateAvailabilitiesVisibility(false);
+        });
+    }
+
+    private void updateAvailabilitiesGrid(Instructor selected) {
+        applyAvailabilityColour(selected.getAvailableEarlyMornings(), TimeOfDay.EARLY_MORNING);
+        applyAvailabilityColour(selected.getAvailableMornings(), TimeOfDay.MORNING);
+        applyAvailabilityColour(selected.getAvailableEarlyAfternoons(), TimeOfDay.EARLY_AFTERNOON);
+        applyAvailabilityColour(selected.getAvailableAfternoons(), TimeOfDay.AFTERNOON);
+        applyAvailabilityColour(selected.getAvailableEvenings(), TimeOfDay.EVENING);
+        applyAvailabilityColour(selected.getAvailableWeekends(), TimeOfDay.IRRELEVANT);
+    }
+
+    private void clearAvailabilitiesGrid() {
+        // TODO figure out why I can't recursively do this with availabilityGrid.getChildren()
+        clearRegions(sunEarlyMorning, monEarlyMorning, tueEarlyMorning, wedEarlyMorning, thurEarlyMorning, friEarlyMorning, satEarlyMorning);
+        clearRegions(sunMorning, monMorning, tueMorning, wedMorning, thurMorning, friMorning, satMorning);
+        clearRegions(sunEarlyAfternoon, monEarlyAfternoon, tueEarlyAfternoon, wedEarlyAfternoon, thurEarlyAfternoon, friEarlyAfternoon, satEarlyAfternoon);
+        clearRegions(sunAfternoon, monAfternoon, tueAfternoon, wedAfternoon, thurAfternoon, friAfternoon, satAfternoon);
+        clearRegions(sunEvening, monEvening, tueEvening, wedEvening, thurEvening, friEvening, satEvening);
+    }
+
+    private void clearRegions(Region sun, Region mon, Region tue, Region wed, Region thur, Region fri, Region sat) {
+        sun.setStyle(invalidColour);
+        mon.setStyle(invalidColour);
+        tue.setStyle(invalidColour);
+        wed.setStyle(invalidColour);
+        thur.setStyle(invalidColour);
+        fri.setStyle(invalidColour);
+        sat.setStyle(invalidColour);
+    }
+
+    private void applyAvailabilityColour(EnumSet<Day> availableDays, TimeOfDay timeOfDay) {
+        switch (timeOfDay) {
+            case EARLY_MORNING ->
+                    applyStyleToRegions(availableDays, sunEarlyMorning, monEarlyMorning, tueEarlyMorning, wedEarlyMorning, thurEarlyMorning, friEarlyMorning, satEarlyMorning);
+            case MORNING ->
+                    applyStyleToRegions(availableDays, sunMorning, monMorning, tueMorning, wedMorning, thurMorning, friMorning, satMorning);
+            case EARLY_AFTERNOON ->
+                    applyStyleToRegions(availableDays, sunEarlyAfternoon, monEarlyAfternoon, tueEarlyAfternoon, wedEarlyAfternoon, thurEarlyAfternoon, friEarlyAfternoon, satEarlyAfternoon);
+            case AFTERNOON ->
+                    applyStyleToRegions(availableDays, sunAfternoon, monAfternoon, tueAfternoon, wedAfternoon, thurAfternoon, friAfternoon, satAfternoon);
+            case EVENING ->
+                    applyStyleToRegions(availableDays, sunEvening, monEvening, tueEvening, wedEvening, thurEvening, friEvening, satEvening);
+
+            // TODO it's possible this is wrong because the original file doesn't specify what time of day weekend instructors are available
+            case IRRELEVANT -> {
+                for (Day day : availableDays) {
+                    switch (day) {
+                        case SATURDAY -> {
+                            satEarlyMorning.setStyle(validColour);
+                            satMorning.setStyle(validColour);
+                            satEarlyAfternoon.setStyle(validColour);
+                            satAfternoon.setStyle(validColour);
+                            satEvening.setStyle(validColour);
+                        }
+                        case SUNDAY -> {
+                            sunEarlyMorning.setStyle(validColour);
+                            sunMorning.setStyle(validColour);
+                            sunEarlyAfternoon.setStyle(validColour);
+                            sunAfternoon.setStyle(validColour);
+                            sunEvening.setStyle(validColour);
                         }
                     }
-                };
+                }
             }
-        });
+        }
+    }
+
+    private void applyStyleToRegions(EnumSet<Day> availableDays, Region sunRegion, Region monRegion, Region tueRegion, Region wedRegion, Region thurRegion, Region friRegion, Region satRegion) {
+        for (Day day : availableDays) {
+            switch (day) {
+                case SUNDAY -> sunRegion.setStyle(validColour);
+                case MONDAY -> monRegion.setStyle(validColour);
+                case TUESDAY -> tueRegion.setStyle(validColour);
+                case WEDNESDAY -> wedRegion.setStyle(validColour);
+                case THURSDAY -> thurRegion.setStyle(validColour);
+                case FRIDAY -> friRegion.setStyle(validColour);
+                case SATURDAY -> satRegion.setStyle(validColour);
+            }
+        }
+    }
+
+    private void updateAvailabilitiesVisibility(boolean contentAvailable) {
+        if (contentAvailable) {
+            availabilitiesGrid.setVisible(true);
+            availabilitiesNotSelectedPane.setVisible(false);
+        } else {
+            availabilitiesGrid.setVisible(false);
+            availabilitiesNotSelectedPane.setVisible(true);
+        }
     }
 }
