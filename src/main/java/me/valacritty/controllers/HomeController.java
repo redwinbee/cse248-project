@@ -4,6 +4,8 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
+import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
@@ -185,22 +187,15 @@ public class HomeController implements Initializable {
     }
 
     private void clearAvailabilitiesGrid() {
-        // TODO figure out why I can't recursively do this with availabilityGrid.getChildren()
-        clearRegions(sunEarlyMorning, monEarlyMorning, tueEarlyMorning, wedEarlyMorning, thurEarlyMorning, friEarlyMorning, satEarlyMorning);
-        clearRegions(sunMorning, monMorning, tueMorning, wedMorning, thurMorning, friMorning, satMorning);
-        clearRegions(sunEarlyAfternoon, monEarlyAfternoon, tueEarlyAfternoon, wedEarlyAfternoon, thurEarlyAfternoon, friEarlyAfternoon, satEarlyAfternoon);
-        clearRegions(sunAfternoon, monAfternoon, tueAfternoon, wedAfternoon, thurAfternoon, friAfternoon, satAfternoon);
-        clearRegions(sunEvening, monEvening, tueEvening, wedEvening, thurEvening, friEvening, satEvening);
-    }
-
-    private void clearRegions(Region sun, Region mon, Region tue, Region wed, Region thur, Region fri, Region sat) {
-        sun.setStyle(invalidColour);
-        mon.setStyle(invalidColour);
-        tue.setStyle(invalidColour);
-        wed.setStyle(invalidColour);
-        thur.setStyle(invalidColour);
-        fri.setStyle(invalidColour);
-        sat.setStyle(invalidColour);
+        for (Node node : availabilitiesGrid.getChildren().filtered(node -> !(node instanceof Label))) {
+            if (node instanceof StackPane pane) {
+                pane.getChildren()
+                        .filtered(child -> !(child instanceof Label))
+                        .forEach(child -> child.setStyle(invalidColour));
+            } else {
+                node.setStyle(invalidColour);
+            }
+        }
     }
 
     private void applyAvailabilityColour(EnumSet<Day> availableDays, TimeOfDay timeOfDay) {
