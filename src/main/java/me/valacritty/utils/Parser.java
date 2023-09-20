@@ -63,7 +63,6 @@ public class Parser {
                 List<String> csvData = new ArrayList<>();
                 for (CSVRecord record : csvParser) {
                     csvData.addAll(record.toList());
-                    System.out.println(record);
                 }
                 return splitData(csvData);
             }

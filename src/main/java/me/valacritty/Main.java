@@ -2,7 +2,6 @@ package me.valacritty;
 
 import atlantafx.base.theme.PrimerLight;
 import javafx.application.Application;
-import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import me.valacritty.models.Instructor;
