@@ -1,23 +1,19 @@
 @font-face {
+    font-family: 'Recursive Sans Linear Static';
     src: url('/fonts/RecursiveSansLnrSt-Regular.ttf');
-    -fx-font-family: 'Recursive Sans Linear Static';
-    -fx-font-style: 'Regular';
 }
 
 @font-face {
+    font-family: 'Recursive Sans Linear Static';
     src: url('/fonts/RecursiveSansLnrSt-Bold.ttf');
-    -fx-font-family: 'Recursive Sans Linear Static';
-    -fx-font-style: 'Bold';
 }
 
 .root {
     -fx-font-family: 'Recursive Sans Linear Static';
-    -fx-font-style: 'Regular';
-    -fx-font-size: 13;
+    -fx-font-size: 90%;
 }
 
 .bold-text {
     -fx-font-family: 'Recursive Sans Linear Static';
-    -fx-font-weight: 'Bold';
-    -fx-font-size: 13;
+    -fx-font-size: 90%;
 }
