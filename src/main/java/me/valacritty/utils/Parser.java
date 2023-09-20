@@ -1,10 +1,11 @@
 package me.valacritty.utils;
 
-import com.opencsv.CSVReader;
-import com.opencsv.exceptions.CsvException;
 import me.valacritty.models.Campus;
 import me.valacritty.models.Day;
 import me.valacritty.models.Instructor;
+import org.apache.commons.csv.CSVFormat;
+import org.apache.commons.csv.CSVParser;
+import org.apache.commons.csv.CSVRecord;
 
 import java.io.FileReader;
 import java.io.IOException;
@@ -57,10 +58,16 @@ public class Parser {
     }
 
     private List<List<String>> getCsvData() {
-        try (CSVReader reader = new CSVReader(new FileReader(PATH))) {
-            List<String> csvData = reader.readAll().stream().flatMap(Arrays::stream).toList();
-            return splitData(csvData);
-        } catch (IOException | CsvException ex) {
+        try (FileReader reader = new FileReader(PATH)) {
+            try (CSVParser csvParser = CSVParser.parse(reader, CSVFormat.DEFAULT)) {
+                List<String> csvData = new ArrayList<>();
+                for (CSVRecord record : csvParser) {
+                    csvData.addAll(record.toList());
+                    System.out.println(record);
+                }
+                return splitData(csvData);
+            }
+        } catch (IOException ex) {
             System.err.println("An error occurred while reading the CSV data: " + ex.getMessage());
             return Collections.emptyList();
         }
