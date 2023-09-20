@@ -10,6 +10,7 @@ import me.valacritty.utils.Parser;
 import me.valacritty.utils.ViewFinder;
 import me.valacritty.utils.ViewMap;
 
+import java.net.URL;
 import java.util.TreeSet;
 
 public class Main extends Application {
@@ -23,21 +24,34 @@ public class Main extends Application {
         return instructors;
     }
 
-    private static void deserializeData() {
+    private void initializeData() {
         Parser parser = Parser.getInstance();
         instructors = parser.parse();
     }
 
+    private String initializeStyles() {
+        Application.setUserAgentStylesheet(new PrimerLight().getUserAgentStylesheet());
+
+        String styleSheet = "";
+        URL url = getClass().getResource("/styles.css");
+        if (url != null) {
+            styleSheet = url.toExternalForm();
+        } else {
+            System.err.println("failed to load stylesheet, perhaps it is missing?");
+        }
+
+        return styleSheet;
+    }
+
     @Override
     public void start(Stage primaryStage) {
-        Application.setUserAgentStylesheet(new PrimerLight().getUserAgentStylesheet());
-        Parent parent = ViewFinder.loadView(ViewMap.HOME);
-        deserializeData();
-        Scene scene = new Scene(parent);
-        primaryStage.setTitle("Project01");
+        initializeData();
+        String styleSheet = initializeStyles();
+
+        Scene scene = new Scene(ViewFinder.loadView(ViewMap.HOME));
         primaryStage.setScene(scene);
-        String styleSheet = getClass().getResource("/styles.css").toExternalForm();
         primaryStage.getScene().getStylesheets().add(styleSheet);
+        primaryStage.setTitle("Project01");
         primaryStage.show();
     }
 }
