@@ -5,320 +5,246 @@
 <?import javafx.scene.layout.*?>
 <AnchorPane xmlns:fx="http://javafx.com/fxml/1" scaleX="0.95" scaleY="0.95" scaleZ="0.95"
             xmlns="http://javafx.com/javafx/17.0.2-ea" fx:controller="me.valacritty.controllers.HomeController">
-    <children>
-        <VBox layoutX="20.0" layoutY="20.0" prefHeight="700.0" prefWidth="1000.0" spacing="10.0"
-              AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0"
-              AnchorPane.topAnchor="0.0" VBox.vgrow="ALWAYS">
-            <children>
-                <HBox spacing="10.0">
-                    <children>
-                        <TextField fx:id="queryField" promptText="Find professors" HBox.hgrow="ALWAYS"/>
-                        <Button defaultButton="true" mnemonicParsing="false" onAction="#onSearch" text="Search"/>
-                    </children>
-                </HBox>
-                <TableView fx:id="instructorView" VBox.vgrow="ALWAYS">
-                    <columns>
-                        <TableColumn fx:id="idCol" prefWidth="75.0" text="ID"/>
-                        <TableColumn fx:id="nameCol" prefWidth="75.0" text="Name"/>
-                        <TableColumn fx:id="rankCol" prefWidth="75.0" text="Rank"/>
-                        <TableColumn fx:id="homeCampusCol" prefWidth="92.0" text=" Home Campus"/>
-                        <TableColumn fx:id="prefCampusCol" prefWidth="81.0" text="Pref Campus"/>
-                        <TableColumn fx:id="onlCertifiedCol" prefWidth="81.0" text="Online"/>
-                        <TableColumn fx:id="coursesCol" prefWidth="81.0" text="Courses"/>
-                        <TableColumn fx:id="secondCourseCol" prefWidth="81.0" text="2nd Course"/>
-                        <TableColumn fx:id="thirdCourseCol" prefWidth="81.0" text="3rd Course"/>
-                    </columns>
-                    <columnResizePolicy>
-                        <TableView fx:constant="CONSTRAINED_RESIZE_POLICY"/>
-                    </columnResizePolicy>
-                </TableView>
-                <StackPane fx:id="availabilitiesPane">
-                    <children>
-                        <AnchorPane fx:id="availabilitiesNotSelectedPane" prefHeight="200.0" prefWidth="200.0">
-                            <children>
-                                <Label alignment="CENTER"
-                                       text="Selected instructors will have their availability appear here."
-                                       textFill="#808080" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0"
-                                       AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0"/>
-                            </children>
-                        </AnchorPane>
-                        <GridPane fx:id="availabilitiesGrid" disable="true" hgap="5.0" vgap="5.0" visible="false">
-                            <columnConstraints>
-                                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0"/>
-                                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0"/>
-                                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0"/>
-                                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0"/>
-                                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0"/>
-                                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0"/>
-                                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0"/>
-                            </columnConstraints>
-                            <rowConstraints>
-                                <RowConstraints minHeight="10.0" prefHeight="60.0" vgrow="SOMETIMES"/>
-                                <RowConstraints minHeight="10.0" prefHeight="60.0" vgrow="SOMETIMES"/>
-                                <RowConstraints minHeight="10.0" prefHeight="60.0" vgrow="SOMETIMES"/>
-                                <RowConstraints minHeight="10.0" prefHeight="60.0" vgrow="SOMETIMES"/>
-                                <RowConstraints minHeight="10.0" prefHeight="60.0" vgrow="SOMETIMES"/>
-                                <RowConstraints minHeight="10.0" prefHeight="60.0" vgrow="SOMETIMES"/>
-                            </rowConstraints>
-                            <children>
-                                <Label text="Sunday" GridPane.halignment="CENTER" GridPane.valignment="CENTER"/>
-                                <Label layoutX="53.0" layoutY="15.0" text="Monday" GridPane.columnIndex="1"
-                                       GridPane.halignment="CENTER" GridPane.valignment="CENTER"/>
-                                <Label layoutX="178.0" layoutY="15.0" text="Tuesday" GridPane.columnIndex="2"
-                                       GridPane.halignment="CENTER" GridPane.valignment="CENTER"/>
-                                <Label layoutX="304.0" layoutY="15.0" text="Wednesday" GridPane.columnIndex="3"
-                                       GridPane.halignment="CENTER" GridPane.valignment="CENTER"/>
-                                <Label layoutX="10.0" layoutY="15.0" text="Thursday" GridPane.columnIndex="4"
-                                       GridPane.halignment="CENTER" GridPane.valignment="CENTER"/>
-                                <Label layoutX="10.0" layoutY="15.0" text="Friday" GridPane.columnIndex="5"
-                                       GridPane.halignment="CENTER" GridPane.valignment="CENTER"/>
-                                <Label layoutX="10.0" layoutY="15.0" text="Saturday" GridPane.columnIndex="6"
-                                       GridPane.halignment="CENTER" GridPane.valignment="CENTER"/>
-                                <StackPane GridPane.halignment="CENTER" GridPane.rowIndex="1"
-                                           GridPane.valignment="CENTER">
-                                    <Region fx:id="sunEarlyMorning" prefHeight="200.0" prefWidth="200.0"/>
-                                    <Label text="7AM-8AM"/>
-                                </StackPane>
-                                <StackPane GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1"
-                                           GridPane.valignment="CENTER">
-                                    <Region fx:id="monEarlyMorning" prefHeight="200.0" prefWidth="200.0"/>
-                                    <Label text="7AM-8AM"/>
-                                </StackPane>
-                                <StackPane GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="1"
-                                           GridPane.valignment="CENTER">
-                                    <Region fx:id="tueEarlyMorning" prefHeight="200.0" prefWidth="200.0"/>
-                                    <Label text="7AM-8AM"/>
-                                </StackPane>
-                                <StackPane GridPane.columnIndex="3" GridPane.halignment="CENTER" GridPane.rowIndex="1"
-                                           GridPane.valignment="CENTER">
-                                    <Region fx:id="wedEarlyMorning" prefHeight="200.0" prefWidth="200.0"/>
-                                    <Label text="7AM-8AM"/>
-                                </StackPane>
-                                <StackPane GridPane.columnIndex="4" GridPane.halignment="CENTER" GridPane.rowIndex="1"
-                                           GridPane.valignment="CENTER">
-                                    <children>
-                                        <Region fx:id="thurEarlyMorning" prefHeight="200.0" prefWidth="200.0"/>
-                                        <Label text="7AM-8AM"/>
-                                    </children>
-                                </StackPane>
-                                <StackPane GridPane.columnIndex="5" GridPane.halignment="CENTER" GridPane.rowIndex="1"
-                                           GridPane.valignment="CENTER">
-                                    <children>
-                                        <Region fx:id="friEarlyMorning" prefHeight="200.0" prefWidth="200.0"/>
-                                        <Label text="7AM-8AM"/>
-                                    </children>
-                                </StackPane>
-                                <StackPane GridPane.columnIndex="6" GridPane.halignment="CENTER" GridPane.rowIndex="1"
-                                           GridPane.valignment="CENTER">
-                                    <children>
-                                        <Region fx:id="satEarlyMorning" prefHeight="200.0" prefWidth="200.0"/>
-                                        <Label text="7AM-8AM"/>
-                                    </children>
-                                </StackPane>
-                                <StackPane GridPane.halignment="CENTER" GridPane.rowIndex="2"
-                                           GridPane.valignment="CENTER">
-                                    <children>
-                                        <Region fx:id="sunMorning" prefHeight="200.0" prefWidth="200.0"/>
-                                        <Label text="8AM-12PM"/>
-                                    </children>
-                                </StackPane>
-                                <StackPane GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="2"
-                                           GridPane.valignment="CENTER">
-                                    <children>
-                                        <Region fx:id="monMorning" prefHeight="200.0" prefWidth="200.0"/>
-                                        <Label text="8AM-12PM"/>
-                                    </children>
-                                </StackPane>
-                                <StackPane GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="2"
-                                           GridPane.valignment="CENTER">
-                                    <children>
-                                        <Region fx:id="tueMorning" prefHeight="200.0" prefWidth="200.0"/>
-                                        <Label text="8AM-12PM"/>
-                                    </children>
-                                </StackPane>
-                                <StackPane GridPane.columnIndex="3" GridPane.halignment="CENTER" GridPane.rowIndex="2"
-                                           GridPane.valignment="CENTER">
-                                    <children>
-                                        <Region fx:id="wedMorning" prefHeight="200.0" prefWidth="200.0"/>
-                                        <Label text="8AM-12PM"/>
-                                    </children>
-                                </StackPane>
-                                <StackPane GridPane.columnIndex="4" GridPane.halignment="CENTER" GridPane.rowIndex="2"
-                                           GridPane.valignment="CENTER">
-                                    <children>
-                                        <Region fx:id="thurMorning" prefHeight="200.0" prefWidth="200.0"/>
-                                        <Label text="8AM-12PM"/>
-                                    </children>
-                                </StackPane>
-                                <StackPane GridPane.columnIndex="5" GridPane.halignment="CENTER" GridPane.rowIndex="2"
-                                           GridPane.valignment="CENTER">
-                                    <children>
-                                        <Region fx:id="friMorning" prefHeight="200.0" prefWidth="200.0"/>
-                                        <Label text="8AM-12PM"/>
-                                    </children>
-                                </StackPane>
-                                <StackPane GridPane.columnIndex="6" GridPane.halignment="CENTER" GridPane.rowIndex="2"
-                                           GridPane.valignment="CENTER">
-                                    <children>
-                                        <Region fx:id="satMorning" prefHeight="200.0" prefWidth="200.0"/>
-                                        <Label text="8AM-12PM"/>
-                                    </children>
-                                </StackPane>
-                                <StackPane GridPane.halignment="CENTER" GridPane.rowIndex="3"
-                                           GridPane.valignment="CENTER">
-                                    <children>
-                                        <Region fx:id="sunEarlyAfternoon" prefHeight="200.0" prefWidth="200.0"/>
-                                        <Label text="12PM-3PM"/>
-                                    </children>
-                                </StackPane>
-                                <StackPane GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="3"
-                                           GridPane.valignment="CENTER">
-                                    <children>
-                                        <Region fx:id="monEarlyAfternoon" prefHeight="200.0" prefWidth="200.0"/>
-                                        <Label text="12PM-3PM"/>
-                                    </children>
-                                </StackPane>
-                                <StackPane GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="3"
-                                           GridPane.valignment="CENTER">
-                                    <children>
-                                        <Region fx:id="tueEarlyAfternoon" prefHeight="200.0" prefWidth="200.0"/>
-                                        <Label text="12PM-3PM"/>
-                                    </children>
-                                </StackPane>
-                                <StackPane GridPane.columnIndex="3" GridPane.halignment="CENTER" GridPane.rowIndex="3"
-                                           GridPane.valignment="CENTER">
-                                    <children>
-                                        <Region fx:id="wedEarlyAfternoon" prefHeight="200.0" prefWidth="200.0"/>
-                                        <Label text="12PM-3PM"/>
-                                    </children>
-                                </StackPane>
-                                <StackPane GridPane.columnIndex="4" GridPane.halignment="CENTER" GridPane.rowIndex="3"
-                                           GridPane.valignment="CENTER">
-                                    <children>
-                                        <Region fx:id="thurEarlyAfternoon" prefHeight="200.0" prefWidth="200.0"/>
-                                        <Label text="12PM-3PM"/>
-                                    </children>
-                                </StackPane>
-                                <StackPane GridPane.columnIndex="5" GridPane.halignment="CENTER" GridPane.rowIndex="3"
-                                           GridPane.valignment="CENTER">
-                                    <children>
-                                        <Region fx:id="friEarlyAfternoon" prefHeight="200.0" prefWidth="200.0"/>
-                                        <Label text="12PM-3PM"/>
-                                    </children>
-                                </StackPane>
-                                <StackPane GridPane.columnIndex="6" GridPane.halignment="CENTER" GridPane.rowIndex="3"
-                                           GridPane.valignment="CENTER">
-                                    <children>
-                                        <Region fx:id="satEarlyAfternoon" prefHeight="200.0" prefWidth="200.0"/>
-                                        <Label text="12PM-3PM"/>
-                                    </children>
-                                </StackPane>
-                                <StackPane GridPane.halignment="CENTER" GridPane.rowIndex="4"
-                                           GridPane.valignment="CENTER">
-                                    <children>
-                                        <Region fx:id="sunAfternoon" prefHeight="200.0" prefWidth="200.0"/>
-                                        <Label text="3PM-4PM"/>
-                                    </children>
-                                </StackPane>
-                                <StackPane GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="4"
-                                           GridPane.valignment="CENTER">
-                                    <children>
-                                        <Region fx:id="monAfternoon" prefHeight="200.0" prefWidth="200.0"/>
-                                        <Label text="3PM-4PM"/>
-                                    </children>
-                                </StackPane>
-                                <StackPane GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="4"
-                                           GridPane.valignment="CENTER">
-                                    <children>
-                                        <Region fx:id="tueAfternoon" prefHeight="200.0" prefWidth="200.0"/>
-                                        <Label text="3PM-4PM"/>
-                                    </children>
-                                </StackPane>
-                                <StackPane GridPane.columnIndex="3" GridPane.halignment="CENTER" GridPane.rowIndex="4"
-                                           GridPane.valignment="CENTER">
-                                    <children>
-                                        <Region fx:id="wedAfternoon" prefHeight="200.0" prefWidth="200.0"/>
-                                        <Label text="3PM-4PM"/>
-                                    </children>
-                                </StackPane>
-                                <StackPane GridPane.columnIndex="4" GridPane.halignment="CENTER" GridPane.rowIndex="4"
-                                           GridPane.valignment="CENTER">
-                                    <children>
-                                        <Region fx:id="thurAfternoon" prefHeight="200.0" prefWidth="200.0"/>
-                                        <Label text="3PM-4PM"/>
-                                    </children>
-                                </StackPane>
-                                <StackPane GridPane.columnIndex="5" GridPane.halignment="CENTER" GridPane.rowIndex="4"
-                                           GridPane.valignment="CENTER">
-                                    <children>
-                                        <Region fx:id="friAfternoon" prefHeight="200.0" prefWidth="200.0"/>
-                                        <Label text="3PM-4PM"/>
-                                    </children>
-                                </StackPane>
-                                <StackPane GridPane.columnIndex="6" GridPane.halignment="CENTER" GridPane.rowIndex="4"
-                                           GridPane.valignment="CENTER">
-                                    <children>
-                                        <Region fx:id="satAfternoon" prefHeight="200.0" prefWidth="200.0"/>
-                                        <Label text="3PM-4PM"/>
-                                    </children>
-                                </StackPane>
-                                <StackPane GridPane.halignment="CENTER" GridPane.rowIndex="5"
-                                           GridPane.valignment="CENTER">
-                                    <children>
-                                        <Region fx:id="sunEvening" prefHeight="200.0" prefWidth="200.0"/>
-                                        <Label text="4PM-9PM"/>
-                                    </children>
-                                </StackPane>
-                                <StackPane GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="5"
-                                           GridPane.valignment="CENTER">
-                                    <children>
-                                        <Region fx:id="monEvening" prefHeight="200.0" prefWidth="200.0"/>
-                                        <Label text="4PM-9PM"/>
-                                    </children>
-                                </StackPane>
-                                <StackPane GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="5"
-                                           GridPane.valignment="CENTER">
-                                    <children>
-                                        <Region fx:id="tueEvening" prefHeight="200.0" prefWidth="200.0"/>
-                                        <Label text="4PM-9PM"/>
-                                    </children>
-                                </StackPane>
-                                <StackPane GridPane.columnIndex="3" GridPane.halignment="CENTER" GridPane.rowIndex="5"
-                                           GridPane.valignment="CENTER">
-                                    <children>
-                                        <Region fx:id="wedEvening" prefHeight="200.0" prefWidth="200.0"/>
-                                        <Label text="4PM-9PM"/>
-                                    </children>
-                                </StackPane>
-                                <StackPane GridPane.columnIndex="4" GridPane.halignment="CENTER" GridPane.rowIndex="5"
-                                           GridPane.valignment="CENTER">
-                                    <children>
-                                        <Region fx:id="thurEvening" prefHeight="200.0" prefWidth="200.0"/>
-                                        <Label text="4PM-9PM"/>
-                                    </children>
-                                </StackPane>
-                                <StackPane GridPane.columnIndex="5" GridPane.halignment="CENTER" GridPane.rowIndex="5"
-                                           GridPane.valignment="CENTER">
-                                    <children>
-                                        <Region fx:id="friEvening" prefHeight="200.0" prefWidth="200.0"/>
-                                        <Label text="4PM-9PM"/>
-                                    </children>
-                                </StackPane>
-                                <StackPane GridPane.columnIndex="6" GridPane.halignment="CENTER" GridPane.rowIndex="5"
-                                           GridPane.valignment="CENTER">
-                                    <children>
-                                        <Region fx:id="satEvening" prefHeight="200.0" prefWidth="200.0"/>
-                                        <Label text="4PM-9PM"/>
-                                    </children>
-                                </StackPane>
-                            </children>
-                        </GridPane>
-                    </children>
+    <VBox layoutX="20.0" layoutY="20.0" prefHeight="700.0" prefWidth="1000.0" spacing="10.0"
+          AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0"
+          AnchorPane.topAnchor="0.0" VBox.vgrow="ALWAYS">
+        <opaqueInsets>
+            <Insets/>
+        </opaqueInsets>
+        <HBox spacing="10.0">
+            <TextField fx:id="queryField" promptText="Find professors" HBox.hgrow="ALWAYS"/>
+            <Button defaultButton="true" mnemonicParsing="false" onAction="#onSearch" text="Search"/>
+        </HBox>
+        <TableView fx:id="instructorView" VBox.vgrow="ALWAYS">
+            <columns>
+                <TableColumn fx:id="idCol" prefWidth="75.0" text="ID"/>
+                <TableColumn fx:id="nameCol" prefWidth="75.0" text="Name"/>
+                <TableColumn fx:id="rankCol" prefWidth="75.0" text="Rank"/>
+                <TableColumn fx:id="homeCampusCol" prefWidth="92.0" text=" Home Campus"/>
+                <TableColumn fx:id="prefCampusCol" prefWidth="81.0" text="Pref Campus"/>
+                <TableColumn fx:id="onlCertifiedCol" prefWidth="81.0" text="Online"/>
+                <TableColumn fx:id="coursesCol" prefWidth="81.0" text="Courses"/>
+                <TableColumn fx:id="secondCourseCol" prefWidth="81.0" text="2nd Course"/>
+                <TableColumn fx:id="thirdCourseCol" prefWidth="81.0" text="3rd Course"/>
+            </columns>
+            <columnResizePolicy>
+                <TableView fx:constant="CONSTRAINED_RESIZE_POLICY"/>
+            </columnResizePolicy>
+        </TableView>
+        <StackPane fx:id="availabilitiesPane">
+            <AnchorPane fx:id="availabilitiesNotSelectedPane" prefHeight="200.0" prefWidth="200.0">
+                <Label alignment="CENTER"
+                       text="Selected instructors will have their availability appear here."
+                       textFill="#808080" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0"
+                       AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0"/>
+            </AnchorPane>
+            <GridPane fx:id="availabilitiesGrid" disable="true" hgap="5.0" vgap="5.0" visible="false">
+                <columnConstraints>
+                    <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0"/>
+                    <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0"/>
+                    <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0"/>
+                    <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0"/>
+                    <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0"/>
+                    <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0"/>
+                    <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0"/>
+                </columnConstraints>
+                <rowConstraints>
+                    <RowConstraints minHeight="10.0" prefHeight="60.0" vgrow="SOMETIMES"/>
+                    <RowConstraints minHeight="10.0" prefHeight="60.0" vgrow="SOMETIMES"/>
+                    <RowConstraints minHeight="10.0" prefHeight="60.0" vgrow="SOMETIMES"/>
+                    <RowConstraints minHeight="10.0" prefHeight="60.0" vgrow="SOMETIMES"/>
+                    <RowConstraints minHeight="10.0" prefHeight="60.0" vgrow="SOMETIMES"/>
+                    <RowConstraints minHeight="10.0" prefHeight="60.0" vgrow="SOMETIMES"/>
+                </rowConstraints>
+                <Label text="Sunday" GridPane.halignment="CENTER" GridPane.valignment="CENTER"/>
+                <Label layoutX="53.0" layoutY="15.0" text="Monday" GridPane.columnIndex="1"
+                       GridPane.halignment="CENTER" GridPane.valignment="CENTER"/>
+                <Label layoutX="178.0" layoutY="15.0" text="Tuesday" GridPane.columnIndex="2"
+                       GridPane.halignment="CENTER" GridPane.valignment="CENTER"/>
+                <Label layoutX="304.0" layoutY="15.0" text="Wednesday" GridPane.columnIndex="3"
+                       GridPane.halignment="CENTER" GridPane.valignment="CENTER"/>
+                <Label layoutX="10.0" layoutY="15.0" text="Thursday" GridPane.columnIndex="4"
+                       GridPane.halignment="CENTER" GridPane.valignment="CENTER"/>
+                <Label layoutX="10.0" layoutY="15.0" text="Friday" GridPane.columnIndex="5"
+                       GridPane.halignment="CENTER" GridPane.valignment="CENTER"/>
+                <Label layoutX="10.0" layoutY="15.0" text="Saturday" GridPane.columnIndex="6"
+                       GridPane.halignment="CENTER" GridPane.valignment="CENTER"/>
+                <StackPane GridPane.halignment="CENTER" GridPane.rowIndex="1"
+                           GridPane.valignment="CENTER">
+                    <Region fx:id="sunEarlyMorning" prefHeight="200.0" prefWidth="200.0"/>
+                    <Label text="7AM-8AM"/>
                 </StackPane>
-            </children>
-            <opaqueInsets>
-                <Insets/>
-            </opaqueInsets>
-        </VBox>
-    </children>
+                <StackPane GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1"
+                           GridPane.valignment="CENTER">
+                    <Region fx:id="monEarlyMorning" prefHeight="200.0" prefWidth="200.0"/>
+                    <Label text="7AM-8AM"/>
+                </StackPane>
+                <StackPane GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="1"
+                           GridPane.valignment="CENTER">
+                    <Region fx:id="tueEarlyMorning" prefHeight="200.0" prefWidth="200.0"/>
+                    <Label text="7AM-8AM"/>
+                </StackPane>
+                <StackPane GridPane.columnIndex="3" GridPane.halignment="CENTER" GridPane.rowIndex="1"
+                           GridPane.valignment="CENTER">
+                    <Region fx:id="wedEarlyMorning" prefHeight="200.0" prefWidth="200.0"/>
+                    <Label text="7AM-8AM"/>
+                </StackPane>
+                <StackPane GridPane.columnIndex="4" GridPane.halignment="CENTER" GridPane.rowIndex="1"
+                           GridPane.valignment="CENTER">
+                    <Region fx:id="thurEarlyMorning" prefHeight="200.0" prefWidth="200.0"/>
+                    <Label text="7AM-8AM"/>
+                </StackPane>
+                <StackPane GridPane.columnIndex="5" GridPane.halignment="CENTER" GridPane.rowIndex="1"
+                           GridPane.valignment="CENTER">
+                    <Region fx:id="friEarlyMorning" prefHeight="200.0" prefWidth="200.0"/>
+                    <Label text="7AM-8AM"/>
+                </StackPane>
+                <StackPane GridPane.columnIndex="6" GridPane.halignment="CENTER" GridPane.rowIndex="1"
+                           GridPane.valignment="CENTER">
+                    <Region fx:id="satEarlyMorning" prefHeight="200.0" prefWidth="200.0"/>
+                    <Label text="7AM-8AM"/>
+                </StackPane>
+                <StackPane GridPane.halignment="CENTER" GridPane.rowIndex="2"
+                           GridPane.valignment="CENTER">
+                    <Region fx:id="sunMorning" prefHeight="200.0" prefWidth="200.0"/>
+                    <Label text="8AM-12PM"/>
+                </StackPane>
+                <StackPane GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="2"
+                           GridPane.valignment="CENTER">
+                    <Region fx:id="monMorning" prefHeight="200.0" prefWidth="200.0"/>
+                    <Label text="8AM-12PM"/>
+                </StackPane>
+                <StackPane GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="2"
+                           GridPane.valignment="CENTER">
+                    <Region fx:id="tueMorning" prefHeight="200.0" prefWidth="200.0"/>
+                    <Label text="8AM-12PM"/>
+                </StackPane>
+                <StackPane GridPane.columnIndex="3" GridPane.halignment="CENTER" GridPane.rowIndex="2"
+                           GridPane.valignment="CENTER">
+                    <Region fx:id="wedMorning" prefHeight="200.0" prefWidth="200.0"/>
+                    <Label text="8AM-12PM"/>
+                </StackPane>
+                <StackPane GridPane.columnIndex="4" GridPane.halignment="CENTER" GridPane.rowIndex="2"
+                           GridPane.valignment="CENTER">
+                    <Region fx:id="thurMorning" prefHeight="200.0" prefWidth="200.0"/>
+                    <Label text="8AM-12PM"/>
+                </StackPane>
+                <StackPane GridPane.columnIndex="5" GridPane.halignment="CENTER" GridPane.rowIndex="2"
+                           GridPane.valignment="CENTER">
+                    <Region fx:id="friMorning" prefHeight="200.0" prefWidth="200.0"/>
+                    <Label text="8AM-12PM"/>
+                </StackPane>
+                <StackPane GridPane.columnIndex="6" GridPane.halignment="CENTER" GridPane.rowIndex="2"
+                           GridPane.valignment="CENTER">
+                    <Region fx:id="satMorning" prefHeight="200.0" prefWidth="200.0"/>
+                    <Label text="8AM-12PM"/>
+                </StackPane>
+                <StackPane GridPane.halignment="CENTER" GridPane.rowIndex="3"
+                           GridPane.valignment="CENTER">
+                    <Region fx:id="sunEarlyAfternoon" prefHeight="200.0" prefWidth="200.0"/>
+                    <Label text="12PM-3PM"/>
+                </StackPane>
+                <StackPane GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="3"
+                           GridPane.valignment="CENTER">
+                    <Region fx:id="monEarlyAfternoon" prefHeight="200.0" prefWidth="200.0"/>
+                    <Label text="12PM-3PM"/>
+                </StackPane>
+                <StackPane GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="3"
+                           GridPane.valignment="CENTER">
+                    <Region fx:id="tueEarlyAfternoon" prefHeight="200.0" prefWidth="200.0"/>
+                    <Label text="12PM-3PM"/>
+                </StackPane>
+                <StackPane GridPane.columnIndex="3" GridPane.halignment="CENTER" GridPane.rowIndex="3"
+                           GridPane.valignment="CENTER">
+                    <Region fx:id="wedEarlyAfternoon" prefHeight="200.0" prefWidth="200.0"/>
+                    <Label text="12PM-3PM"/>
+                </StackPane>
+                <StackPane GridPane.columnIndex="4" GridPane.halignment="CENTER" GridPane.rowIndex="3"
+                           GridPane.valignment="CENTER">
+                    <Region fx:id="thurEarlyAfternoon" prefHeight="200.0" prefWidth="200.0"/>
+                    <Label text="12PM-3PM"/>
+                </StackPane>
+                <StackPane GridPane.columnIndex="5" GridPane.halignment="CENTER" GridPane.rowIndex="3"
+                           GridPane.valignment="CENTER">
+                    <Region fx:id="friEarlyAfternoon" prefHeight="200.0" prefWidth="200.0"/>
+                    <Label text="12PM-3PM"/>
+                </StackPane>
+                <StackPane GridPane.columnIndex="6" GridPane.halignment="CENTER" GridPane.rowIndex="3"
+                           GridPane.valignment="CENTER">
+                    <Region fx:id="satEarlyAfternoon" prefHeight="200.0" prefWidth="200.0"/>
+                    <Label text="12PM-3PM"/>
+                </StackPane>
+                <StackPane GridPane.halignment="CENTER" GridPane.rowIndex="4"
+                           GridPane.valignment="CENTER">
+                    <Region fx:id="sunAfternoon" prefHeight="200.0" prefWidth="200.0"/>
+                    <Label text="3PM-4PM"/>
+                </StackPane>
+                <StackPane GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="4"
+                           GridPane.valignment="CENTER">
+                    <Region fx:id="monAfternoon" prefHeight="200.0" prefWidth="200.0"/>
+                    <Label text="3PM-4PM"/>
+                </StackPane>
+                <StackPane GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="4"
+                           GridPane.valignment="CENTER">
+                    <Region fx:id="tueAfternoon" prefHeight="200.0" prefWidth="200.0"/>
+                    <Label text="3PM-4PM"/>
+                </StackPane>
+                <StackPane GridPane.columnIndex="3" GridPane.halignment="CENTER" GridPane.rowIndex="4"
+                           GridPane.valignment="CENTER">
+                    <Region fx:id="wedAfternoon" prefHeight="200.0" prefWidth="200.0"/>
+                    <Label text="3PM-4PM"/>
+                </StackPane>
+                <StackPane GridPane.columnIndex="4" GridPane.halignment="CENTER" GridPane.rowIndex="4"
+                           GridPane.valignment="CENTER">
+                    <Region fx:id="thurAfternoon" prefHeight="200.0" prefWidth="200.0"/>
+                    <Label text="3PM-4PM"/>
+                </StackPane>
+                <StackPane GridPane.columnIndex="5" GridPane.halignment="CENTER" GridPane.rowIndex="4"
+                           GridPane.valignment="CENTER">
+                    <Region fx:id="friAfternoon" prefHeight="200.0" prefWidth="200.0"/>
+                    <Label text="3PM-4PM"/>
+                </StackPane>
+                <StackPane GridPane.columnIndex="6" GridPane.halignment="CENTER" GridPane.rowIndex="4"
+                           GridPane.valignment="CENTER">
+                    <Region fx:id="satAfternoon" prefHeight="200.0" prefWidth="200.0"/>
+                    <Label text="3PM-4PM"/>
+                </StackPane>
+                <StackPane GridPane.halignment="CENTER" GridPane.rowIndex="5"
+                           GridPane.valignment="CENTER">
+                    <Region fx:id="sunEvening" prefHeight="200.0" prefWidth="200.0"/>
+                    <Label text="4PM-9PM"/>
+                </StackPane>
+                <StackPane GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="5"
+                           GridPane.valignment="CENTER">
+                    <Region fx:id="monEvening" prefHeight="200.0" prefWidth="200.0"/>
+                    <Label text="4PM-9PM"/>
+                </StackPane>
+                <StackPane GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="5"
+                           GridPane.valignment="CENTER">
+                    <Region fx:id="tueEvening" prefHeight="200.0" prefWidth="200.0"/>
+                    <Label text="4PM-9PM"/>
+                </StackPane>
+                <StackPane GridPane.columnIndex="3" GridPane.halignment="CENTER" GridPane.rowIndex="5"
+                           GridPane.valignment="CENTER">
+                    <Region fx:id="wedEvening" prefHeight="200.0" prefWidth="200.0"/>
+                    <Label text="4PM-9PM"/>
+                </StackPane>
+                <StackPane GridPane.columnIndex="4" GridPane.halignment="CENTER" GridPane.rowIndex="5"
+                           GridPane.valignment="CENTER">
+                    <Region fx:id="thurEvening" prefHeight="200.0" prefWidth="200.0"/>
+                    <Label text="4PM-9PM"/>
+                </StackPane>
+                <StackPane GridPane.columnIndex="5" GridPane.halignment="CENTER" GridPane.rowIndex="5"
+                           GridPane.valignment="CENTER">
+                    <Region fx:id="friEvening" prefHeight="200.0" prefWidth="200.0"/>
+                    <Label text="4PM-9PM"/>
+                </StackPane>
+                <StackPane GridPane.columnIndex="6" GridPane.halignment="CENTER" GridPane.rowIndex="5"
+                           GridPane.valignment="CENTER">
+                    <Region fx:id="satEvening" prefHeight="200.0" prefWidth="200.0"/>
+                    <Label text="4PM-9PM"/>
+                </StackPane>
+            </GridPane>
+        </StackPane>
+    </VBox>
 </AnchorPane>
