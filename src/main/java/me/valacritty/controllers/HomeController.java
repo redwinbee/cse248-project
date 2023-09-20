@@ -49,18 +49,6 @@ public class HomeController implements Initializable {
     @FXML
     public TableColumn<Instructor, Boolean> thirdCourseCol;
     @FXML
-    public TableColumn<Instructor, ArrayList<Day>> earlyMorningCol;
-    @FXML
-    public TableColumn<Instructor, ArrayList<Day>> morningCol;
-    @FXML
-    public TableColumn<Instructor, ArrayList<Day>> earlyAfternoonCol;
-    @FXML
-    public TableColumn<Instructor, ArrayList<Day>> afternoonCol;
-    @FXML
-    public TableColumn<Instructor, ArrayList<Day>> eveningCol;
-    @FXML
-    public TableColumn<Instructor, ArrayList<Day>> weekendCol;
-    @FXML
     public Region sunEarlyMorning;
     @FXML
     public Region monEarlyMorning;
@@ -152,20 +140,6 @@ public class HomeController implements Initializable {
         coursesCol.setCellValueFactory(new PropertyValueFactory<>("courses"));
         secondCourseCol.setCellValueFactory(new PropertyValueFactory<>("canTeachSecondCourse"));
         thirdCourseCol.setCellValueFactory(new PropertyValueFactory<>("canTeachThirdCourse"));
-
-        // TODO remove all this later
-        earlyMorningCol.setVisible(false);
-        morningCol.setVisible(false);
-        earlyAfternoonCol.setVisible(false);
-        afternoonCol.setVisible(false);
-        eveningCol.setVisible(false);
-        weekendCol.setVisible(false);
-//        earlyMorningCol.setCellValueFactory(new PropertyValueFactory<>("availableEarlyMornings"));
-//        morningCol.setCellValueFactory(new PropertyValueFactory<>("availableMornings"));
-//        earlyAfternoonCol.setCellValueFactory(new PropertyValueFactory<>("availableEarlyAfternoons"));
-//        afternoonCol.setCellValueFactory(new PropertyValueFactory<>("availableAfternoons"));
-//        eveningCol.setCellValueFactory(new PropertyValueFactory<>("availableEvenings"));
-//        weekendCol.setCellValueFactory(new PropertyValueFactory<>("availableWeekends"));
 
         // configure cell value listeners
         setCellSelectionListener();
