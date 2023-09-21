@@ -1,4 +1,4 @@
-package me.valacritty.models;
+package me.valacritty.models.enums;
 
 public enum Campus {
     AMERMAN,

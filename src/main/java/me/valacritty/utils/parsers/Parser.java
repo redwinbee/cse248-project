@@ -1,7 +1,7 @@
-package me.valacritty.utils;
+package me.valacritty.utils.parsers;
 
-import me.valacritty.models.Campus;
-import me.valacritty.models.Day;
+import me.valacritty.models.enums.Campus;
+import me.valacritty.models.enums.Day;
 import me.valacritty.models.Instructor;
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVParser;

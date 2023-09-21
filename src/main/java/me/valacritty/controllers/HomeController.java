@@ -15,10 +15,10 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.StackPane;
 import me.valacritty.Main;
-import me.valacritty.models.Campus;
-import me.valacritty.models.Day;
+import me.valacritty.models.enums.Campus;
+import me.valacritty.models.enums.Day;
 import me.valacritty.models.Instructor;
-import me.valacritty.models.TimeOfDay;
+import me.valacritty.models.enums.TimeOfDay;
 
 import java.net.URL;
 import java.util.ArrayList;

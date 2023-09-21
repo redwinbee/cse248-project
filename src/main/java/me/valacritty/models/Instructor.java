@@ -1,5 +1,8 @@
 package me.valacritty.models;
 
+import me.valacritty.models.enums.Campus;
+import me.valacritty.models.enums.Day;
+
 import java.time.LocalDate;
 import java.util.EnumSet;
 import java.util.HashSet;

@@ -4,8 +4,10 @@ import atlantafx.base.theme.PrimerLight;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import me.valacritty.models.Course;
 import me.valacritty.models.Instructor;
-import me.valacritty.utils.Parser;
+import me.valacritty.utils.parsers.CourseParser;
+import me.valacritty.utils.parsers.Parser;
 import me.valacritty.utils.ViewFinder;
 import me.valacritty.utils.ViewMap;
 
@@ -14,6 +16,7 @@ import java.util.TreeSet;
 
 public class Main extends Application {
     private static TreeSet<Instructor> instructors;
+    private static TreeSet<Course> courses;
 
     public static void main(String[] args) {
         launch(args);
@@ -25,6 +28,8 @@ public class Main extends Application {
 
     private void initializeData() {
         Parser parser = Parser.getInstance();
+        CourseParser courseParser = CourseParser.getInstance();
+        courses = courseParser.parse();
         instructors = parser.parse();
     }
 
