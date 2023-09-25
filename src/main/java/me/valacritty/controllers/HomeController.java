@@ -1,14 +1,12 @@
 package me.valacritty.controllers;
 
+import atlantafx.base.theme.Styles;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
-import javafx.scene.control.Label;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
@@ -21,13 +19,14 @@ import me.valacritty.models.enums.Day;
 import me.valacritty.models.enums.TimeOfDay;
 
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.ResourceBundle;
 import java.util.Set;
 
 public class HomeController implements Initializable {
     private final ObservableList<Instructor> instructorData = FXCollections.observableArrayList();
+    private final ObservableList<String> courseData = FXCollections.observableArrayList();
+    private final ObservableList<Campus> campusData = FXCollections.observableArrayList();
+
     private final String validColour = "-fx-background-color: #e3ffe3;";
     private final String invalidColour = "-fx-background-color: #ffe6e6;";
     @FXML
@@ -41,11 +40,7 @@ public class HomeController implements Initializable {
     @FXML
     public TableColumn<Instructor, Campus> homeCampusCol;
     @FXML
-    public TableColumn<Instructor, HashSet<Campus>> prefCampusCol;
-    @FXML
     public TableColumn<Instructor, Boolean> onlCertifiedCol;
-    @FXML
-    public TableColumn<Instructor, ArrayList<String>> coursesCol;
     @FXML
     public TableColumn<Instructor, Boolean> secondCourseCol;
     @FXML
@@ -127,6 +122,18 @@ public class HomeController implements Initializable {
     @FXML
     public GridPane availabilitiesGrid;
     @FXML
+    public StackPane coursesPane;
+    @FXML
+    public StackPane campusesPane;
+    @FXML
+    public ListView<String> coursesView;
+    @FXML
+    public ListView<Campus> campusesView;
+    @FXML
+    public AnchorPane coursesNotSelectedPane;
+    @FXML
+    public AnchorPane campusesNotSelectedPane;
+    @FXML
     private TextField queryField;
     private Instructor currentSelection;
 
@@ -137,9 +144,7 @@ public class HomeController implements Initializable {
         nameCol.setCellValueFactory(new PropertyValueFactory<>("name"));
         rankCol.setCellValueFactory(new PropertyValueFactory<>("rank"));
         homeCampusCol.setCellValueFactory(new PropertyValueFactory<>("homeCampus"));
-        prefCampusCol.setCellValueFactory(new PropertyValueFactory<>("preferredCampuses"));
         onlCertifiedCol.setCellValueFactory(new PropertyValueFactory<>("canTeachOnline"));
-        coursesCol.setCellValueFactory(new PropertyValueFactory<>("courses"));
         secondCourseCol.setCellValueFactory(new PropertyValueFactory<>("canTeachSecondCourse"));
         thirdCourseCol.setCellValueFactory(new PropertyValueFactory<>("canTeachThirdCourse"));
 
@@ -148,6 +153,12 @@ public class HomeController implements Initializable {
 
         // set the view to the observable list
         instructorView.setItems(instructorData);
+        coursesView.setItems(courseData);
+        campusesView.setItems(campusData);
+        Styles.toggleStyleClass(instructorView, Styles.BORDERED);
+        Styles.toggleStyleClass(coursesView, Styles.BORDERED);
+        Styles.toggleStyleClass(campusesView, Styles.BORDERED);
+
     }
 
     @FXML
@@ -169,11 +180,19 @@ public class HomeController implements Initializable {
                 // only make updates when an instructor is actually selected
                 currentSelection = selected;
                 updateAvailabilitiesGrid(selected);
-                updateAvailabilitiesVisibility(true);
+                updateContentPaneVisibilities(true);
+
+                // Update the courses and campuses ListViews
+                courseData.clear();
+                courseData.addAll(selected.getCourses());
+
+                campusData.clear();
+                campusData.addAll(selected.getPreferredCampuses());
+
                 return;
             }
 
-            updateAvailabilitiesVisibility(false);
+            updateContentPaneVisibilities(false);
         });
     }
 
@@ -249,13 +268,22 @@ public class HomeController implements Initializable {
         }
     }
 
-    private void updateAvailabilitiesVisibility(boolean contentAvailable) {
+    private void updateContentPaneVisibilities(boolean contentAvailable) {
         if (contentAvailable) {
             availabilitiesGrid.setVisible(true);
             availabilitiesNotSelectedPane.setVisible(false);
+            coursesView.setVisible(true);
+            coursesNotSelectedPane.setVisible(false);
+            campusesView.setVisible(true);
+            campusesNotSelectedPane.setVisible(false);
+
         } else {
             availabilitiesGrid.setVisible(false);
             availabilitiesNotSelectedPane.setVisible(true);
+            coursesView.setVisible(false);
+            coursesNotSelectedPane.setVisible(true);
+            campusesView.setVisible(false);
+            campusesNotSelectedPane.setVisible(true);
         }
     }
 }

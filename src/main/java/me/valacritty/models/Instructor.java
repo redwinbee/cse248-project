@@ -5,7 +5,7 @@ import me.valacritty.models.enums.Day;
 
 import java.time.LocalDate;
 import java.util.EnumSet;
-import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 public class Instructor implements Comparable<Instructor> {
@@ -16,7 +16,7 @@ public class Instructor implements Comparable<Instructor> {
     private String workPhone;
     private String address;
     private LocalDate dateHired;
-    private HashSet<String> courses;
+    private List<String> courses;
     private String rank;
     private boolean canTeachOnline;
     private Set<Campus> preferredCampuses;
@@ -85,11 +85,11 @@ public class Instructor implements Comparable<Instructor> {
         this.dateHired = dateHired;
     }
 
-    public HashSet<String> getCourses() {
+    public List<String> getCourses() {
         return courses;
     }
 
-    public void setCourses(HashSet<String> courses) {
+    public void setCourses(List<String> courses) {
         this.courses = courses;
     }
 

@@ -125,8 +125,8 @@ public class InstructorParser extends AbstractParser<Instructor> {
         return getBooleanFromString(canTeachOnlineStr);
     }
 
-    private HashSet<String> parseCourses(String coursesStr) {
-        return Arrays.stream(coursesStr.split("\\s+")).collect(Collectors.toCollection(HashSet::new));
+    private List<String> parseCourses(String coursesStr) {
+        return Arrays.stream(coursesStr.split("\\s+")).toList();
     }
 
     private LocalDate parseDateHired(String dateHiredStr) {
