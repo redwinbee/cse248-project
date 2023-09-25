@@ -1,8 +1,8 @@
 package me.valacritty.utils.parsers;
 
+import me.valacritty.models.Instructor;
 import me.valacritty.models.enums.Campus;
 import me.valacritty.models.enums.Day;
-import me.valacritty.models.Instructor;
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVParser;
 import org.apache.commons.csv.CSVRecord;
@@ -14,17 +14,17 @@ import java.time.format.DateTimeFormatter;
 import java.util.*;
 import java.util.stream.Collectors;
 
-public class Parser {
+public class InstructorParser extends AbstractParser<Instructor> {
     private static final String DELIMITER = "===";
     private static final String PATH = "Instructors.csv";
-    private static Parser instance;
+    private static InstructorParser instance;
 
-    private Parser() {
+    private InstructorParser() {
     }
 
-    public static Parser getInstance() {
+    public static InstructorParser getInstance() {
         if (instance == null) {
-            instance = new Parser();
+            instance = new InstructorParser();
         }
         return instance;
     }
@@ -97,50 +97,6 @@ public class Parser {
         return out;
     }
 
-    private EnumSet<Day> parseDays(String charStr) {
-        EnumSet<Day> out = EnumSet.noneOf(Day.class);
-        boolean sawTuesday = false;
-        for (String day : charStr.chars().mapToObj(Character::toString).toList()) {
-            switch (day) {
-                case "M" -> out.add(Day.MONDAY);
-                case "T" -> {
-                    if (!sawTuesday) {
-                        out.add(Day.TUESDAY);
-                    } else {
-                        out.add(Day.THURSDAY);
-                    }
-                    sawTuesday = true;
-                }
-                case "W" -> out.add(Day.WEDNESDAY);
-                case "F" -> out.add(Day.FRIDAY);
-                default -> {
-                    // NOOP
-                }
-            }
-        }
-        return out;
-    }
-
-    private Campus parseCampus(String campusStr) {
-        switch (campusStr.charAt(0)) {
-            case 'A' -> {
-                return Campus.AMERMAN;
-            }
-            case 'W', 'G' -> {
-                return Campus.GRANT;
-            }
-            case 'E' -> {
-                return Campus.EAST;
-            }
-            case 'O' -> {
-                return Campus.ONLINE;
-            }
-            default -> {
-                return null;
-            }
-        }
-    }
-
     private EnumSet<Day> parseAvailableWeekends(String weekendsStr) {
         EnumSet<Day> out = EnumSet.noneOf(Day.class);
         String[] split = weekendsStr.split("(?=(Sun))");
@@ -154,7 +110,7 @@ public class Parser {
         return out;
     }
 
-    private EnumSet<Day> parseAvailableWeekdays(String availabilityStr) {
+    private Set<Day> parseAvailableWeekdays(String availabilityStr) {
         String cleaned = removeAsterisks(availabilityStr);
         return parseDays(cleaned);
     }
@@ -176,13 +132,6 @@ public class Parser {
     private LocalDate parseDateHired(String dateHiredStr) {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MM/dd/yyyy");
         return LocalDate.parse(dateHiredStr, formatter);
-    }
-
-    private String removeAsterisks(String asteriskedString) {
-        return asteriskedString.chars()
-                .filter(Character::isAlphabetic)
-                .collect(StringBuilder::new, StringBuilder::appendCodePoint, StringBuilder::append)
-                .toString();
     }
 
     private boolean getBooleanFromString(String boolString) {

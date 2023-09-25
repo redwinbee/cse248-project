@@ -1,7 +1,6 @@
 package me.valacritty.utils.parsers;
 
-import me.valacritty.models.*;
-import me.valacritty.models.enums.Campus;
+import me.valacritty.models.Course;
 import me.valacritty.models.enums.Day;
 import me.valacritty.models.enums.InstructionMethod;
 import me.valacritty.models.enums.PartOfTerm;
@@ -16,7 +15,7 @@ import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
 
-public class CourseParser {
+public class CourseParser extends AbstractParser<Course> {
     private static final String PATH = "CourseInformation.csv";
     private static CourseParser instance;
 
@@ -64,8 +63,6 @@ public class CourseParser {
         for (String course : data.stream().skip(1).toList()) {  // skip the header
             courses.add(createCourseFromData(course));
         }
-
-        courses.forEach(System.out::println);
 
         return courses;
     }
@@ -134,26 +131,6 @@ public class CourseParser {
             }
             default -> {
                 return PartOfTerm.ONLINE;
-            }
-        }
-    }
-
-    private Campus parseCampus(String campusStr) {
-        switch (campusStr.charAt(0)) {
-            case 'A' -> {
-                return Campus.AMERMAN;
-            }
-            case 'W', 'G' -> {
-                return Campus.GRANT;
-            }
-            case 'E' -> {
-                return Campus.EAST;
-            }
-            case 'O' -> {
-                return Campus.ONLINE;
-            }
-            default -> {
-                return null;
             }
         }
     }

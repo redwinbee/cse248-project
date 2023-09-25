@@ -6,10 +6,10 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 import me.valacritty.models.Course;
 import me.valacritty.models.Instructor;
-import me.valacritty.utils.parsers.CourseParser;
-import me.valacritty.utils.parsers.Parser;
 import me.valacritty.utils.ViewFinder;
 import me.valacritty.utils.ViewMap;
+import me.valacritty.utils.parsers.CourseParser;
+import me.valacritty.utils.parsers.InstructorParser;
 
 import java.net.URL;
 import java.util.TreeSet;
@@ -27,7 +27,7 @@ public class Main extends Application {
     }
 
     private void initializeData() {
-        Parser parser = Parser.getInstance();
+        InstructorParser parser = InstructorParser.getInstance();
         CourseParser courseParser = CourseParser.getInstance();
         courses = courseParser.parse();
         instructors = parser.parse();

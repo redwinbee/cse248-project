@@ -15,16 +15,16 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.StackPane;
 import me.valacritty.Main;
+import me.valacritty.models.Instructor;
 import me.valacritty.models.enums.Campus;
 import me.valacritty.models.enums.Day;
-import me.valacritty.models.Instructor;
 import me.valacritty.models.enums.TimeOfDay;
 
 import java.net.URL;
 import java.util.ArrayList;
-import java.util.EnumSet;
 import java.util.HashSet;
 import java.util.ResourceBundle;
+import java.util.Set;
 
 public class HomeController implements Initializable {
     private final ObservableList<Instructor> instructorData = FXCollections.observableArrayList();
@@ -198,7 +198,7 @@ public class HomeController implements Initializable {
         }
     }
 
-    private void applyAvailabilityColour(EnumSet<Day> availableDays, TimeOfDay timeOfDay) {
+    private void applyAvailabilityColour(Set<Day> availableDays, TimeOfDay timeOfDay) {
         switch (timeOfDay) {
             case EARLY_MORNING ->
                     applyStyleToRegions(availableDays, sunEarlyMorning, monEarlyMorning, tueEarlyMorning, wedEarlyMorning, thurEarlyMorning, friEarlyMorning, satEarlyMorning);
@@ -235,7 +235,7 @@ public class HomeController implements Initializable {
         }
     }
 
-    private void applyStyleToRegions(EnumSet<Day> availableDays, Region sunRegion, Region monRegion, Region tueRegion, Region wedRegion, Region thurRegion, Region friRegion, Region satRegion) {
+    private void applyStyleToRegions(Set<Day> availableDays, Region sunRegion, Region monRegion, Region tueRegion, Region wedRegion, Region thurRegion, Region friRegion, Region satRegion) {
         for (Day day : availableDays) {
             switch (day) {
                 case SUNDAY -> sunRegion.setStyle(validColour);

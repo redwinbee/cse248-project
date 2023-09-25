@@ -6,6 +6,7 @@ import me.valacritty.models.enums.Day;
 import java.time.LocalDate;
 import java.util.EnumSet;
 import java.util.HashSet;
+import java.util.Set;
 
 public class Instructor implements Comparable<Instructor> {
     private String id;
@@ -18,15 +19,15 @@ public class Instructor implements Comparable<Instructor> {
     private HashSet<String> courses;
     private String rank;
     private boolean canTeachOnline;
-    private EnumSet<Campus> preferredCampuses;
+    private Set<Campus> preferredCampuses;
     private boolean canTeachSecondCourse;
     private boolean canTeachThirdCourse;
-    private EnumSet<Day> availableEarlyMornings;
-    private EnumSet<Day> availableMornings;
-    private EnumSet<Day> availableEarlyAfternoons;
-    private EnumSet<Day> availableAfternoons;
-    private EnumSet<Day> availableEvenings;
-    private EnumSet<Day> availableWeekends;
+    private Set<Day> availableEarlyMornings;
+    private Set<Day> availableMornings;
+    private Set<Day> availableEarlyAfternoons;
+    private Set<Day> availableAfternoons;
+    private Set<Day> availableEvenings;
+    private Set<Day> availableWeekends;
 
     public String getId() {
         return id;
@@ -108,7 +109,7 @@ public class Instructor implements Comparable<Instructor> {
         this.canTeachOnline = canTeachOnline;
     }
 
-    public EnumSet<Campus> getPreferredCampuses() {
+    public Set<Campus> getPreferredCampuses() {
         return preferredCampuses;
     }
 
@@ -132,47 +133,47 @@ public class Instructor implements Comparable<Instructor> {
         this.canTeachThirdCourse = canTeachThirdCourse;
     }
 
-    public EnumSet<Day> getAvailableEarlyMornings() {
+    public Set<Day> getAvailableEarlyMornings() {
         return availableEarlyMornings;
     }
 
-    public void setAvailableEarlyMornings(EnumSet<Day> availableEarlyMornings) {
+    public void setAvailableEarlyMornings(Set<Day> availableEarlyMornings) {
         this.availableEarlyMornings = availableEarlyMornings;
     }
 
-    public EnumSet<Day> getAvailableMornings() {
+    public Set<Day> getAvailableMornings() {
         return availableMornings;
     }
 
-    public void setAvailableMornings(EnumSet<Day> availableMornings) {
+    public void setAvailableMornings(Set<Day> availableMornings) {
         this.availableMornings = availableMornings;
     }
 
-    public EnumSet<Day> getAvailableEarlyAfternoons() {
+    public Set<Day> getAvailableEarlyAfternoons() {
         return availableEarlyAfternoons;
     }
 
-    public void setAvailableEarlyAfternoons(EnumSet<Day> availableEarlyAfternoons) {
+    public void setAvailableEarlyAfternoons(Set<Day> availableEarlyAfternoons) {
         this.availableEarlyAfternoons = availableEarlyAfternoons;
     }
 
-    public EnumSet<Day> getAvailableAfternoons() {
+    public Set<Day> getAvailableAfternoons() {
         return availableAfternoons;
     }
 
-    public void setAvailableAfternoons(EnumSet<Day> availableAfternoons) {
+    public void setAvailableAfternoons(Set<Day> availableAfternoons) {
         this.availableAfternoons = availableAfternoons;
     }
 
-    public EnumSet<Day> getAvailableEvenings() {
+    public Set<Day> getAvailableEvenings() {
         return availableEvenings;
     }
 
-    public void setAvailableEvenings(EnumSet<Day> availableEvenings) {
+    public void setAvailableEvenings(Set<Day> availableEvenings) {
         this.availableEvenings = availableEvenings;
     }
 
-    public EnumSet<Day> getAvailableWeekends() {
+    public Set<Day> getAvailableWeekends() {
         return availableWeekends;
     }
 
