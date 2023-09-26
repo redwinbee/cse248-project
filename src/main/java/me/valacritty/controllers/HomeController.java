@@ -8,10 +8,10 @@ import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.StackPane;
+import javafx.scene.layout.VBox;
 import me.valacritty.Main;
 import me.valacritty.models.Instructor;
 import me.valacritty.models.enums.Campus;
@@ -26,7 +26,6 @@ public class HomeController implements Initializable {
     private final ObservableList<Instructor> instructorData = FXCollections.observableArrayList();
     private final ObservableList<String> courseData = FXCollections.observableArrayList();
     private final ObservableList<Campus> campusData = FXCollections.observableArrayList();
-
     private final String validColour = "-fx-background-color: #e3ffe3;";
     private final String invalidColour = "-fx-background-color: #ffe6e6;";
     @FXML
@@ -45,6 +44,10 @@ public class HomeController implements Initializable {
     public TableColumn<Instructor, Boolean> secondCourseCol;
     @FXML
     public TableColumn<Instructor, Boolean> thirdCourseCol;
+    @FXML
+    public ListView<String> coursesView;
+    @FXML
+    public ListView<Campus> campusesView;
     @FXML
     public Region sunEarlyMorning;
     @FXML
@@ -116,26 +119,13 @@ public class HomeController implements Initializable {
     @FXML
     public Region satEvening;
     @FXML
-    public StackPane availabilitiesPane;
-    @FXML
-    public AnchorPane availabilitiesNotSelectedPane;
+    public VBox availabilitiesBox;
     @FXML
     public GridPane availabilitiesGrid;
     @FXML
-    public StackPane coursesPane;
+    public Label selectProfessorLabel;
     @FXML
-    public StackPane campusesPane;
-    @FXML
-    public ListView<String> coursesView;
-    @FXML
-    public ListView<Campus> campusesView;
-    @FXML
-    public AnchorPane coursesNotSelectedPane;
-    @FXML
-    public AnchorPane campusesNotSelectedPane;
-    @FXML
-    private TextField queryField;
-    private Instructor currentSelection;
+    public TextField queryField;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -155,9 +145,9 @@ public class HomeController implements Initializable {
         instructorView.setItems(instructorData);
         coursesView.setItems(courseData);
         campusesView.setItems(campusData);
-        Styles.toggleStyleClass(instructorView, Styles.BORDERED);
-        Styles.toggleStyleClass(coursesView, Styles.BORDERED);
-        Styles.toggleStyleClass(campusesView, Styles.BORDERED);
+        Styles.toggleStyleClass(instructorView, Styles.STRIPED);
+        Styles.toggleStyleClass(coursesView, Styles.STRIPED);
+        Styles.toggleStyleClass(campusesView, Styles.STRIPED);
 
     }
 
@@ -178,9 +168,8 @@ public class HomeController implements Initializable {
             Instructor selected = instructorView.getSelectionModel().getSelectedItem();
             if (selected != null) {
                 // only make updates when an instructor is actually selected
-                currentSelection = selected;
                 updateAvailabilitiesGrid(selected);
-                updateContentPaneVisibilities(true);
+                updateContentVisibility(true);
 
                 // Update the courses and campuses ListViews
                 courseData.clear();
@@ -192,7 +181,7 @@ public class HomeController implements Initializable {
                 return;
             }
 
-            updateContentPaneVisibilities(false);
+            updateContentVisibility(false);
         });
     }
 
@@ -268,22 +257,13 @@ public class HomeController implements Initializable {
         }
     }
 
-    private void updateContentPaneVisibilities(boolean contentAvailable) {
+    private void updateContentVisibility(boolean contentAvailable) {
         if (contentAvailable) {
-            availabilitiesGrid.setVisible(true);
-            availabilitiesNotSelectedPane.setVisible(false);
-            coursesView.setVisible(true);
-            coursesNotSelectedPane.setVisible(false);
-            campusesView.setVisible(true);
-            campusesNotSelectedPane.setVisible(false);
-
+            availabilitiesBox.setVisible(true);
+            selectProfessorLabel.setVisible(false);
         } else {
-            availabilitiesGrid.setVisible(false);
-            availabilitiesNotSelectedPane.setVisible(true);
-            coursesView.setVisible(false);
-            coursesNotSelectedPane.setVisible(true);
-            campusesView.setVisible(false);
-            campusesNotSelectedPane.setVisible(true);
+            availabilitiesBox.setVisible(false);
+            selectProfessorLabel.setVisible(true);
         }
     }
 }
