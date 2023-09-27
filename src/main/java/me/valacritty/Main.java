@@ -10,13 +10,16 @@ import me.valacritty.utils.ViewFinder;
 import me.valacritty.utils.ViewMap;
 import me.valacritty.utils.parsers.CourseParser;
 import me.valacritty.utils.parsers.InstructorParser;
+import me.valacritty.utils.parsers.InstructorRecentCoursesParser;
 
 import java.net.URL;
+import java.util.Collection;
 import java.util.TreeSet;
 
 public class Main extends Application {
     private static TreeSet<Instructor> instructors;
     private static TreeSet<Course> courses;
+    private Collection<Instructor> instructorsWithRecentCourses;
 
     public static void main(String[] args) {
         launch(args);
@@ -29,8 +32,13 @@ public class Main extends Application {
     private void initializeData() {
         InstructorParser parser = InstructorParser.getInstance();
         CourseParser courseParser = CourseParser.getInstance();
+        InstructorRecentCoursesParser instructorRecentCoursesParser = InstructorRecentCoursesParser.getInstance();
         courses = courseParser.parse();
         instructors = parser.parse();
+        instructorsWithRecentCourses = instructorRecentCoursesParser.parse();
+
+        instructors.addAll(instructorsWithRecentCourses);
+        instructors.forEach(System.out::println);
     }
 
     private String initializeStyles() {

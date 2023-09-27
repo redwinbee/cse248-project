@@ -5,10 +5,7 @@ import me.valacritty.models.enums.Day;
 import me.valacritty.models.enums.Rank;
 
 import java.time.LocalDate;
-import java.util.EnumSet;
-import java.util.List;
-import java.util.Set;
-import java.util.StringJoiner;
+import java.util.*;
 
 public class Instructor implements Comparable<Instructor> {
     private String id;
@@ -21,6 +18,7 @@ public class Instructor implements Comparable<Instructor> {
     private String address;
     private LocalDate dateHired;
     private List<String> courses;
+    private Set<String> previousCourses;
     private Rank rank;
     private boolean canTeachOnline;
     private Set<Campus> preferredCampuses;
@@ -32,6 +30,30 @@ public class Instructor implements Comparable<Instructor> {
     private Set<Day> availableAfternoons;
     private Set<Day> availableEvenings;
     private Set<Day> availableWeekends;
+
+    public Instructor(String firstName, String lastName) {
+        this.id = generateRandomId();
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.courses = new LinkedList<>();
+        this.preferredCampuses = EnumSet.noneOf(Campus.class);
+        this.availableEarlyMornings = EnumSet.noneOf(Day.class);
+        this.availableMornings = EnumSet.noneOf(Day.class);
+        this.availableEarlyAfternoons = EnumSet.noneOf(Day.class);
+        this.availableAfternoons = EnumSet.noneOf(Day.class);
+        this.availableEvenings = EnumSet.noneOf(Day.class);
+        this.availableWeekends = EnumSet.noneOf(Day.class);
+    }
+
+    public Instructor() {
+
+    }
+
+    private String generateRandomId() {
+        Random random = new Random();
+        int max = (int) Math.pow(10, 8) - 1;
+        return String.valueOf(random.nextInt(max + 1));
+    }
 
     public String getId() {
         return id;
@@ -111,6 +133,14 @@ public class Instructor implements Comparable<Instructor> {
 
     public void setCourses(List<String> courses) {
         this.courses = courses;
+    }
+
+    public Set<String> getPreviousCourses() {
+        return previousCourses;
+    }
+
+    public void setPreviousCourses(Set<String> previousCourses) {
+        this.previousCourses = previousCourses;
     }
 
     public Rank getRank() {
@@ -214,7 +244,8 @@ public class Instructor implements Comparable<Instructor> {
                 .add("address='" + address + "'")
                 .add("dateHired=" + dateHired)
                 .add("courses=" + courses)
-                .add("rank='" + rank + "'")
+                .add("previousCourses=" + previousCourses)
+                .add("rank=" + rank)
                 .add("canTeachOnline=" + canTeachOnline)
                 .add("preferredCampuses=" + preferredCampuses)
                 .add("canTeachSecondCourse=" + canTeachSecondCourse)

@@ -5,7 +5,6 @@ import me.valacritty.models.enums.Day;
 import me.valacritty.models.enums.InstructionMethod;
 import me.valacritty.models.enums.PartOfTerm;
 
-import java.time.LocalTime;
 import java.util.EnumSet;
 import java.util.StringJoiner;
 

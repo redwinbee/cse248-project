@@ -96,7 +96,7 @@ public class CourseParser extends AbstractParser<Course> {
     }
 
     private LocalDateTime parseDateTime(String date, String time) {
-        String[] patterns = new String[] { "MM/dd/yyyy", "M/d/yyyy" };
+        String[] patterns = new String[]{"MM/dd/yyyy", "M/d/yyyy"};
         LocalTime parsedTime = LocalTime.parse(time, DateTimeFormatter.ofPattern("h:mma"));
         for (String pattern : patterns) {
             try {
