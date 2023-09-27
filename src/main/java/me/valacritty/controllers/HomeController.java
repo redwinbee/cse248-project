@@ -16,6 +16,7 @@ import me.valacritty.Main;
 import me.valacritty.models.Instructor;
 import me.valacritty.models.enums.Campus;
 import me.valacritty.models.enums.Day;
+import me.valacritty.models.enums.Rank;
 import me.valacritty.models.enums.TimeOfDay;
 
 import java.net.URL;
@@ -39,7 +40,7 @@ public class HomeController implements Initializable {
     @FXML
     public TableColumn<Instructor, String> lastNameCol;
     @FXML
-    public TableColumn<Instructor, String> rankCol;
+    public TableColumn<Instructor, Rank> rankCol;
     @FXML
     public TableColumn<Instructor, Campus> homeCampusCol;
     @FXML

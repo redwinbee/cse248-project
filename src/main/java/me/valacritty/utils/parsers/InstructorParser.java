@@ -3,6 +3,7 @@ package me.valacritty.utils.parsers;
 import me.valacritty.models.Instructor;
 import me.valacritty.models.enums.Campus;
 import me.valacritty.models.enums.Day;
+import me.valacritty.models.enums.Rank;
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVParser;
 import org.apache.commons.csv.CSVRecord;
@@ -90,7 +91,7 @@ public class InstructorParser extends AbstractParser<Instructor> {
         out.setAddress(ins.get(16) + " ," + ins.get(31));
         out.setDateHired(parseDateHired(ins.get(17)));
         out.setCourses(parseCourses(ins.get(32)));
-        out.setRank(ins.get(3));
+        out.setRank(Rank.valueOf(ins.get(3)));
         out.setCanTeachOnline(parseCanTeachOnline(ins.get(4)));
         out.setPreferredCampuses(parsePreferredCampuses(ins.get(5)));
         out.setCanTeachSecondCourse(getBooleanFromString(ins.get(6)));

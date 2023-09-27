@@ -2,6 +2,7 @@ package me.valacritty.models;
 
 import me.valacritty.models.enums.Campus;
 import me.valacritty.models.enums.Day;
+import me.valacritty.models.enums.Rank;
 
 import java.time.LocalDate;
 import java.util.EnumSet;
@@ -20,7 +21,7 @@ public class Instructor implements Comparable<Instructor> {
     private String address;
     private LocalDate dateHired;
     private List<String> courses;
-    private String rank;
+    private Rank rank;
     private boolean canTeachOnline;
     private Set<Campus> preferredCampuses;
     private boolean canTeachSecondCourse;
@@ -112,11 +113,11 @@ public class Instructor implements Comparable<Instructor> {
         this.courses = courses;
     }
 
-    public String getRank() {
+    public Rank getRank() {
         return rank;
     }
 
-    public void setRank(String rank) {
+    public void setRank(Rank rank) {
         this.rank = rank;
     }
 
