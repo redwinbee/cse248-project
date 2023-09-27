@@ -1,6 +1,7 @@
 package me.valacritty.utils.parsers;
 
 import me.valacritty.models.Course;
+import me.valacritty.models.TimeRange;
 import me.valacritty.models.enums.Day;
 import me.valacritty.models.enums.InstructionMethod;
 import me.valacritty.models.enums.PartOfTerm;
@@ -11,6 +12,9 @@ import org.apache.commons.csv.CSVRecord;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
+import java.time.DateTimeException;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
@@ -78,14 +82,32 @@ public class CourseParser extends AbstractParser<Course> {
         out.setInstructionMethod(parseInstructionMethod(entries[9]));
         if (!out.getTitle().startsWith("SUR")) { // TODO figure out why these courses are formatted differently
             out.setDaysOffered(parseDaysOffered(entries[18]));
-            if (!entries[19].isBlank()) {
-                out.setBeginTime(LocalTime.parse(entries[19], DateTimeFormatter.ofPattern("h:mma")));
-            }
-            if (!entries[20].isBlank()) {
-                out.setEndTime(LocalTime.parse(entries[20], DateTimeFormatter.ofPattern("h:mma")));
+            if (!entries[16].isBlank() && !entries[17].isBlank() && !entries[19].isBlank() && !entries[20].isBlank()) {
+                String startDate = entries[16];
+                String endDate = entries[17];
+                String startTime = entries[19];
+                String endTime = entries[20];
+                LocalDateTime startDateTime = parseDateTime(startDate, startTime);
+                LocalDateTime endDateTime = parseDateTime(endDate, endTime);
+                out.setTimeRange(new TimeRange(startDateTime, endDateTime));
             }
         }
         return out;
+    }
+
+    private LocalDateTime parseDateTime(String date, String time) {
+        String[] patterns = new String[] { "MM/dd/yyyy", "M/d/yyyy" };
+        LocalTime parsedTime = LocalTime.parse(time, DateTimeFormatter.ofPattern("h:mma"));
+        for (String pattern : patterns) {
+            try {
+                LocalDate parsedDate = LocalDate.parse(date, DateTimeFormatter.ofPattern(pattern));
+                return LocalDateTime.of(parsedDate, parsedTime);
+            } catch (DateTimeException ex) {
+                // try next formatter
+            }
+        }
+        long unixEpochTime = System.currentTimeMillis() / 1000; // Convert to seconds
+        return LocalDateTime.ofEpochSecond(unixEpochTime, 0, java.time.ZoneOffset.UTC);
     }
 
     private EnumSet<Day> parseDaysOffered(String entry) {

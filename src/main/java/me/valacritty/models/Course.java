@@ -7,6 +7,7 @@ import me.valacritty.models.enums.PartOfTerm;
 
 import java.time.LocalTime;
 import java.util.EnumSet;
+import java.util.StringJoiner;
 
 public class Course implements Comparable<Course> {
     private String courseNumber;
@@ -17,8 +18,7 @@ public class Course implements Comparable<Course> {
     private Campus campus;
     private InstructionMethod instructionMethod;
     private EnumSet<Day> daysOffered;
-    private LocalTime beginTime;
-    private LocalTime endTime;
+    private TimeRange timeRange;
 
     public Course() {
         this.credits = 4;    // TODO remove this when we get real data
@@ -88,35 +88,27 @@ public class Course implements Comparable<Course> {
         this.daysOffered = daysOffered;
     }
 
-    public LocalTime getBeginTime() {
-        return beginTime;
+    public TimeRange getTimeRange() {
+        return timeRange;
     }
 
-    public void setBeginTime(LocalTime beginTime) {
-        this.beginTime = beginTime;
-    }
-
-    public LocalTime getEndTime() {
-        return endTime;
-    }
-
-    public void setEndTime(LocalTime endTime) {
-        this.endTime = endTime;
+    public void setTimeRange(TimeRange timeRange) {
+        this.timeRange = timeRange;
     }
 
     @Override
     public String toString() {
-        return "Course{" + "courseNumber='" + courseNumber + '\'' +
-                ", title='" + title + '\'' +
-                ", crn=" + crn +
-                ", credits=" + credits +
-                ", partOfTerm=" + partOfTerm +
-                ", campus=" + campus +
-                ", instructionMethod=" + instructionMethod +
-                ", daysOffered=" + daysOffered +
-                ", beginTime=" + beginTime +
-                ", endTime=" + endTime +
-                '}';
+        return new StringJoiner(", ", Course.class.getSimpleName() + "[", "]")
+                .add("courseNumber='" + courseNumber + "'")
+                .add("title='" + title + "'")
+                .add("crn=" + crn)
+                .add("credits=" + credits)
+                .add("partOfTerm=" + partOfTerm)
+                .add("campus=" + campus)
+                .add("instructionMethod=" + instructionMethod)
+                .add("daysOffered=" + daysOffered)
+                .add("timeRange=" + timeRange)
+                .toString();
     }
 
     @Override
