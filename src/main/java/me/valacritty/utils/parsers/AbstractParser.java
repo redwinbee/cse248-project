@@ -3,14 +3,21 @@ package me.valacritty.utils.parsers;
 import me.valacritty.models.enums.Campus;
 import me.valacritty.models.enums.Day;
 
-import java.util.Collection;
-import java.util.EnumSet;
-import java.util.Set;
+import java.util.*;
+import java.util.stream.Stream;
 
 public abstract class AbstractParser<E extends Comparable<E>> {
-    public abstract Collection<E> parse();
+    protected abstract Collection<E> parse();
 
-    public Campus parseCampus(String campusStr) {
+    protected List<String> parseFullName(String fullNameStr) {
+        return Arrays.stream(fullNameStr.replaceAll("\\.", "")
+                        .split(","))
+                .map(String::trim)
+                .flatMap(part -> Stream.of(part.split(" ")))
+                .toList();
+    }
+
+    protected Campus parseCampus(String campusStr) {
         switch (campusStr.charAt(0)) {
             case 'A' -> {
                 return Campus.AMERMAN;
@@ -30,7 +37,7 @@ public abstract class AbstractParser<E extends Comparable<E>> {
         }
     }
 
-    public Set<Day> parseDays(String charStr) {
+    protected Set<Day> parseDays(String charStr) {
         EnumSet<Day> out = EnumSet.noneOf(Day.class);
         boolean sawTuesday = false;
         for (String day : charStr.chars().mapToObj(Character::toString).toList()) {
@@ -54,7 +61,7 @@ public abstract class AbstractParser<E extends Comparable<E>> {
         return out;
     }
 
-    public String removeAsterisks(String asteriskedString) {
+    protected String removeAsterisks(String asteriskedString) {
         return asteriskedString.chars()
                 .filter(Character::isAlphabetic)
                 .collect(StringBuilder::new, StringBuilder::appendCodePoint, StringBuilder::append)

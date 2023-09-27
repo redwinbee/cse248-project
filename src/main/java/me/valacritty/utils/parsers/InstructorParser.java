@@ -74,8 +74,16 @@ public class InstructorParser extends AbstractParser<Instructor> {
 
     private Instructor createInstructorFromData(List<String> ins) {
         Instructor out = new Instructor();
+        List<String> fullName = parseFullName(ins.get(1));
+
         out.setId(ins.get(0));
-        out.setName(ins.get(1));
+        out.setFirstName(fullName.get(1));
+        try {
+            out.setMiddleName(fullName.get(2));
+        } catch (IndexOutOfBoundsException ex) {
+            // no middle name
+        }
+        out.setLastName(fullName.get(0));
         out.setHomeCampus(parseCampus(ins.get(15)));
         out.setHomePhone(ins.get(2));
         out.setWorkPhone(ins.get(30));

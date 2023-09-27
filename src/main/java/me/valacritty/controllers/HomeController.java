@@ -33,7 +33,11 @@ public class HomeController implements Initializable {
     @FXML
     public TableColumn<Instructor, String> idCol;
     @FXML
-    public TableColumn<Instructor, String> nameCol;
+    public TableColumn<Instructor, String> firstNameCol;
+    @FXML
+    public TableColumn<Instructor, String> middleNameCol;
+    @FXML
+    public TableColumn<Instructor, String> lastNameCol;
     @FXML
     public TableColumn<Instructor, String> rankCol;
     @FXML
@@ -131,7 +135,9 @@ public class HomeController implements Initializable {
     public void initialize(URL url, ResourceBundle resourceBundle) {
         // configure cell value factories
         idCol.setCellValueFactory(new PropertyValueFactory<>("id"));
-        nameCol.setCellValueFactory(new PropertyValueFactory<>("name"));
+        firstNameCol.setCellValueFactory(new PropertyValueFactory<>("firstName"));
+        middleNameCol.setCellValueFactory(new PropertyValueFactory<>("middleName"));
+        lastNameCol.setCellValueFactory(new PropertyValueFactory<>("lastName"));
         rankCol.setCellValueFactory(new PropertyValueFactory<>("rank"));
         homeCampusCol.setCellValueFactory(new PropertyValueFactory<>("homeCampus"));
         onlCertifiedCol.setCellValueFactory(new PropertyValueFactory<>("canTeachOnline"));
@@ -157,7 +163,9 @@ public class HomeController implements Initializable {
             String query = queryField.getText().toLowerCase().trim();
             instructorData.clear(); // Clear the existing data
             Main.getInstructors().stream()
-                    .filter(instructor -> instructor.getName().toLowerCase().contains(query) || instructor.getId().contains(query))
+                    .filter(instructor -> instructor.getFirstName().toLowerCase().contains(query)
+                            || instructor.getLastName().toLowerCase().contains(query)
+                            || instructor.getId().contains(query))
                     .forEach(instructorData::add); // Add filtered instructors to the list
         }
     }

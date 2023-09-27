@@ -7,10 +7,13 @@ import java.time.LocalDate;
 import java.util.EnumSet;
 import java.util.List;
 import java.util.Set;
+import java.util.StringJoiner;
 
 public class Instructor implements Comparable<Instructor> {
     private String id;
-    private String name;
+    private String firstName;
+    private String middleName;
+    private String lastName;
     private Campus homeCampus;
     private String homePhone;
     private String workPhone;
@@ -37,12 +40,28 @@ public class Instructor implements Comparable<Instructor> {
         this.id = id;
     }
 
-    public String getName() {
-        return name;
+    public String getFirstName() {
+        return firstName;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+
+    public String getMiddleName() {
+        return middleName;
+    }
+
+    public void setMiddleName(String middleName) {
+        this.middleName = middleName;
+    }
+
+    public String getLastName() {
+        return lastName;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
     }
 
     public Campus getHomeCampus() {
@@ -183,28 +202,29 @@ public class Instructor implements Comparable<Instructor> {
 
     @Override
     public String toString() {
-        final StringBuilder sb = new StringBuilder("Instructor{");
-        sb.append("id='").append(id).append('\'');
-        sb.append(", name='").append(name).append('\'');
-        sb.append(", homeCampus=").append(homeCampus);
-        sb.append(", homePhone='").append(homePhone).append('\'');
-        sb.append(", workPhone='").append(workPhone).append('\'');
-        sb.append(", address='").append(address).append('\'');
-        sb.append(", dateHired=").append(dateHired);
-        sb.append(", courses=").append(courses);
-        sb.append(", rank='").append(rank).append('\'');
-        sb.append(", canTeachOnline=").append(canTeachOnline);
-        sb.append(", preferredCampuses=").append(preferredCampuses);
-        sb.append(", canTeachSecondCourse=").append(canTeachSecondCourse);
-        sb.append(", canTeachThirdCourse=").append(canTeachThirdCourse);
-        sb.append(", availableEarlyMornings=").append(availableEarlyMornings);
-        sb.append(", availableMornings=").append(availableMornings);
-        sb.append(", availableEarlyAfternoons=").append(availableEarlyAfternoons);
-        sb.append(", availableAfternoons=").append(availableAfternoons);
-        sb.append(", availableEvenings=").append(availableEvenings);
-        sb.append(", availableWeekends=").append(availableWeekends);
-        sb.append('}');
-        return sb.toString();
+        return new StringJoiner(", ", Instructor.class.getSimpleName() + "[", "]")
+                .add("id='" + id + "'")
+                .add("firstName='" + firstName + "'")
+                .add("middleName='" + middleName + "'")
+                .add("lastName='" + lastName + "'")
+                .add("homeCampus=" + homeCampus)
+                .add("homePhone='" + homePhone + "'")
+                .add("workPhone='" + workPhone + "'")
+                .add("address='" + address + "'")
+                .add("dateHired=" + dateHired)
+                .add("courses=" + courses)
+                .add("rank='" + rank + "'")
+                .add("canTeachOnline=" + canTeachOnline)
+                .add("preferredCampuses=" + preferredCampuses)
+                .add("canTeachSecondCourse=" + canTeachSecondCourse)
+                .add("canTeachThirdCourse=" + canTeachThirdCourse)
+                .add("availableEarlyMornings=" + availableEarlyMornings)
+                .add("availableMornings=" + availableMornings)
+                .add("availableEarlyAfternoons=" + availableEarlyAfternoons)
+                .add("availableAfternoons=" + availableAfternoons)
+                .add("availableEvenings=" + availableEvenings)
+                .add("availableWeekends=" + availableWeekends)
+                .toString();
     }
 
     @Override

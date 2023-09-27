@@ -19,7 +19,9 @@
                 <TableView fx:id="instructorView">
                     <columns>
                         <TableColumn fx:id="idCol" prefWidth="75.0" text="ID"/>
-                        <TableColumn fx:id="nameCol" prefWidth="75.0" text="Name"/>
+                        <TableColumn fx:id="firstNameCol" prefWidth="75.0" text="First Name"/>
+                        <TableColumn fx:id="middleNameCol" prefWidth="75.0" text="Middle Name"/>
+                        <TableColumn fx:id="lastNameCol" prefWidth="75.0" text="Last Name"/>
                         <TableColumn fx:id="rankCol" prefWidth="75.0" text="Rank"/>
                         <TableColumn fx:id="homeCampusCol" prefWidth="92.0" text=" Home Campus"/>
                         <TableColumn fx:id="onlCertifiedCol" prefWidth="81.0" text="Online"/>
