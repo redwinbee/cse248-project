@@ -1,36 +1,27 @@
 package me.valacritty.utils.parsers;
 
 import me.valacritty.models.Instructor;
-import org.apache.commons.csv.CSVFormat;
-import org.apache.commons.csv.CSVParser;
 import org.apache.commons.csv.CSVRecord;
 
-import java.io.FileReader;
-import java.io.IOException;
 import java.util.*;
 
 public class InstructorRecentCoursesParser extends AbstractParser<Instructor> {
-    private static final String PATH = "Instructor_Recent_Courses.csv";
     private static final List<String> NON_COURSES_COLS = new LinkedList<>(List.of("First Name", "Last Name", "Frequencies"));
     private static InstructorRecentCoursesParser instance;
 
-    private InstructorRecentCoursesParser() {
+    private InstructorRecentCoursesParser(String filePath) {
+        super(filePath);
     }
 
-    public static InstructorRecentCoursesParser getInstance() {
+    public static InstructorRecentCoursesParser getInstance(String filePath) {
         if (instance == null) {
-            instance = new InstructorRecentCoursesParser();
+            instance = new InstructorRecentCoursesParser(filePath);
         }
         return instance;
     }
 
-    @Override
-    public Collection<Instructor> parse() {
-        return createData(getCsvData());
-    }
-
-    private List<Instructor> createData(List<CSVRecord> records) {
-        List<Instructor> instructors = new LinkedList<>();
+    protected Set<Instructor> createData(List<CSVRecord> records) {
+        Set<Instructor> instructors = new TreeSet<>();
         for (CSVRecord record : records) {
             Instructor instructor = new Instructor(record.get("First Name"), record.get("Last Name"));
             instructor.setPreviousCourses(parsePreviouslyTaughtCourses(record));
@@ -53,16 +44,5 @@ public class InstructorRecentCoursesParser extends AbstractParser<Instructor> {
         }
 
         return selectedCols;
-    }
-
-    private List<CSVRecord> getCsvData() {
-        try (FileReader reader = new FileReader(PATH)) {
-            try (CSVParser parser = CSVParser.parse(reader, CSVFormat.Builder.create().setHeader().build())) {
-                return parser.getRecords();
-            }
-        } catch (IOException ex) {
-            System.err.println("An error occurred while parsing the CSV file: " + ex.getMessage());
-            return Collections.emptyList();
-        }
     }
 }

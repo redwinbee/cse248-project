@@ -4,73 +4,74 @@ import me.valacritty.models.Instructor;
 import me.valacritty.models.enums.Campus;
 import me.valacritty.models.enums.Day;
 import me.valacritty.models.enums.Rank;
-import org.apache.commons.csv.CSVFormat;
-import org.apache.commons.csv.CSVParser;
 import org.apache.commons.csv.CSVRecord;
 
-import java.io.FileReader;
-import java.io.IOException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public class InstructorParser extends AbstractParser<Instructor> {
     private static final String DELIMITER = "===";
-    private static final String PATH = "Instructors.csv";
     private static InstructorParser instance;
 
-    private InstructorParser() {
+    private InstructorParser(String filePath) {
+        super(filePath);
     }
 
-    public static InstructorParser getInstance() {
+    public static InstructorParser getInstance(String filePath) {
         if (instance == null) {
-            instance = new InstructorParser();
+            instance = new InstructorParser(filePath);
         }
         return instance;
     }
 
-    private static List<List<String>> splitData(List<String> data) {
-        List<List<String>> instructorsData = new LinkedList<>();
-        List<String> currentInstructorData = new LinkedList<>();
-        instructorsData.add(currentInstructorData);
+    private static List<List<CSVRecord>> splitData(List<CSVRecord> records) {
+        List<List<CSVRecord>> allData = new LinkedList<>();
+        List<CSVRecord> current = new LinkedList<>();
+        allData.add(current);
 
-        for (String str : data) {
-            if (str.equals(DELIMITER)) {
-                currentInstructorData = new LinkedList<>();
-                instructorsData.add(currentInstructorData);
+        for (CSVRecord record : records) {
+            if (record.get(0).equals(DELIMITER)) {
+                if (!current.isEmpty()) {
+                    allData.add(new LinkedList<>(current));
+                    current.clear();
+                }
             } else {
-                currentInstructorData.add(str);
+                current.add(record);
             }
         }
-        return instructorsData;
+
+        return allData;
     }
 
-    public TreeSet<Instructor> parse() {
-        List<List<String>> data = getCsvData();
-        TreeSet<Instructor> instructors = new TreeSet<>();
-        for (List<String> ins : data) {
-            if (ins.isEmpty())
-                continue;
-            instructors.add(createInstructorFromData(ins));
+    @Override
+    protected Set<Instructor> createData(List<CSVRecord> records) {
+        List<List<String>> flattened = flattenRecords(records);
+        Set<Instructor> instructors = new TreeSet<>();
+        for (List<String> ins : flattened) {
+            Instructor out = createInstructorFromData(ins);
+            instructors.add(out);
         }
 
+        instructors.forEach(System.out::println);
         return instructors;
     }
 
-    private List<List<String>> getCsvData() {
-        try (FileReader reader = new FileReader(PATH)) {
-            try (CSVParser csvParser = CSVParser.parse(reader, CSVFormat.DEFAULT)) {
-                List<String> csvData = new ArrayList<>();
-                for (CSVRecord record : csvParser) {
-                    csvData.addAll(record.toList());
-                }
-                return splitData(csvData);
-            }
-        } catch (IOException ex) {
-            System.err.println("An error occurred while reading the CSV data: " + ex.getMessage());
-            return Collections.emptyList();
+    private List<List<String>> flattenRecords(List<CSVRecord> records) {
+        List<List<CSVRecord>> splitRecords = splitData(records);
+        List<List<String>> combined = new LinkedList<>();
+        for (List<CSVRecord> nestedRecords : splitRecords) {
+            List<String> flattened = nestedRecords.stream()
+                    .map(CSVRecord::values)
+                    .flatMap(Stream::of)
+                    .toList();
+
+            combined.add(flattened);
         }
+
+        return combined;
     }
 
     private Instructor createInstructorFromData(List<String> ins) {

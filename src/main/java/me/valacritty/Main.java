@@ -14,12 +14,11 @@ import me.valacritty.utils.parsers.InstructorRecentCoursesParser;
 
 import java.net.URL;
 import java.util.Collection;
+import java.util.Set;
 import java.util.TreeSet;
 
 public class Main extends Application {
     private static TreeSet<Instructor> instructors;
-    private static TreeSet<Course> courses;
-    private Collection<Instructor> instructorsWithRecentCourses;
 
     public static void main(String[] args) {
         launch(args);
@@ -30,15 +29,16 @@ public class Main extends Application {
     }
 
     private void initializeData() {
-        InstructorParser parser = InstructorParser.getInstance();
-        CourseParser courseParser = CourseParser.getInstance();
-        InstructorRecentCoursesParser instructorRecentCoursesParser = InstructorRecentCoursesParser.getInstance();
-        courses = courseParser.parse();
-        instructors = parser.parse();
-        instructorsWithRecentCourses = instructorRecentCoursesParser.parse();
+        InstructorParser parser = InstructorParser.getInstance("Instructors.csv");
+        CourseParser courseParser = CourseParser.getInstance("CourseInformation.csv");
+        InstructorRecentCoursesParser instructorRecentCoursesParser =
+                InstructorRecentCoursesParser.getInstance("Instructor_Recent_Courses.csv");
+
+        Set<Course> courses = new TreeSet<>(courseParser.parse());
+        Collection<Instructor> instructorsWithRecentCourses = instructorRecentCoursesParser.parse();
+        instructors = new TreeSet<>(parser.parse());
 
         instructors.addAll(instructorsWithRecentCourses);
-        instructors.forEach(System.out::println);
     }
 
     private String initializeStyles() {
