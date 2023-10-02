@@ -50,10 +50,6 @@ public class HomeController implements Initializable {
     @FXML
     public TableColumn<Instructor, Boolean> thirdCourseCol;
     @FXML
-    public ListView<String> coursesView;
-    @FXML
-    public ListView<Campus> campusesView;
-    @FXML
     public Region sunEarlyMorning;
     @FXML
     public Region monEarlyMorning;
@@ -150,11 +146,7 @@ public class HomeController implements Initializable {
 
         // set the view to the observable list
         instructorView.setItems(instructorData);
-        coursesView.setItems(courseData);
-        campusesView.setItems(campusData);
         Styles.toggleStyleClass(instructorView, Styles.STRIPED);
-        Styles.toggleStyleClass(coursesView, Styles.STRIPED);
-        Styles.toggleStyleClass(campusesView, Styles.STRIPED);
 
     }
 

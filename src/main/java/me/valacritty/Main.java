@@ -63,6 +63,7 @@ public class Main extends Application {
         Scene scene = new Scene(ViewFinder.loadView(ViewMap.HOME));
         primaryStage.setScene(scene);
         primaryStage.getScene().getStylesheets().add(styleSheet);
+        primaryStage.setMaximized(true);
         primaryStage.setTitle("Project01");
         primaryStage.show();
     }
