@@ -1,34 +1,34 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <eclipse-userlibraries>
-  <library name="Maven: org.openjfx:javafx-fxml:mac-aarch64:20">
-    <archive path="/Users/valacritty/.m2/repository/org/openjfx/javafx-fxml/20/javafx-fxml-20-mac-aarch64.jar" />
-  </library>
-  <library name="Maven: org.openjfx:javafx-fxml:20">
-    <archive path="/Users/valacritty/.m2/repository/org/openjfx/javafx-fxml/20/javafx-fxml-20.jar" />
-  </library>
-  <library name="Maven: org.openjfx:javafx-controls:mac-aarch64:20">
-    <archive path="/Users/valacritty/.m2/repository/org/openjfx/javafx-controls/20/javafx-controls-20-mac-aarch64.jar" />
-  </library>
-  <library name="Maven: org.openjfx:javafx-controls:20">
-    <archive path="/Users/valacritty/.m2/repository/org/openjfx/javafx-controls/20/javafx-controls-20.jar" />
+  <library name="Maven: io.github.mkpaz:atlantafx-base:2.0.1">
+    <archive path="/Users/valacritty/.m2/repository/io/github/mkpaz/atlantafx-base/2.0.1/atlantafx-base-2.0.1.jar" />
   </library>
   <library name="Maven: org.apache.commons:commons-csv:1.10.0">
     <archive path="/Users/valacritty/.m2/repository/org/apache/commons/commons-csv/1.10.0/commons-csv-1.10.0.jar" />
   </library>
-  <library name="Maven: io.github.mkpaz:atlantafx-base:2.0.1">
-    <archive path="/Users/valacritty/.m2/repository/io/github/mkpaz/atlantafx-base/2.0.1/atlantafx-base-2.0.1.jar" />
+  <library name="Maven: org.openjfx:javafx-controls:21-ea+24">
+    <archive path="/Users/valacritty/.m2/repository/org/openjfx/javafx-controls/21-ea+24/javafx-controls-21-ea+24.jar" />
   </library>
-  <library name="Maven: org.openjfx:javafx-graphics:mac-aarch64:20">
-    <archive path="/Users/valacritty/.m2/repository/org/openjfx/javafx-graphics/20/javafx-graphics-20-mac-aarch64.jar" />
+  <library name="Maven: org.openjfx:javafx-fxml:mac-aarch64:21-ea+24">
+    <archive path="/Users/valacritty/.m2/repository/org/openjfx/javafx-fxml/21-ea+24/javafx-fxml-21-ea+24-mac-aarch64.jar" />
   </library>
-  <library name="Maven: org.openjfx:javafx-graphics:20">
-    <archive path="/Users/valacritty/.m2/repository/org/openjfx/javafx-graphics/20/javafx-graphics-20.jar" />
+  <library name="Maven: org.openjfx:javafx-graphics:21-ea+24">
+    <archive path="/Users/valacritty/.m2/repository/org/openjfx/javafx-graphics/21-ea+24/javafx-graphics-21-ea+24.jar" />
   </library>
-  <library name="Maven: org.openjfx:javafx-base:mac-aarch64:20">
-    <archive path="/Users/valacritty/.m2/repository/org/openjfx/javafx-base/20/javafx-base-20-mac-aarch64.jar" />
+  <library name="Maven: org.openjfx:javafx-controls:mac-aarch64:21-ea+24">
+    <archive path="/Users/valacritty/.m2/repository/org/openjfx/javafx-controls/21-ea+24/javafx-controls-21-ea+24-mac-aarch64.jar" />
   </library>
-  <library name="Maven: org.openjfx:javafx-base:20">
-    <archive path="/Users/valacritty/.m2/repository/org/openjfx/javafx-base/20/javafx-base-20.jar" />
+  <library name="Maven: org.openjfx:javafx-fxml:21-ea+24">
+    <archive path="/Users/valacritty/.m2/repository/org/openjfx/javafx-fxml/21-ea+24/javafx-fxml-21-ea+24.jar" />
+  </library>
+  <library name="Maven: org.openjfx:javafx-base:21-ea+24">
+    <archive path="/Users/valacritty/.m2/repository/org/openjfx/javafx-base/21-ea+24/javafx-base-21-ea+24.jar" />
+  </library>
+  <library name="Maven: org.openjfx:javafx-graphics:mac-aarch64:21-ea+24">
+    <archive path="/Users/valacritty/.m2/repository/org/openjfx/javafx-graphics/21-ea+24/javafx-graphics-21-ea+24-mac-aarch64.jar" />
+  </library>
+  <library name="Maven: org.openjfx:javafx-base:mac-aarch64:21-ea+24">
+    <archive path="/Users/valacritty/.m2/repository/org/openjfx/javafx-base/21-ea+24/javafx-base-21-ea+24-mac-aarch64.jar" />
   </library>
 </eclipse-userlibraries>
 
