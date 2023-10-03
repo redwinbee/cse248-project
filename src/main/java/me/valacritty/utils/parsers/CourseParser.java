@@ -36,7 +36,7 @@ public class CourseParser extends AbstractParser<Course> {
         Set<Course> courses = new TreeSet<>();
         for (CSVRecord record : records) {
             Course out = new Course();
-            out.setCourseNumber(record.get("Term") + record.get("Crse"));
+            out.setCourseNumber(record.get("Subj") + record.get("Crse"));
             out.setTitle(record.get("Crse_Title"));
             out.setCrn(Integer.parseInt(record.get("CRN")));
             out.setPartOfTerm(parsePartOfTerm(record.get("POT")));

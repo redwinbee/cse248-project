@@ -14,11 +14,11 @@ import me.valacritty.utils.parsers.InstructorRecentCoursesParser;
 
 import java.net.URL;
 import java.util.Collection;
-import java.util.Set;
 import java.util.TreeSet;
 
 public class Main extends Application {
     private static TreeSet<Instructor> instructors;
+    private static TreeSet<Course> courses;
 
     public static void main(String[] args) {
         launch(args);
@@ -28,14 +28,18 @@ public class Main extends Application {
         return instructors;
     }
 
+    public static TreeSet<Course> getCourses() {
+        return courses;
+    }
+
     private void initializeData() {
         InstructorParser parser = InstructorParser.getInstance("Instructors.csv");
         CourseParser courseParser = CourseParser.getInstance("CourseInformation.csv");
         InstructorRecentCoursesParser instructorRecentCoursesParser =
                 InstructorRecentCoursesParser.getInstance("Instructor_Recent_Courses.csv");
 
-        Set<Course> courses = new TreeSet<>(courseParser.parse());
         Collection<Instructor> instructorsWithRecentCourses = instructorRecentCoursesParser.parse();
+        courses = new TreeSet<>(courseParser.parse());
         instructors = new TreeSet<>(parser.parse());
 
         instructors.addAll(instructorsWithRecentCourses);
@@ -63,7 +67,6 @@ public class Main extends Application {
         Scene scene = new Scene(ViewFinder.loadView(ViewMap.HOME));
         primaryStage.setScene(scene);
         primaryStage.getScene().getStylesheets().add(styleSheet);
-        primaryStage.setMaximized(true);
         primaryStage.setTitle("Project01");
         primaryStage.show();
     }

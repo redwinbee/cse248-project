@@ -13,6 +13,7 @@ import javafx.scene.layout.Region;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import me.valacritty.Main;
+import me.valacritty.models.Course;
 import me.valacritty.models.Instructor;
 import me.valacritty.models.enums.Campus;
 import me.valacritty.models.enums.Day;
@@ -20,6 +21,7 @@ import me.valacritty.models.enums.Rank;
 import me.valacritty.models.enums.TimeOfDay;
 
 import java.net.URL;
+import java.util.List;
 import java.util.ResourceBundle;
 import java.util.Set;
 
@@ -126,7 +128,13 @@ public class HomeController implements Initializable {
     @FXML
     public Label selectProfessorLabel;
     @FXML
+    public Label courseTitleLabel;
+    @FXML
     public TextField queryField;
+    @FXML
+    public ComboBox<String> sectionCombo;
+    @FXML
+    public ComboBox<Integer> crnCombo;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -143,24 +151,59 @@ public class HomeController implements Initializable {
 
         // configure cell value listeners
         setCellSelectionListener();
+        setSectionSelectionListener();
 
         // set the view to the observable list
         instructorView.setItems(instructorData);
         Styles.toggleStyleClass(instructorView, Styles.STRIPED);
 
+        // set the initial data for the section combo box
+        sectionCombo.getItems().addAll(Main.getCourses().stream().map(Course::getCourseNumber).toList());
+
     }
 
     @FXML
     public void onSearch() {
-        if (!queryField.getText().isBlank()) {
-            String query = queryField.getText().toLowerCase().trim();
-            instructorData.clear(); // Clear the existing data
+        String query = queryField.getText().toLowerCase().trim();
+        instructorData.clear(); // Clear the existing data
+
+        String selected = sectionCombo.getSelectionModel().getSelectedItem();
+        if (selected != null) {
             Main.getInstructors().stream()
-                    .filter(instructor -> instructor.getFirstName().toLowerCase().contains(query)
-                            || instructor.getLastName().toLowerCase().contains(query)
-                            || instructor.getId().contains(query))
-                    .forEach(instructorData::add); // Add filtered instructors to the list
+                    .filter(instructor -> instructor.getCourses().contains(selected))
+                    .forEach(instructorData::add);
+        } else {
+            Main.getInstructors().stream()
+                    .filter(instructor -> instructor.getFirstName().equalsIgnoreCase(query)
+                            || instructor.getMiddleName().equalsIgnoreCase(query)
+                            || instructor.getLastName().equalsIgnoreCase(query))
+                    .forEach(instructorData::add);
         }
+    }
+
+
+    public void setSectionSelectionListener() {
+        sectionCombo.setOnAction(event -> {
+            String selected = sectionCombo.getValue();
+            List<Course> matched = Main.getCourses().stream()
+                    .filter(course -> course.getCourseNumber().equals(selected))
+                    .toList();
+
+            updateCrnCombo(matched.stream().map(Course::getCrn).toList());
+            updateCourseTitleLabel(matched.stream().findFirst().get().getTitle());
+        });
+    }
+
+    private void updateCrnCombo(List<Integer> crns) {
+        if (crnCombo.isDisable()) {
+            crnCombo.setDisable(false);
+        }
+        crnCombo.getItems().clear();
+        crnCombo.getItems().addAll(crns);
+    }
+
+    private void updateCourseTitleLabel(String title) {
+        courseTitleLabel.setText(title);
     }
 
     private void setCellSelectionListener() {
