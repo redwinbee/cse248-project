@@ -15,7 +15,7 @@ public abstract class AbstractParser<E extends Comparable<E>> {
     private final String filePath;
 
     public AbstractParser(String filePath) {
-        this.filePath = filePath;
+        this.filePath = "data/" + filePath;
     }
 
     public Set<E> parse() {
