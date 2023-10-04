@@ -8,7 +8,7 @@ import me.valacritty.models.enums.PartOfTerm;
 import java.util.EnumSet;
 import java.util.StringJoiner;
 
-public class Course implements Comparable<Course> {
+public class Course implements Comparable<Course>, Cloneable {
     private String courseNumber;
     private String title;
     private int crn;
@@ -113,5 +113,15 @@ public class Course implements Comparable<Course> {
     @Override
     public int compareTo(Course o) {
         return Integer.compare(this.getCrn(), o.getCrn());
+    }
+
+    @Override
+    public Course clone() {
+        try {
+            // TODO: copy mutable state here, so the clone can't change the internals of the original
+            return (Course) super.clone();
+        } catch (CloneNotSupportedException e) {
+            throw new AssertionError();
+        }
     }
 }

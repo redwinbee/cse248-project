@@ -19,6 +19,7 @@ import me.valacritty.models.enums.Campus;
 import me.valacritty.models.enums.Day;
 import me.valacritty.models.enums.Rank;
 import me.valacritty.models.enums.TimeOfDay;
+import me.valacritty.utils.helpers.CourseHelper;
 
 import java.net.URL;
 import java.util.List;
@@ -27,7 +28,7 @@ import java.util.Set;
 
 public class HomeController implements Initializable {
     private final ObservableList<Instructor> instructorData = FXCollections.observableArrayList();
-    private final ObservableList<String> courseData = FXCollections.observableArrayList();
+    private final ObservableList<Course> courseData = FXCollections.observableArrayList();
     private final ObservableList<Campus> campusData = FXCollections.observableArrayList();
     private final String validColour = "-fx-background-color: #e3ffe3;";
     private final String invalidColour = "-fx-background-color: #ffe6e6;";
@@ -169,9 +170,11 @@ public class HomeController implements Initializable {
 
         String selected = sectionCombo.getSelectionModel().getSelectedItem();
         if (selected != null) {
-            Main.getInstructors().stream()
-                    .filter(instructor -> instructor.getCourses().contains(selected))
-                    .forEach(instructorData::add);
+            CourseHelper.findCourse(selected).ifPresent(course -> Main.getInstructors().stream()
+                    .filter(instructor -> instructor.getCourses().stream()
+                            .map(Course::getCourseNumber)
+                            .anyMatch(courseNum -> courseNum.equalsIgnoreCase(selected)))
+                    .forEach(instructorData::add));
         } else {
             Main.getInstructors().stream()
                     .filter(instructor -> instructor.getFirstName().equalsIgnoreCase(query)

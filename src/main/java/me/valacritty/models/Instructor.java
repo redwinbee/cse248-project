@@ -10,14 +10,14 @@ import java.util.*;
 public class Instructor implements Comparable<Instructor> {
     private String id;
     private String firstName;
-    private String middleName;
+    private String middleName = "";
     private String lastName;
     private Campus homeCampus;
     private String homePhone;
     private String workPhone;
     private String address;
     private LocalDate dateHired;
-    private List<String> courses;
+    private List<Course> courses;
     private Set<String> previousCourses;
     private Rank rank;
     private boolean canTeachOnline;
@@ -127,11 +127,11 @@ public class Instructor implements Comparable<Instructor> {
         this.dateHired = dateHired;
     }
 
-    public List<String> getCourses() {
+    public List<Course> getCourses() {
         return courses;
     }
 
-    public void setCourses(List<String> courses) {
+    public void setCourses(List<Course> courses) {
         this.courses = courses;
     }
 

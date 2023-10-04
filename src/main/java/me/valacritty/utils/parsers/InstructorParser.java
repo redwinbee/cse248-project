@@ -1,5 +1,6 @@
 package me.valacritty.utils.parsers;
 
+import me.valacritty.models.Course;
 import me.valacritty.models.Instructor;
 import me.valacritty.models.enums.Campus;
 import me.valacritty.models.enums.Day;
@@ -11,6 +12,8 @@ import java.time.format.DateTimeFormatter;
 import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
+
+import static me.valacritty.utils.helpers.CourseHelper.findCourse;
 
 public class InstructorParser extends AbstractParser<Instructor> {
     private static final String DELIMITER = "===";
@@ -135,8 +138,14 @@ public class InstructorParser extends AbstractParser<Instructor> {
         return getBooleanFromString(canTeachOnlineStr);
     }
 
-    private List<String> parseCourses(String coursesStr) {
-        return Arrays.stream(coursesStr.split("\\s+")).toList();
+    private List<Course> parseCourses(String coursesStr) {
+        List<Course> out = new LinkedList<>();
+        Arrays.stream(coursesStr.split("\\s+"))
+                // TODO not sure if it's okay to assume specific courses but the original data only said the subject
+                .forEach(string -> findCourse(string).ifPresentOrElse(matching -> out.add(matching.clone()), () -> {
+                }));
+
+        return out;
     }
 
     private LocalDate parseDateHired(String dateHiredStr) {
