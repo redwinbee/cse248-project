@@ -27,14 +27,6 @@
                                         <Button defaultButton="true" mnemonicParsing="false" onAction="#onSearch"
                                                 text="Search"/>
                                     </HBox>
-                                    <HBox alignment="CENTER_LEFT" layoutX="10.0" layoutY="10.0" spacing="10.0">
-                                        <children>
-                                            <Label text="Can Teach:"/>
-                                            <ComboBox fx:id="sectionCombo" promptText="Section"/>
-                                            <ComboBox fx:id="crnCombo" disable="true" promptText="CRN"/>
-                                            <Label fx:id="courseTitleLabel" layoutX="10.0" layoutY="18.0"/>
-                                        </children>
-                                    </HBox>
                                 </children>
                             </VBox>
                         </children>

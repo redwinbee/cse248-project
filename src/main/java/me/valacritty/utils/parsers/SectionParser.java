@@ -1,6 +1,7 @@
 package me.valacritty.utils.parsers;
 
 import me.valacritty.models.Course;
+import me.valacritty.models.Section;
 import me.valacritty.models.TimeRange;
 import me.valacritty.models.enums.Day;
 import me.valacritty.models.enums.InstructionMethod;
@@ -17,33 +18,34 @@ import java.util.List;
 import java.util.Set;
 import java.util.TreeSet;
 
-public class CourseParser extends AbstractParser<Course> {
-    private static CourseParser instance;
+public class SectionParser extends AbstractParser<Section> {
+    private static SectionParser instance;
 
-    private CourseParser(String filePath) {
+    private SectionParser(String filePath) {
         super(filePath);
     }
 
-    public static CourseParser getInstance(String filePath) {
+    public static SectionParser getInstance(String filePath) {
         if (instance == null) {
-            instance = new CourseParser(filePath);
+            instance = new SectionParser(filePath);
         }
         return instance;
     }
 
     @Override
-    protected Set<Course> createData(List<CSVRecord> records) {
-        Set<Course> courses = new TreeSet<>();
+    protected Set<Section> createData(List<CSVRecord> records) {
+        Set<Section> sections = new TreeSet<>();
         for (CSVRecord record : records) {
-            Course out = new Course();
-            out.setCourseNumber(record.get("Subj") + record.get("Crse"));
-            out.setTitle(record.get("Crse_Title"));
-            out.setCrn(Integer.parseInt(record.get("CRN")));
-            out.setPartOfTerm(parsePartOfTerm(record.get("POT")));
-            out.setCampus(parseCampus(record.get("Camp")));
-            out.setInstructionMethod(parseInstructionMethod(record.get("Inst_Mthd")));
-            if (!out.getTitle().startsWith("SUR")) {    // TODO figure out why these courses are formatted differently
-                out.setDaysOffered(parseDaysOffered(record.get("Days")));
+            Course course = new Course();
+            Section section = new Section();
+            course.setCourseNumber(record.get("Subj") + record.get("Crse"));
+            course.setTitle(record.get("Crse_Title"));
+            section.setCrn(Integer.parseInt(record.get("CRN")));
+            section.setPartOfTerm(parsePartOfTerm(record.get("POT")));
+            section.setCampus(parseCampus(record.get("Camp")));
+            section.setInstructionMethod(parseInstructionMethod(record.get("Inst_Mthd")));
+            if (!course.getTitle().startsWith("SUR")) {    // TODO figure out why these courses are formatted differently
+                section.setDaysOffered(parseDaysOffered(record.get("Days")));
                 if (!record.get("Start_Dt").isBlank()
                         && !record.get("End_Dt").isBlank()
                         && !record.get("Beg_Time").isBlank()
@@ -54,13 +56,14 @@ public class CourseParser extends AbstractParser<Course> {
                     String endTime = record.get("End_Time");
                     LocalDateTime startDateTime = parseDateTime(startDate, startTime);
                     LocalDateTime endDateTime = parseDateTime(endDate, endTime);
-                    out.setTimeRange(new TimeRange(startDateTime, endDateTime));
+                    section.setTimeRange(new TimeRange(startDateTime, endDateTime));
                 }
             }
-            courses.add(out);
+            section.setCourse(course);
+            sections.add(section);
         }
 
-        return courses;
+        return sections;
     }
 
     private LocalDateTime parseDateTime(String date, String time) {
