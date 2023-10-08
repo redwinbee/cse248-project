@@ -162,9 +162,9 @@ public class HomeController implements Initializable {
         instructorData.clear(); // Clear the existing data
 
         Main.getInstructors().stream()
-                .filter(instructor -> instructor.getFirstName().equalsIgnoreCase(query)
-                        || instructor.getMiddleName().equalsIgnoreCase(query)
-                        || instructor.getLastName().equalsIgnoreCase(query))
+                .filter(instructor -> instructor.getId().contains(query)
+                        || instructor.getFirstName().contains(query)
+                        || instructor.getLastName().contains(query))
                 .forEach(instructorData::add);
     }
 

@@ -10,7 +10,7 @@ import java.util.*;
 public class Instructor implements Comparable<Instructor> {
     private String id;
     private String firstName;
-    private String middleName = "";
+    private String middleName;
     private String lastName;
     private Campus homeCampus;
     private String homePhone;
@@ -31,9 +31,10 @@ public class Instructor implements Comparable<Instructor> {
     private Set<Day> availableEvenings;
     private Set<Day> availableWeekends;
 
-    public Instructor(String firstName, String lastName) {
+    public Instructor(String firstName, String middleName, String lastName) {
         this.id = generateRandomId();
         this.firstName = firstName;
+        this.middleName = middleName;
         this.lastName = lastName;
         this.courses = new LinkedList<>();
         this.preferredCampuses = EnumSet.noneOf(Campus.class);
@@ -43,6 +44,10 @@ public class Instructor implements Comparable<Instructor> {
         this.availableAfternoons = EnumSet.noneOf(Day.class);
         this.availableEvenings = EnumSet.noneOf(Day.class);
         this.availableWeekends = EnumSet.noneOf(Day.class);
+    }
+
+    public Instructor(String firstName, String lastName) {
+        this(firstName, "", lastName);
     }
 
     public Instructor() {
