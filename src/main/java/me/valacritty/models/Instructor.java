@@ -18,7 +18,7 @@ public class Instructor implements Comparable<Instructor> {
     private String address;
     private LocalDate dateHired;
     private List<Course> courses;
-    private Set<String> previousCourses;
+    private Set<Course> previousCourses;
     private Rank rank;
     private boolean canTeachOnline;
     private Set<Campus> preferredCampuses;
@@ -135,11 +135,11 @@ public class Instructor implements Comparable<Instructor> {
         this.courses = courses;
     }
 
-    public Set<String> getPreviousCourses() {
+    public Set<Course> getPreviousCourses() {
         return previousCourses;
     }
 
-    public void setPreviousCourses(Set<String> previousCourses) {
+    public void setPreviousCourses(Set<Course> previousCourses) {
         this.previousCourses = previousCourses;
     }
 

@@ -58,7 +58,6 @@ public class InstructorParser extends AbstractParser<Instructor> {
             instructors.add(out);
         }
 
-        instructors.forEach(System.out::println);
         return instructors;
     }
 

@@ -12,9 +12,13 @@ public class CourseHelper {
     }
 
     public static Optional<Course> findCourse(String courseNumber) {
-        return Main.getSections().stream()
-                .map(Section::getCourse)
-                .filter(course -> course.getCourseNumber().equalsIgnoreCase(courseNumber))
-                .findFirst();
+        try {
+            return Main.getSections().stream()
+                    .map(Section::getCourse)
+                    .filter(course -> course.getCourseNumber().equalsIgnoreCase(courseNumber))
+                    .findFirst();
+        } catch (NullPointerException ignored) {}
+
+        return Optional.empty();
     }
 }
