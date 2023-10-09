@@ -163,8 +163,8 @@ public class HomeController implements Initializable {
 
         Main.getInstructors().stream()
                 .filter(instructor -> instructor.getId().contains(query)
-                        || instructor.getFirstName().contains(query)
-                        || instructor.getLastName().contains(query))
+                        || instructor.getFirstName().toLowerCase().contains(query)
+                        || instructor.getLastName().toLowerCase().contains(query))
                 .forEach(instructorData::add);
     }
 
