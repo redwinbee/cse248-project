@@ -160,12 +160,9 @@ public class HomeController implements Initializable {
     public void onSearch() {
         String query = queryField.getText().toLowerCase().trim();
         instructorData.clear(); // Clear the existing data
-
-        Configuration.getInstructorManager().all().stream()
-                .filter(instructor -> instructor.getId().contains(query)
-                        || instructor.getFirstName().toLowerCase().contains(query)
-                        || instructor.getLastName().toLowerCase().contains(query))
-                .forEach(instructorData::add);
+        instructorData.addAll(Configuration.getInstructorManager().matches(instructor -> instructor.getId().contains(query)
+                || instructor.getFirstName().toLowerCase().contains(query)
+                || instructor.getLastName().toLowerCase().contains(query)));
     }
 
     private void setCellSelectionListener() {
