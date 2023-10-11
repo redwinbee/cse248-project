@@ -1,8 +1,9 @@
 package me.valacritty.models;
 
+import java.io.Serializable;
 import java.util.StringJoiner;
 
-public class Course implements Comparable<Course>, Cloneable {
+public class Course implements Comparable<Course>, Cloneable, Serializable {
     private String courseNumber;
     private String title;
     private byte credits;

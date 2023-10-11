@@ -15,13 +15,13 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
-import me.valacritty.Main;
 import me.valacritty.models.Course;
 import me.valacritty.models.Instructor;
 import me.valacritty.models.enums.Campus;
 import me.valacritty.models.enums.Day;
 import me.valacritty.models.enums.Rank;
 import me.valacritty.models.enums.TimeOfDay;
+import me.valacritty.persistence.Configuration;
 
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -161,7 +161,7 @@ public class HomeController implements Initializable {
         String query = queryField.getText().toLowerCase().trim();
         instructorData.clear(); // Clear the existing data
 
-        Main.getInstructors().stream()
+        Configuration.getInstructorManager().all().stream()
                 .filter(instructor -> instructor.getId().contains(query)
                         || instructor.getFirstName().toLowerCase().contains(query)
                         || instructor.getLastName().toLowerCase().contains(query))

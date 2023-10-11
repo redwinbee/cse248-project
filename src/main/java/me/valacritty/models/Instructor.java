@@ -4,10 +4,11 @@ import me.valacritty.models.enums.Campus;
 import me.valacritty.models.enums.Day;
 import me.valacritty.models.enums.Rank;
 
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.*;
 
-public class Instructor implements Comparable<Instructor> {
+public class Instructor implements Comparable<Instructor>, Serializable {
     private String id;
     private String firstName;
     private String middleName;

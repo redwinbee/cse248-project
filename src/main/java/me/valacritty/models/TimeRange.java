@@ -1,11 +1,12 @@
 package me.valacritty.models;
 
+import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.ZoneOffset;
 import java.util.StringJoiner;
 
-public class TimeRange {
+public class TimeRange implements Serializable {
     private LocalDateTime startTime;
     private LocalDateTime endTime;
 

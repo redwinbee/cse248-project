@@ -5,10 +5,11 @@ import me.valacritty.models.enums.Day;
 import me.valacritty.models.enums.InstructionMethod;
 import me.valacritty.models.enums.PartOfTerm;
 
+import java.io.Serializable;
 import java.util.EnumSet;
 import java.util.StringJoiner;
 
-public class Section implements Comparable<Section>, Cloneable {
+public class Section implements Comparable<Section>, Cloneable, Serializable {
     private Course course;
     private int crn;
     private PartOfTerm partOfTerm;
