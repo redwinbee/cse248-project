@@ -47,10 +47,16 @@ public class Configuration {
     }
 
     public static Manager<Instructor> getInstructorManager() {
+        if (instructorManager == null) {
+            instructorManager = new Manager<>(InstructorParser.getInstance("Instructors.csv").parse());
+        }
         return instructorManager;
     }
 
     public static Manager<Section> getSectionManager() {
+        if (sectionManager == null) {
+            sectionManager = new Manager<>(SectionParser.getInstance("CourseInformation.csv").parse());
+        }
         return sectionManager;
     }
 }

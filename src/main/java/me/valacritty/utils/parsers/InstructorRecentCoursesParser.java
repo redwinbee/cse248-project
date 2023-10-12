@@ -47,9 +47,8 @@ public class InstructorRecentCoursesParser extends AbstractParser<Instructor> {
         }
 
         return selectedCols.stream()
-                .map(CourseHelper::findCourse)
-                .filter(Optional::isPresent)
-                .map(Optional::get)
+                .map(CourseHelper::allCoursesMatching)
+                .flatMap(Collection::stream)
                 .collect(Collectors.toSet());
     }
 }

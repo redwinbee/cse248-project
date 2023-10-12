@@ -1,5 +1,6 @@
 package me.valacritty.models;
 
+import com.sun.source.tree.Tree;
 import me.valacritty.models.enums.Campus;
 import me.valacritty.models.enums.Day;
 import me.valacritty.models.enums.Rank;
@@ -18,7 +19,7 @@ public class Instructor implements Comparable<Instructor>, Serializable {
     private String workPhone;
     private String address;
     private LocalDate dateHired;
-    private List<Course> courses;
+    private Set<Course> courses;
     private Set<Course> previousCourses;
     private Rank rank;
     private boolean canTeachOnline;
@@ -37,7 +38,7 @@ public class Instructor implements Comparable<Instructor>, Serializable {
         this.firstName = firstName;
         this.middleName = middleName;
         this.lastName = lastName;
-        this.courses = new LinkedList<>();
+        this.courses = new TreeSet<>();
         this.preferredCampuses = EnumSet.noneOf(Campus.class);
         this.availableEarlyMornings = EnumSet.noneOf(Day.class);
         this.availableMornings = EnumSet.noneOf(Day.class);
@@ -133,11 +134,11 @@ public class Instructor implements Comparable<Instructor>, Serializable {
         this.dateHired = dateHired;
     }
 
-    public List<Course> getCourses() {
+    public Set<Course> getCourses() {
         return courses;
     }
 
-    public void setCourses(List<Course> courses) {
+    public void setCourses(Set<Course> courses) {
         this.courses = courses;
     }
 

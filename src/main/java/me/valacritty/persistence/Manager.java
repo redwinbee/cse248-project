@@ -5,6 +5,7 @@ import java.util.Set;
 import java.util.TreeSet;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public class Manager<T extends Comparable<T>> implements Serializable {
     private T type;
@@ -34,5 +35,9 @@ public class Manager<T extends Comparable<T>> implements Serializable {
         return managed.stream()
                 .filter(predicate)
                 .collect(Collectors.toSet());
+    }
+
+    public Stream<T> stream() {
+        return managed.stream();
     }
 }
