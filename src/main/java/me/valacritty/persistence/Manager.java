@@ -8,8 +8,8 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 public class Manager<T extends Comparable<T>> implements Serializable {
-    private T type;
     private final Set<T> managed;
+    private T type;
 
     public Manager() {
         this.managed = new TreeSet<>();

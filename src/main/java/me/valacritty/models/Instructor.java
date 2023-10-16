@@ -1,15 +1,16 @@
 package me.valacritty.models;
 
-import com.sun.source.tree.Tree;
 import me.valacritty.models.enums.Campus;
 import me.valacritty.models.enums.Day;
 import me.valacritty.models.enums.Rank;
+import me.valacritty.models.enums.TimeOfDay;
 
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.*;
 
 public class Instructor implements Comparable<Instructor>, Serializable {
+    private final Map<Day, Set<TimeOfDay>> availabilities;
     private String id;
     private String firstName;
     private String middleName;
@@ -26,12 +27,6 @@ public class Instructor implements Comparable<Instructor>, Serializable {
     private Set<Campus> preferredCampuses;
     private boolean canTeachSecondCourse;
     private boolean canTeachThirdCourse;
-    private Set<Day> availableEarlyMornings;
-    private Set<Day> availableMornings;
-    private Set<Day> availableEarlyAfternoons;
-    private Set<Day> availableAfternoons;
-    private Set<Day> availableEvenings;
-    private Set<Day> availableWeekends;
 
     public Instructor(String firstName, String middleName, String lastName) {
         this.id = generateRandomId();
@@ -40,12 +35,7 @@ public class Instructor implements Comparable<Instructor>, Serializable {
         this.lastName = lastName;
         this.courses = new TreeSet<>();
         this.preferredCampuses = EnumSet.noneOf(Campus.class);
-        this.availableEarlyMornings = EnumSet.noneOf(Day.class);
-        this.availableMornings = EnumSet.noneOf(Day.class);
-        this.availableEarlyAfternoons = EnumSet.noneOf(Day.class);
-        this.availableAfternoons = EnumSet.noneOf(Day.class);
-        this.availableEvenings = EnumSet.noneOf(Day.class);
-        this.availableWeekends = EnumSet.noneOf(Day.class);
+        this.availabilities = new TreeMap<>();
     }
 
     public Instructor(String firstName, String lastName) {
@@ -53,7 +43,25 @@ public class Instructor implements Comparable<Instructor>, Serializable {
     }
 
     public Instructor() {
+        this.availabilities = new TreeMap<>();
+    }
 
+    /**
+     * Adds onto the availability of this instructor the given set of days
+     * and their corresponding time of days. This function will assume that
+     * all days provided are part of the same time of day.
+     *
+     * @param days      The days to be added.
+     * @param timeOfDay The time of day of the set of provided days.
+     */
+    public void addAvailability(Set<Day> days, TimeOfDay timeOfDay) {
+        for (Day day : days) {
+            availabilities.computeIfAbsent(day, k -> new HashSet<>()).add(timeOfDay);
+        }
+    }
+
+    public void removeAvailability(Day day, TimeOfDay timeOfDay) {
+        availabilities.computeIfAbsent(day, k -> new HashSet<>()).add(timeOfDay);
     }
 
     private String generateRandomId() {
@@ -190,52 +198,8 @@ public class Instructor implements Comparable<Instructor>, Serializable {
         this.canTeachThirdCourse = canTeachThirdCourse;
     }
 
-    public Set<Day> getAvailableEarlyMornings() {
-        return availableEarlyMornings;
-    }
-
-    public void setAvailableEarlyMornings(Set<Day> availableEarlyMornings) {
-        this.availableEarlyMornings = availableEarlyMornings;
-    }
-
-    public Set<Day> getAvailableMornings() {
-        return availableMornings;
-    }
-
-    public void setAvailableMornings(Set<Day> availableMornings) {
-        this.availableMornings = availableMornings;
-    }
-
-    public Set<Day> getAvailableEarlyAfternoons() {
-        return availableEarlyAfternoons;
-    }
-
-    public void setAvailableEarlyAfternoons(Set<Day> availableEarlyAfternoons) {
-        this.availableEarlyAfternoons = availableEarlyAfternoons;
-    }
-
-    public Set<Day> getAvailableAfternoons() {
-        return availableAfternoons;
-    }
-
-    public void setAvailableAfternoons(Set<Day> availableAfternoons) {
-        this.availableAfternoons = availableAfternoons;
-    }
-
-    public Set<Day> getAvailableEvenings() {
-        return availableEvenings;
-    }
-
-    public void setAvailableEvenings(Set<Day> availableEvenings) {
-        this.availableEvenings = availableEvenings;
-    }
-
-    public Set<Day> getAvailableWeekends() {
-        return availableWeekends;
-    }
-
-    public void setAvailableWeekends(EnumSet<Day> availableWeekends) {
-        this.availableWeekends = availableWeekends;
+    public Map<Day, Set<TimeOfDay>> getAvailabilities() {
+        return availabilities;
     }
 
     @Override
@@ -257,12 +221,6 @@ public class Instructor implements Comparable<Instructor>, Serializable {
                 .add("preferredCampuses=" + preferredCampuses)
                 .add("canTeachSecondCourse=" + canTeachSecondCourse)
                 .add("canTeachThirdCourse=" + canTeachThirdCourse)
-                .add("availableEarlyMornings=" + availableEarlyMornings)
-                .add("availableMornings=" + availableMornings)
-                .add("availableEarlyAfternoons=" + availableEarlyAfternoons)
-                .add("availableAfternoons=" + availableAfternoons)
-                .add("availableEvenings=" + availableEvenings)
-                .add("availableWeekends=" + availableWeekends)
                 .toString();
     }
 

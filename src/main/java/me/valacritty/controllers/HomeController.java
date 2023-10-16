@@ -4,17 +4,22 @@ import atlantafx.base.theme.Styles;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
-import javafx.scene.layout.Region;
-import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
+import me.valacritty.Main;
+import me.valacritty.extensions.region.TemporalClickableRegion;
 import me.valacritty.models.Course;
 import me.valacritty.models.Instructor;
 import me.valacritty.models.enums.Campus;
@@ -22,10 +27,15 @@ import me.valacritty.models.enums.Day;
 import me.valacritty.models.enums.Rank;
 import me.valacritty.models.enums.TimeOfDay;
 import me.valacritty.persistence.Configuration;
+import me.valacritty.utils.ViewFinder;
+import me.valacritty.utils.ViewMap;
 
+import java.io.IOException;
 import java.net.URL;
+import java.util.AbstractMap;
+import java.util.HashSet;
+import java.util.Map;
 import java.util.ResourceBundle;
-import java.util.Set;
 
 public class HomeController implements Initializable {
     private final ObservableList<Instructor> instructorData = FXCollections.observableArrayList();
@@ -33,6 +43,8 @@ public class HomeController implements Initializable {
     private final ObservableList<Campus> campusData = FXCollections.observableArrayList();
     private final String validColour = "-fx-background-color: #e3ffe3;";
     private final String invalidColour = "-fx-background-color: #ffe6e6;";
+    @FXML
+    public AnchorPane homePane;
     @FXML
     public TableView<Instructor> instructorView;
     @FXML
@@ -54,85 +66,14 @@ public class HomeController implements Initializable {
     @FXML
     public TableColumn<Instructor, Boolean> thirdCourseCol;
     @FXML
-    public Region sunEarlyMorning;
-    @FXML
-    public Region monEarlyMorning;
-    @FXML
-    public Region tueEarlyMorning;
-    @FXML
-    public Region wedEarlyMorning;
-    @FXML
-    public Region thurEarlyMorning;
-    @FXML
-    public Region friEarlyMorning;
-    @FXML
-    public Region satEarlyMorning;
-    @FXML
-    public Region sunMorning;
-    @FXML
-    public Region monMorning;
-    @FXML
-    public Region tueMorning;
-    @FXML
-    public Region wedMorning;
-    @FXML
-    public Region thurMorning;
-    @FXML
-    public Region friMorning;
-    @FXML
-    public Region satMorning;
-    @FXML
-    public Region sunEarlyAfternoon;
-    @FXML
-    public Region monEarlyAfternoon;
-    @FXML
-    public Region tueEarlyAfternoon;
-    @FXML
-    public Region wedEarlyAfternoon;
-    @FXML
-    public Region thurEarlyAfternoon;
-    @FXML
-    public Region friEarlyAfternoon;
-    @FXML
-    public Region satEarlyAfternoon;
-    @FXML
-    public Region sunAfternoon;
-    @FXML
-    public Region monAfternoon;
-    @FXML
-    public Region tueAfternoon;
-    @FXML
-    public Region wedAfternoon;
-    @FXML
-    public Region thurAfternoon;
-    @FXML
-    public Region friAfternoon;
-    @FXML
-    public Region satAfternoon;
-    @FXML
-    public Region sunEvening;
-    @FXML
-    public Region monEvening;
-    @FXML
-    public Region tueEvening;
-    @FXML
-    public Region wedEvening;
-    @FXML
-    public Region thurEvening;
-    @FXML
-    public Region friEvening;
-    @FXML
-    public Region satEvening;
-    @FXML
     public VBox availabilitiesBox;
     @FXML
     public GridPane availabilitiesGrid;
     @FXML
     public Label selectProfessorLabel;
     @FXML
-    public Label courseTitleLabel;
-    @FXML
     public TextField queryField;
+    private HashSet<TemporalClickableRegion> temporalRegions;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -150,10 +91,55 @@ public class HomeController implements Initializable {
         // configure cell value listeners
         setCellSelectionListener();
 
+
         // set the view to the observable list
         instructorView.setItems(instructorData);
         Styles.toggleStyleClass(instructorView, Styles.STRIPED);
 
+        // initialize availabilities grid
+        initializeAvailabilitiesGrid();
+
+    }
+
+    private void initializeAvailabilitiesGrid() {
+        temporalRegions = new HashSet<>(availabilitiesGrid.getColumnCount() * availabilitiesGrid.getRowCount());
+
+        for (int rowIdx = 0; rowIdx < availabilitiesGrid.getColumnCount(); rowIdx++) {
+            for (int colIdx = 0; colIdx < availabilitiesGrid.getRowCount(); colIdx++) {
+                Map.Entry<Day, TimeOfDay> entry = mapToDayAndTimeOfDay(rowIdx, colIdx);
+                TemporalClickableRegion region = new TemporalClickableRegion(entry);
+                if (entry.getValue() == TimeOfDay.DEFAULT)
+                    continue;
+                temporalRegions.add(region);
+                availabilitiesGrid.add(region, rowIdx, colIdx);
+            }
+        }
+    }
+
+    private Map.Entry<Day, TimeOfDay> mapToDayAndTimeOfDay(int rowIdx, int colIdx) {
+        Day day = null;
+        TimeOfDay timeOfDay;
+
+        switch (colIdx) {
+            case 0 -> timeOfDay = TimeOfDay.EARLY_MORNING;
+            case 1 -> timeOfDay = TimeOfDay.MORNING;
+            case 2 -> timeOfDay = TimeOfDay.EARLY_AFTERNOON;
+            case 3 -> timeOfDay = TimeOfDay.AFTERNOON;
+            case 4 -> timeOfDay = TimeOfDay.EVENING;
+            default -> timeOfDay = TimeOfDay.DEFAULT;
+        }
+
+        switch (rowIdx) {
+            case 0 -> day = Day.SUNDAY;
+            case 1 -> day = Day.MONDAY;
+            case 2 -> day = Day.TUESDAY;
+            case 3 -> day = Day.WEDNESDAY;
+            case 4 -> day = Day.THURSDAY;
+            case 5 -> day = Day.FRIDAY;
+            case 6 -> day = Day.SATURDAY;
+        }
+
+        return new AbstractMap.SimpleEntry<>(day, timeOfDay);
     }
 
     @FXML
@@ -167,11 +153,10 @@ public class HomeController implements Initializable {
 
     private void setCellSelectionListener() {
         instructorView.setOnMouseClicked(event -> {
-            clearAvailabilitiesGrid();
             Instructor selected = instructorView.getSelectionModel().getSelectedItem();
             if (selected != null) {
                 // only make updates when an instructor is actually selected
-                updateAvailabilitiesGrid(selected);
+                updateAvailabilities(selected);
                 updateContentVisibility(true);
 
                 // Update the courses and campuses ListViews
@@ -188,76 +173,45 @@ public class HomeController implements Initializable {
         });
     }
 
-    private void updateAvailabilitiesGrid(Instructor selected) {
-        applyAvailabilityColour(selected.getAvailableEarlyMornings(), TimeOfDay.EARLY_MORNING);
-        applyAvailabilityColour(selected.getAvailableMornings(), TimeOfDay.MORNING);
-        applyAvailabilityColour(selected.getAvailableEarlyAfternoons(), TimeOfDay.EARLY_AFTERNOON);
-        applyAvailabilityColour(selected.getAvailableAfternoons(), TimeOfDay.AFTERNOON);
-        applyAvailabilityColour(selected.getAvailableEvenings(), TimeOfDay.EVENING);
-        applyAvailabilityColour(selected.getAvailableWeekends(), TimeOfDay.IRRELEVANT);
-    }
-
-    private void clearAvailabilitiesGrid() {
-        for (Node node : availabilitiesGrid.getChildren().filtered(node -> !(node instanceof Label))) {
-            if (node instanceof StackPane pane) {
-                pane.getChildren()
-                        .filtered(child -> !(child instanceof Label))
-                        .forEach(child -> child.setStyle(invalidColour));
-            } else {
-                node.setStyle(invalidColour);
-            }
-        }
-    }
-
-    private void applyAvailabilityColour(Set<Day> availableDays, TimeOfDay timeOfDay) {
-        switch (timeOfDay) {
-            case EARLY_MORNING ->
-                    applyStyleToRegions(availableDays, sunEarlyMorning, monEarlyMorning, tueEarlyMorning, wedEarlyMorning, thurEarlyMorning, friEarlyMorning, satEarlyMorning);
-            case MORNING ->
-                    applyStyleToRegions(availableDays, sunMorning, monMorning, tueMorning, wedMorning, thurMorning, friMorning, satMorning);
-            case EARLY_AFTERNOON ->
-                    applyStyleToRegions(availableDays, sunEarlyAfternoon, monEarlyAfternoon, tueEarlyAfternoon, wedEarlyAfternoon, thurEarlyAfternoon, friEarlyAfternoon, satEarlyAfternoon);
-            case AFTERNOON ->
-                    applyStyleToRegions(availableDays, sunAfternoon, monAfternoon, tueAfternoon, wedAfternoon, thurAfternoon, friAfternoon, satAfternoon);
-            case EVENING ->
-                    applyStyleToRegions(availableDays, sunEvening, monEvening, tueEvening, wedEvening, thurEvening, friEvening, satEvening);
-
-            // TODO it's possible this is wrong because the original file doesn't specify what time of day weekend instructors are available
-            case IRRELEVANT -> {
-                for (Day day : availableDays) {
-                    switch (day) {
-                        case SATURDAY -> {
-                            satEarlyMorning.setStyle(validColour);
-                            satMorning.setStyle(validColour);
-                            satEarlyAfternoon.setStyle(validColour);
-                            satAfternoon.setStyle(validColour);
-                            satEvening.setStyle(validColour);
-                        }
-                        case SUNDAY -> {
-                            sunEarlyMorning.setStyle(validColour);
-                            sunMorning.setStyle(validColour);
-                            sunEarlyAfternoon.setStyle(validColour);
-                            sunAfternoon.setStyle(validColour);
-                            sunEvening.setStyle(validColour);
-                        }
+    private void updateAvailabilities(Instructor selected) {
+        availabilitiesGrid.getChildren().stream()
+                .filter(node -> node instanceof TemporalClickableRegion)
+                .map(node -> (TemporalClickableRegion) node)
+                .forEach(region -> {
+                    // process the nodes so they include the correct information
+                    Map.Entry<Day, TimeOfDay> regionEntry = region.getTemporalEntry();
+                    region.setOnMouseClicked(event -> handleRegionMouseClick(selected, region));
+                    if (selected.getAvailabilities().entrySet().stream()
+                            .anyMatch(entry -> entry.getKey() == regionEntry.getKey() && entry.getValue().contains(regionEntry.getValue()))) {
+                        region.validate();
+                        region.setDisable(false);
+                    } else {
+                        region.invalidate();
+                        region.setDisable(true);
                     }
-                }
-            }
-        }
+                });
     }
 
-    private void applyStyleToRegions(Set<Day> availableDays, Region sunRegion, Region monRegion, Region tueRegion, Region wedRegion, Region thurRegion, Region friRegion, Region satRegion) {
-        for (Day day : availableDays) {
-            switch (day) {
-                case SUNDAY -> sunRegion.setStyle(validColour);
-                case MONDAY -> monRegion.setStyle(validColour);
-                case TUESDAY -> tueRegion.setStyle(validColour);
-                case WEDNESDAY -> wedRegion.setStyle(validColour);
-                case THURSDAY -> thurRegion.setStyle(validColour);
-                case FRIDAY -> friRegion.setStyle(validColour);
-                case SATURDAY -> satRegion.setStyle(validColour);
-            }
+    private void handleRegionMouseClick(Instructor selected, TemporalClickableRegion region) {
+        FXMLLoader loader = ViewFinder.getLoaderFrom(ViewMap.COURSE_ASSIGNMENT);
+        Parent root;
+        try {
+            root = loader.load();
+
+        } catch (IOException e) {
+            throw new RuntimeException(e);
         }
+        CourseAssignmentController controller = loader.getController();
+        controller.setInstructor(selected);
+        controller.setRegion(region);
+
+        Scene scene = new Scene(root);
+        Stage stage = new Stage();
+        stage.setScene(scene);
+        stage.initOwner(Main.getStage());
+        stage.initModality(Modality.APPLICATION_MODAL);
+        stage.setResizable(false);
+        stage.showAndWait();
     }
 
     private void updateContentVisibility(boolean contentAvailable) {

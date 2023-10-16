@@ -11,9 +11,16 @@ import me.valacritty.utils.ViewMap;
 import java.net.URL;
 
 public class Main extends Application {
+    private static Stage primaryStage;
+
     public static void main(String[] args) {
         launch(args);
     }
+
+    public static Stage getStage() {
+        return primaryStage;
+    }
+
 
     private String loadStyles() {
         Application.setUserAgentStylesheet(new PrimerLight().getUserAgentStylesheet());
@@ -32,6 +39,7 @@ public class Main extends Application {
     @Override
     public void start(Stage primaryStage) {
         Configuration.initializeManagers();
+        Main.primaryStage = primaryStage;
 
         Scene scene = new Scene(ViewFinder.loadView(ViewMap.HOME));
         primaryStage.setOnCloseRequest(event -> Configuration.saveAll());

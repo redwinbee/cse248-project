@@ -4,7 +4,7 @@ import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.ZoneOffset;
-import java.util.StringJoiner;
+import java.time.format.DateTimeFormatter;
 
 public class TimeRange implements Serializable {
     private LocalDateTime startTime;
@@ -50,11 +50,27 @@ public class TimeRange implements Serializable {
         this.endTime = endTime;
     }
 
+    private String formatTime(LocalTime time) {
+        int minute = time.getMinute();
+
+        if (minute != 0) {
+            return time.format(DateTimeFormatter.ofPattern("h:mma"));
+        } else {
+            return time.format(DateTimeFormatter.ofPattern("ha"));
+        }
+    }
+
     @Override
     public String toString() {
-        return new StringJoiner(", ", TimeRange.class.getSimpleName() + "[", "]")
-                .add("startTime=" + startTime)
-                .add("endTime=" + endTime)
-                .toString();
+        String startTimeStr = formatTime(LocalTime.from(startTime));
+        String endTimeStr = formatTime(LocalTime.from(endTime));
+
+        return startTimeStr + "-" + endTimeStr;
+    }
+
+    public boolean isInRange(TimeRange otherRange) {
+        LocalTime otherStartTime = otherRange.getStartTime().toLocalTime();
+        LocalTime otherEndTime = otherRange.getEndTime().toLocalTime();
+        return isInRange(otherEndTime) && isInRange(otherEndTime);
     }
 }

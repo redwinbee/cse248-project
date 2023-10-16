@@ -4,8 +4,6 @@ import me.valacritty.models.Course;
 import me.valacritty.models.Section;
 import me.valacritty.persistence.Configuration;
 
-import java.util.Collections;
-import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
 

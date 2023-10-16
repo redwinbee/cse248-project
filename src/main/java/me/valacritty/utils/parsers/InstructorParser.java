@@ -3,8 +3,8 @@ package me.valacritty.utils.parsers;
 import me.valacritty.models.Course;
 import me.valacritty.models.Instructor;
 import me.valacritty.models.enums.Campus;
-import me.valacritty.models.enums.Day;
 import me.valacritty.models.enums.Rank;
+import me.valacritty.models.enums.TimeOfDay;
 import me.valacritty.utils.helpers.CourseHelper;
 import org.apache.commons.csv.CSVRecord;
 
@@ -98,32 +98,16 @@ public class InstructorParser extends AbstractParser<Instructor> {
         out.setPreferredCampuses(parsePreferredCampuses(ins.get(5)));
         out.setCanTeachSecondCourse(getBooleanFromString(ins.get(6)));
         out.setCanTeachThirdCourse(getBooleanFromString(ins.get(21)));
-        out.setAvailableEarlyMornings(parseAvailableWeekdays(ins.get(8)));
-        out.setAvailableMornings(parseAvailableWeekdays(ins.get(23)));
-        out.setAvailableEarlyAfternoons(parseAvailableWeekdays(ins.get(9)));
-        out.setAvailableAfternoons(parseAvailableWeekdays(ins.get(24)));
-        out.setAvailableEvenings(parseAvailableWeekdays(ins.get(11)));
-        out.setAvailableWeekends(parseAvailableWeekends(ins.get(10) + ins.get(25)));
+
+        out.addAvailability(parseDays(ins.get(8)), TimeOfDay.EARLY_MORNING);
+        out.addAvailability(parseDays(ins.get(23)), TimeOfDay.MORNING);
+        out.addAvailability(parseDays(ins.get(9)), TimeOfDay.EARLY_AFTERNOON);
+        out.addAvailability(parseDays(ins.get(24)), TimeOfDay.AFTERNOON);
+        out.addAvailability(parseDays(ins.get(11)), TimeOfDay.EVENING);
+//        out.addAvailability(parseDays(ins.get(10)), TimeOfDay.DEFAULT);
+//        out.addAvailability(parseDays(ins.get(25)), TimeOfDay.DEFAULT);
 
         return out;
-    }
-
-    private EnumSet<Day> parseAvailableWeekends(String weekendsStr) {
-        EnumSet<Day> out = EnumSet.noneOf(Day.class);
-        String[] split = weekendsStr.split("(?=(Sun))");
-        for (String day : split) {
-            switch (day) {
-                case "Sat" -> out.add(Day.SATURDAY);
-                case "Sun" -> out.add(Day.SUNDAY);
-            }
-        }
-
-        return out;
-    }
-
-    private Set<Day> parseAvailableWeekdays(String availabilityStr) {
-        String cleaned = removeAsterisks(availabilityStr);
-        return parseDays(cleaned);
     }
 
     private EnumSet<Campus> parsePreferredCampuses(String parsePreferredCampusesStr) {
