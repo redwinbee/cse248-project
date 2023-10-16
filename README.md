@@ -1,4 +1,4 @@
-# CSE248 Project
+# CSE248 Project (Edwin Bermudes)
 
 ## Eclipse Importing (ZIP downloaded):
 

@@ -10,7 +10,6 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
-import javafx.stage.Window;
 import me.valacritty.models.Course;
 import me.valacritty.models.Instructor;
 import me.valacritty.models.Section;
@@ -26,7 +25,6 @@ public class PossibleSectionsController {
     private final ObservableList<Section> sectionData = FXCollections.observableArrayList();
     @FXML
     public Button deleteButton;
-    private Stage stage;
     @FXML
     public TableView<Section> sectionsView;
     @FXML
@@ -43,6 +41,7 @@ public class PossibleSectionsController {
     public TableColumn<Section, Day> daysCol;
     @FXML
     public TableColumn<Section, TimeRange> timeRangeCol;
+    private Stage stage;
     private Set<Section> possibleSections;
     private Instructor instructor;
 
@@ -86,8 +85,8 @@ public class PossibleSectionsController {
 
     @FXML
     public void onDelete(ActionEvent actionEvent) {
-            Section selected = sectionsView.getSelectionModel().getSelectedItem();
-            instructor.getCourses().remove(selected.getCourse());
-            stage.close();
+        Section selected = sectionsView.getSelectionModel().getSelectedItem();
+        instructor.getCourses().remove(selected.getCourse());
+        stage.close();
     }
 }

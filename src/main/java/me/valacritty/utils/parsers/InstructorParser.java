@@ -104,8 +104,6 @@ public class InstructorParser extends AbstractParser<Instructor> {
         out.addAvailability(parseDays(ins.get(9)), TimeOfDay.EARLY_AFTERNOON);
         out.addAvailability(parseDays(ins.get(24)), TimeOfDay.AFTERNOON);
         out.addAvailability(parseDays(ins.get(11)), TimeOfDay.EVENING);
-//        out.addAvailability(parseDays(ins.get(10)), TimeOfDay.DEFAULT);
-//        out.addAvailability(parseDays(ins.get(25)), TimeOfDay.DEFAULT);
 
         return out;
     }
