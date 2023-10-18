@@ -1,5 +1,7 @@
 package me.valacritty.controllers;
 
+import atlantafx.base.controls.ModalPane;
+import atlantafx.base.layout.ModalBox;
 import atlantafx.base.theme.Styles;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -7,7 +9,6 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -16,9 +17,6 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
-import javafx.stage.Modality;
-import javafx.stage.Stage;
-import me.valacritty.Main;
 import me.valacritty.extensions.region.TemporalClickableRegion;
 import me.valacritty.models.Course;
 import me.valacritty.models.Instructor;
@@ -39,12 +37,10 @@ import java.util.ResourceBundle;
 
 public class HomeController implements Initializable {
     private final ObservableList<Instructor> instructorData = FXCollections.observableArrayList();
-    private final ObservableList<Course> courseData = FXCollections.observableArrayList();
-    private final ObservableList<Campus> campusData = FXCollections.observableArrayList();
-    private final String validColour = "-fx-background-color: #e3ffe3;";
-    private final String invalidColour = "-fx-background-color: #ffe6e6;";
+    private final ModalBox assignmentBox = new ModalBox();
+    private final ModalPane assignmentPane = new ModalPane();
     @FXML
-    public AnchorPane homePane;
+    public AnchorPane rootPane;
     @FXML
     public TableView<Instructor> instructorView;
     @FXML
@@ -91,7 +87,6 @@ public class HomeController implements Initializable {
         // configure cell value listeners
         setCellSelectionListener();
 
-
         // set the view to the observable list
         instructorView.setItems(instructorData);
         Styles.toggleStyleClass(instructorView, Styles.STRIPED);
@@ -99,6 +94,21 @@ public class HomeController implements Initializable {
         // initialize availabilities grid
         initializeAvailabilitiesGrid();
 
+        postInitialization();
+    }
+
+    private void postInitialization() {
+        // set the pane up
+        rootPane.getChildren().add(assignmentPane);
+        assignmentPane.setPersistent(true);
+        AnchorPane.setTopAnchor(assignmentPane, 0d);
+        AnchorPane.setBottomAnchor(assignmentPane, 0d);
+        AnchorPane.setLeftAnchor(assignmentPane, 0d);
+        AnchorPane.setRightAnchor(assignmentPane, 0d);
+
+        // set the box up
+        assignmentBox.setMaxSize(500, 500);
+        assignmentBox.setOnClose(event -> assignmentPane.setDisplay(false));
     }
 
     private void initializeAvailabilitiesGrid() {
@@ -158,14 +168,6 @@ public class HomeController implements Initializable {
                 // only make updates when an instructor is actually selected
                 updateAvailabilities(selected);
                 updateContentVisibility(true);
-
-                // Update the courses and campuses ListViews
-                courseData.clear();
-                courseData.addAll(selected.getCourses());
-
-                campusData.clear();
-                campusData.addAll(selected.getPreferredCampuses());
-
                 return;
             }
 
@@ -193,25 +195,27 @@ public class HomeController implements Initializable {
     }
 
     private void handleRegionMouseClick(Instructor selected, TemporalClickableRegion region) {
-        FXMLLoader loader = ViewFinder.getLoaderFrom(ViewMap.COURSE_ASSIGNMENT);
-        Parent root;
+        showAssignmentPane(selected, region);
+    }
+
+    private void showAssignmentPane(Instructor selected, TemporalClickableRegion region) {
+        assignmentBox.getChildren().removeIf(node -> node instanceof AnchorPane);
+        FXMLLoader loader = ViewFinder.getLoaderFrom(ViewMap.SECTION_ASSIGNMENT);
+        Parent root = new AnchorPane();
         try {
             root = loader.load();
-
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            System.err.println("[err] an error occurred while loading the assignment pane node: " + e.getMessage());
         }
-        CourseAssignmentController controller = loader.getController();
-        controller.setInstructor(selected);
-        controller.setRegion(region);
 
-        Scene scene = new Scene(root);
-        Stage stage = new Stage();
-        stage.setScene(scene);
-        stage.initOwner(Main.getStage());
-        stage.initModality(Modality.APPLICATION_MODAL);
-        stage.setResizable(false);
-        stage.showAndWait();
+        SectionAssignmentController controller = loader.getController();
+        controller.setUserData(selected, region);
+        assignmentBox.addContent(root);
+        AnchorPane.setTopAnchor(root, 0d);
+        AnchorPane.setBottomAnchor(root, 0d);
+        AnchorPane.setLeftAnchor(root, 0d);
+        AnchorPane.setRightAnchor(root, 0d);
+        assignmentPane.show(assignmentBox);
     }
 
     private void updateContentVisibility(boolean contentAvailable) {
