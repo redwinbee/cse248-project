@@ -2,6 +2,7 @@ package me.valacritty.persistence;
 
 import me.valacritty.models.Instructor;
 import me.valacritty.models.Section;
+import me.valacritty.utils.generators.InstructorGenerator;
 import me.valacritty.utils.parsers.InstructorParser;
 import me.valacritty.utils.parsers.InstructorRecentCoursesParser;
 import me.valacritty.utils.parsers.SectionParser;
@@ -13,6 +14,7 @@ public class Configuration {
     private static final File SECTION_FILE = new File("bin/sections.dat");
     private static Manager<Instructor> instructorManager;
     private static Manager<Section> sectionManager;
+    private static boolean instructorsExisted = false;
 
     private Configuration() {
     }
@@ -28,6 +30,7 @@ public class Configuration {
             instructorStorage.backup(instructorManager, INSTRUCTOR_FILE);
         } else {
             instructorManager = instructorStorage.restore(INSTRUCTOR_FILE);
+            instructorsExisted = true;
         }
 
         if (!SECTION_FILE.exists()) {
@@ -35,6 +38,15 @@ public class Configuration {
             sectionStorage.backup(sectionManager, SECTION_FILE);
         } else {
             sectionManager = sectionStorage.restore(SECTION_FILE);
+            instructorsExisted = true;
+        }
+    }
+
+    public static void initializeGenerators(int numElements) {
+        if (!instructorsExisted) {
+            System.out.printf("[configuration]: initializing generators...%n");
+            instructorManager.addAll(InstructorGenerator.generateFakes(numElements));
+            saveAll();
         }
     }
 

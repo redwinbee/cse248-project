@@ -9,7 +9,6 @@ import java.util.stream.Stream;
 
 public class Manager<T extends Comparable<T>> implements Serializable {
     private final Set<T> managed;
-    private T type;
 
     public Manager() {
         this.managed = new TreeSet<>();
@@ -35,6 +34,12 @@ public class Manager<T extends Comparable<T>> implements Serializable {
         return managed.stream()
                 .filter(predicate)
                 .collect(Collectors.toSet());
+    }
+
+    @SuppressWarnings("unchecked")  // T isn't going to change
+    public T random() {
+        int skip = (int) (Math.random() * managed.size());
+        return (T) managed.toArray()[skip];
     }
 
     public Stream<T> stream() {

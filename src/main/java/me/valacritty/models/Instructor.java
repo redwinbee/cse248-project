@@ -10,7 +10,7 @@ import java.time.LocalDate;
 import java.util.*;
 
 public class Instructor implements Comparable<Instructor>, Serializable {
-    private final Map<Day, Set<TimeOfDay>> availabilities;
+    private Map<Day, Set<TimeOfDay>> availabilities;
     private String id;
     private String firstName;
     private String middleName;
@@ -43,6 +43,7 @@ public class Instructor implements Comparable<Instructor>, Serializable {
     }
 
     public Instructor() {
+        this.id = generateRandomId();
         this.availabilities = new TreeMap<>();
     }
 
@@ -69,6 +70,7 @@ public class Instructor implements Comparable<Instructor>, Serializable {
         int max = (int) Math.pow(10, 8) - 1;
         return String.valueOf(random.nextInt(max + 1));
     }
+
 
     public String getId() {
         return id;
@@ -200,6 +202,10 @@ public class Instructor implements Comparable<Instructor>, Serializable {
 
     public Map<Day, Set<TimeOfDay>> getAvailabilities() {
         return availabilities;
+    }
+
+    public void setAvailabilities(Map<Day, Set<TimeOfDay>> availabilities) {
+        this.availabilities = availabilities;
     }
 
     @Override
