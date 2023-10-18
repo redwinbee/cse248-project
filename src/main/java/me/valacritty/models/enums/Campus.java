@@ -22,11 +22,21 @@ public enum Campus {
     @Override
     public String toString() {
         switch (this) {
-            case AMERMAN -> { return "Ammerman"; }
-            case GRANT -> { return "Grant/West"; }
-            case EAST -> { return "Eastern"; }
-            case ONLINE -> { return "Online"; }
-            default -> { throw new IllegalArgumentException("enum not mappable to string representation! "); }
+            case AMERMAN -> {
+                return "Ammerman";
+            }
+            case GRANT -> {
+                return "Grant/West";
+            }
+            case EAST -> {
+                return "Eastern";
+            }
+            case ONLINE -> {
+                return "Online";
+            }
+            default -> {
+                throw new IllegalArgumentException("enum not mappable to string representation! ");
+            }
         }
     }
 }

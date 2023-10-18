@@ -20,6 +20,7 @@ public class SectionAssignmentController {
     public Label prefCampsLabel;
     private Instructor selected;
     private TemporalClickableRegion region;
+
     public void setUserData(Instructor selected, TemporalClickableRegion region) {
         this.selected = selected;
         this.region = region;
