@@ -8,6 +8,7 @@ import me.valacritty.utils.parsers.InstructorRecentCoursesParser;
 import me.valacritty.utils.parsers.SectionParser;
 
 import java.io.File;
+import java.util.Set;
 
 public class Configuration {
     private static final File INSTRUCTOR_FILE = new File("bin/instructors.dat");
@@ -26,6 +27,15 @@ public class Configuration {
 
         if (!INSTRUCTOR_FILE.exists()) {
             instructorManager = new Manager<>(InstructorParser.getInstance("Instructors.csv").parse(false));
+            Set<Instructor> recents = InstructorRecentCoursesParser.getInstance("Instructor_Recent_Courses.csv").parse(true);
+            for (Instructor recent : recents) {
+                instructorManager
+                        .findBy(instructor -> instructor.getId().equalsIgnoreCase(recent.getId()))
+                        .ifPresent(instructor -> {
+                            instructor.setCourses(recent.getCourses());
+                            System.out.printf("[configuration::debug]: re-assigning courses for %s%n", instructor.getFullName());
+                        });
+            }
             //instructorManager.addAll(InstructorRecentCoursesParser.getInstance("Instructor_Recent_Courses.csv").parse(true));
             instructorStorage.backup(instructorManager, INSTRUCTOR_FILE);
         } else {

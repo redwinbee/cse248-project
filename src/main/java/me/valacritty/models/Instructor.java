@@ -234,4 +234,10 @@ public class Instructor implements Comparable<Instructor>, Serializable {
     public int compareTo(Instructor o) {
         return this.getId().compareTo(o.getId());
     }
+
+    public String getFullName() {
+        return getFirstName() +
+                " " +
+                getLastName();
+    }
 }

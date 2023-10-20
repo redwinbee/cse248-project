@@ -27,6 +27,7 @@ public class InstructorRecentCoursesParser extends AbstractParser<Instructor> {
         Set<Instructor> instructors = new TreeSet<>();
         for (CSVRecord record : records) {
             Instructor instructor = new Instructor(record.get("First Name"), record.get("Last Name"));
+            instructor.setId(record.get("ID"));
             instructor.setPreviousCourses(parsePreviouslyTaughtCourses(record));
             instructors.add(instructor);
         }
