@@ -18,16 +18,22 @@ public abstract class AbstractParser<E extends Comparable<E>> {
         this.filePath = "data/" + filePath;
     }
 
-    public Set<E> parse() {
-        return createData(getCsvData(filePath));
+    public Set<E> parse(boolean withHeader) {
+        return createData(getCsvData(filePath, withHeader));
     }
 
     protected abstract Set<E> createData(List<CSVRecord> records);
 
-    protected List<CSVRecord> getCsvData(String path) {
+    protected List<CSVRecord> getCsvData(String path, boolean withHeader) {
         try (FileReader reader = new FileReader(path)) {
-            try (CSVParser parser = CSVParser.parse(reader, CSVFormat.Builder.create().setHeader().build())) {
-                return parser.getRecords();
+            if (withHeader) {
+                try (CSVParser parser = CSVParser.parse(reader, CSVFormat.Builder.create().setHeader().build())) {
+                    return parser.getRecords();
+                }
+            } else {
+                try (CSVParser parser = CSVParser.parse(reader, CSVFormat.Builder.create().build())) {
+                    return parser.getRecords();
+                }
             }
         } catch (IOException ex) {
             System.err.println("An error occurred while parsing the CSV file: " + ex.getMessage());
@@ -66,6 +72,7 @@ public abstract class AbstractParser<E extends Comparable<E>> {
     protected Set<Day> parseDays(String charStr) {
         EnumSet<Day> out = EnumSet.noneOf(Day.class);
         boolean sawTuesday = false;
+        boolean sawSaturday = false;
         for (String day : charStr.chars().mapToObj(Character::toString).toList()) {
             switch (day) {
                 case "M" -> out.add(Day.MONDAY);
@@ -79,6 +86,13 @@ public abstract class AbstractParser<E extends Comparable<E>> {
                 }
                 case "W" -> out.add(Day.WEDNESDAY);
                 case "F" -> out.add(Day.FRIDAY);
+                case "S" -> {
+                    if (charStr.equalsIgnoreCase("Sat")) {
+                        out.add(Day.SATURDAY);
+                    } else {
+                        out.add(Day.SUNDAY);
+                    }
+                }
                 default -> {
                     // NOOP
                 }

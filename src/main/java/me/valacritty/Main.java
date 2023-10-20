@@ -39,7 +39,7 @@ public class Main extends Application {
     @Override
     public void start(Stage primaryStage) {
         Configuration.initializeManagers();
-        Configuration.initializeGenerators(1_500);
+        //Configuration.initializeGenerators(0);
         Main.primaryStage = primaryStage;
 
         Scene scene = new Scene(ViewFinder.loadView(ViewMap.HOME));

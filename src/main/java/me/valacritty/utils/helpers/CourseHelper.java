@@ -15,7 +15,7 @@ public class CourseHelper {
     public static Set<Course> allCoursesMatching(String courseNumber) {
         return Configuration.getSectionManager().stream()
                 .map(Section::getCourse)
-                .filter(course -> course.getCourseNumber().equalsIgnoreCase(courseNumber))
+                .filter(course -> course.getCourseNumber().contains(courseNumber))
                 .collect(Collectors.toSet());
     }
 }

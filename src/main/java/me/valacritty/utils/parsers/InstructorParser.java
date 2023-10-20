@@ -8,6 +8,7 @@ import me.valacritty.models.enums.TimeOfDay;
 import me.valacritty.utils.helpers.CourseHelper;
 import org.apache.commons.csv.CSVRecord;
 
+import java.time.DateTimeException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
@@ -32,7 +33,6 @@ public class InstructorParser extends AbstractParser<Instructor> {
     private static List<List<CSVRecord>> splitData(List<CSVRecord> records) {
         List<List<CSVRecord>> allData = new LinkedList<>();
         List<CSVRecord> current = new LinkedList<>();
-        allData.add(current);
 
         for (CSVRecord record : records) {
             if (record.get(0).equals(DELIMITER)) {
@@ -54,6 +54,7 @@ public class InstructorParser extends AbstractParser<Instructor> {
         Set<Instructor> instructors = new TreeSet<>();
         for (List<String> ins : flattened) {
             Instructor out = createInstructorFromData(ins);
+
             instructors.add(out);
         }
 
@@ -92,18 +93,20 @@ public class InstructorParser extends AbstractParser<Instructor> {
         out.setWorkPhone(ins.get(30));
         out.setAddress(ins.get(16) + " ," + ins.get(31));
         out.setDateHired(parseDateHired(ins.get(17)));
-        out.setCourses(parseCourses(ins.get(32)));
+        out.setCourses(parseCourses(String.join(" ", ins.subList(32, 53))));
         out.setRank(Rank.valueOf(ins.get(3)));
         out.setCanTeachOnline(parseCanTeachOnline(ins.get(4)));
         out.setPreferredCampuses(parsePreferredCampuses(ins.get(5)));
         out.setCanTeachSecondCourse(getBooleanFromString(ins.get(6)));
         out.setCanTeachThirdCourse(getBooleanFromString(ins.get(21)));
-
         out.addAvailability(parseDays(ins.get(8)), TimeOfDay.EARLY_MORNING);
         out.addAvailability(parseDays(ins.get(23)), TimeOfDay.MORNING);
         out.addAvailability(parseDays(ins.get(9)), TimeOfDay.EARLY_AFTERNOON);
         out.addAvailability(parseDays(ins.get(24)), TimeOfDay.AFTERNOON);
         out.addAvailability(parseDays(ins.get(11)), TimeOfDay.EVENING);
+        if (!ins.get(25).isBlank()) {
+            out.addAvailability(parseDays(ins.get(25)), TimeOfDay.MORNING);
+        }
 
         return out;
     }
@@ -126,8 +129,16 @@ public class InstructorParser extends AbstractParser<Instructor> {
     }
 
     private LocalDate parseDateHired(String dateHiredStr) {
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MM/dd/yyyy");
-        return LocalDate.parse(dateHiredStr, formatter);
+        String[] patterns = new String[]{"MM/dd/yyyy", "M/d/yyyy"};
+
+        for (String pattern : patterns) {
+            try {
+                return LocalDate.parse(dateHiredStr, DateTimeFormatter.ofPattern(pattern));
+            } catch (DateTimeException ignored) {
+            }
+        }
+
+        return null;
     }
 
     private boolean getBooleanFromString(String boolString) {

@@ -25,8 +25,8 @@ public class Configuration {
         Storage<Section> sectionStorage = new Storage<>();
 
         if (!INSTRUCTOR_FILE.exists()) {
-            instructorManager = new Manager<>(InstructorParser.getInstance("Instructors.csv").parse());
-            instructorManager.addAll(InstructorRecentCoursesParser.getInstance("Instructor_Recent_Courses.csv").parse());
+            instructorManager = new Manager<>(InstructorParser.getInstance("Instructors.csv").parse(false));
+            //instructorManager.addAll(InstructorRecentCoursesParser.getInstance("Instructor_Recent_Courses.csv").parse(true));
             instructorStorage.backup(instructorManager, INSTRUCTOR_FILE);
         } else {
             instructorManager = instructorStorage.restore(INSTRUCTOR_FILE);
@@ -34,7 +34,7 @@ public class Configuration {
         }
 
         if (!SECTION_FILE.exists()) {
-            sectionManager = new Manager<>(SectionParser.getInstance("CourseInformation.csv").parse());
+            sectionManager = new Manager<>(SectionParser.getInstance("CourseInformation.csv").parse(true));
             sectionStorage.backup(sectionManager, SECTION_FILE);
         } else {
             sectionManager = sectionStorage.restore(SECTION_FILE);
@@ -60,14 +60,14 @@ public class Configuration {
 
     public static Manager<Instructor> getInstructorManager() {
         if (instructorManager == null) {
-            instructorManager = new Manager<>(InstructorParser.getInstance("Instructors.csv").parse());
+            instructorManager = new Manager<>(InstructorParser.getInstance("Instructors.csv").parse(false));
         }
         return instructorManager;
     }
 
     public static Manager<Section> getSectionManager() {
         if (sectionManager == null) {
-            sectionManager = new Manager<>(SectionParser.getInstance("CourseInformation.csv").parse());
+            sectionManager = new Manager<>(SectionParser.getInstance("CourseInformation.csv").parse(true));
         }
         return sectionManager;
     }
