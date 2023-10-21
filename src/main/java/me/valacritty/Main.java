@@ -47,6 +47,7 @@ public class Main extends Application {
         primaryStage.setScene(scene);
         primaryStage.getScene().getStylesheets().add(loadStyles());
         primaryStage.setTitle("Project01");
+        primaryStage.setResizable(false);
         primaryStage.show();
     }
 }
