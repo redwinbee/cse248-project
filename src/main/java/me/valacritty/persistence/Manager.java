@@ -1,6 +1,7 @@
 package me.valacritty.persistence;
 
 import java.io.Serializable;
+import java.util.Optional;
 import java.util.Set;
 import java.util.TreeSet;
 import java.util.function.Predicate;
@@ -44,5 +45,11 @@ public class Manager<T extends Comparable<T>> implements Serializable {
 
     public Stream<T> stream() {
         return managed.stream();
+    }
+
+    public Optional<T> findBy(Predicate<? super T> predicate) {
+        return managed.stream()
+                .filter(predicate)
+                .findFirst();
     }
 }

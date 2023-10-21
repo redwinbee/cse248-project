@@ -13,6 +13,10 @@ public class Course implements Comparable<Course>, Cloneable, Serializable {
         this.credits = 4;    // TODO remove this when we get real data
     }
 
+    public Course(String courseNumber) {
+        this.courseNumber = courseNumber;
+    }
+
     public String getCourseNumber() {
         return courseNumber;
     }

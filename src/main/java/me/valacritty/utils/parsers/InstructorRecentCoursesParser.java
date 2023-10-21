@@ -27,11 +27,24 @@ public class InstructorRecentCoursesParser extends AbstractParser<Instructor> {
         Set<Instructor> instructors = new TreeSet<>();
         for (CSVRecord record : records) {
             Instructor instructor = new Instructor(record.get("First Name"), record.get("Last Name"));
+            instructor.setId(record.get("ID"));
             instructor.setPreviousCourses(parsePreviouslyTaughtCourses(record));
+            instructor.setCourseFrequencies(parseCourseFrequencies(record.get("Frequencies")));
             instructors.add(instructor);
         }
 
         return instructors;
+    }
+
+    private Map<Course, Integer> parseCourseFrequencies(String frequencies) {
+        Map<Course, Integer> freqs = new TreeMap<>();
+        Arrays.stream(frequencies.split(","))
+                .forEach(course -> {
+                    // split it again to get the parts such as: MAT001: 4 -> [MAT001, 4]
+                    String[] freqSplit = course.split(":");
+                    freqs.put(CourseHelper.getCourseFromNumber(freqSplit[0]), Integer.parseInt(freqSplit[1].trim()));
+                });
+        return freqs;
     }
 
     private Set<Course> parsePreviouslyTaughtCourses(CSVRecord record) {

@@ -11,6 +11,7 @@ import java.util.*;
 
 public class Instructor implements Comparable<Instructor>, Serializable {
     private Map<Day, Set<TimeOfDay>> availabilities;
+    private Map<Course, Integer> courseFrequencies;
     private String id;
     private String firstName;
     private String middleName;
@@ -36,6 +37,7 @@ public class Instructor implements Comparable<Instructor>, Serializable {
         this.courses = new TreeSet<>();
         this.preferredCampuses = EnumSet.noneOf(Campus.class);
         this.availabilities = new TreeMap<>();
+        this.courseFrequencies = new TreeMap<>();
     }
 
     public Instructor(String firstName, String lastName) {
@@ -45,6 +47,7 @@ public class Instructor implements Comparable<Instructor>, Serializable {
     public Instructor() {
         this.id = generateRandomId();
         this.availabilities = new TreeMap<>();
+        this.courseFrequencies = new TreeMap<>();
     }
 
     /**
@@ -208,6 +211,14 @@ public class Instructor implements Comparable<Instructor>, Serializable {
         this.availabilities = availabilities;
     }
 
+    public Map<Course, Integer> getCourseFrequencies() {
+        return courseFrequencies;
+    }
+
+    public void setCourseFrequencies(Map<Course, Integer> courseFrequencies) {
+        this.courseFrequencies = courseFrequencies;
+    }
+
     @Override
     public String toString() {
         return new StringJoiner(", ", Instructor.class.getSimpleName() + "[", "]")
@@ -233,5 +244,11 @@ public class Instructor implements Comparable<Instructor>, Serializable {
     @Override
     public int compareTo(Instructor o) {
         return this.getId().compareTo(o.getId());
+    }
+
+    public String getFullName() {
+        return getFirstName() +
+                " " +
+                getLastName();
     }
 }

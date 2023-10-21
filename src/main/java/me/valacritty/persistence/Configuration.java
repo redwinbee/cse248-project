@@ -8,6 +8,7 @@ import me.valacritty.utils.parsers.InstructorRecentCoursesParser;
 import me.valacritty.utils.parsers.SectionParser;
 
 import java.io.File;
+import java.util.Set;
 
 public class Configuration {
     private static final File INSTRUCTOR_FILE = new File("bin/instructors.dat");
@@ -25,8 +26,17 @@ public class Configuration {
         Storage<Section> sectionStorage = new Storage<>();
 
         if (!INSTRUCTOR_FILE.exists()) {
-            instructorManager = new Manager<>(InstructorParser.getInstance("Instructors.csv").parse());
-            instructorManager.addAll(InstructorRecentCoursesParser.getInstance("Instructor_Recent_Courses.csv").parse());
+            instructorManager = new Manager<>(InstructorParser.getInstance("Instructors.csv").parse(false));
+            Set<Instructor> recents = InstructorRecentCoursesParser.getInstance("Instructor_Recent_Courses.csv").parse(true);
+            for (Instructor recent : recents) {
+                instructorManager
+                        .findBy(instructor -> instructor.getId().equalsIgnoreCase(recent.getId()))
+                        .ifPresent(instructor -> {
+                            instructor.setCourses(recent.getCourses());
+                            instructor.setCourseFrequencies(recent.getCourseFrequencies());
+                            System.out.printf("[configuration::debug]: re-assigning courses for %s%n", instructor.getFullName());
+                        });
+            }
             instructorStorage.backup(instructorManager, INSTRUCTOR_FILE);
         } else {
             instructorManager = instructorStorage.restore(INSTRUCTOR_FILE);
@@ -34,7 +44,7 @@ public class Configuration {
         }
 
         if (!SECTION_FILE.exists()) {
-            sectionManager = new Manager<>(SectionParser.getInstance("CourseInformation.csv").parse());
+            sectionManager = new Manager<>(SectionParser.getInstance("CourseInformation.csv").parse(true));
             sectionStorage.backup(sectionManager, SECTION_FILE);
         } else {
             sectionManager = sectionStorage.restore(SECTION_FILE);
@@ -60,14 +70,14 @@ public class Configuration {
 
     public static Manager<Instructor> getInstructorManager() {
         if (instructorManager == null) {
-            instructorManager = new Manager<>(InstructorParser.getInstance("Instructors.csv").parse());
+            instructorManager = new Manager<>(InstructorParser.getInstance("Instructors.csv").parse(false));
         }
         return instructorManager;
     }
 
     public static Manager<Section> getSectionManager() {
         if (sectionManager == null) {
-            sectionManager = new Manager<>(SectionParser.getInstance("CourseInformation.csv").parse());
+            sectionManager = new Manager<>(SectionParser.getInstance("CourseInformation.csv").parse(true));
         }
         return sectionManager;
     }
