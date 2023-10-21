@@ -33,10 +33,10 @@ public class Configuration {
                         .findBy(instructor -> instructor.getId().equalsIgnoreCase(recent.getId()))
                         .ifPresent(instructor -> {
                             instructor.setCourses(recent.getCourses());
+                            instructor.setCourseFrequencies(recent.getCourseFrequencies());
                             System.out.printf("[configuration::debug]: re-assigning courses for %s%n", instructor.getFullName());
                         });
             }
-            //instructorManager.addAll(InstructorRecentCoursesParser.getInstance("Instructor_Recent_Courses.csv").parse(true));
             instructorStorage.backup(instructorManager, INSTRUCTOR_FILE);
         } else {
             instructorManager = instructorStorage.restore(INSTRUCTOR_FILE);
