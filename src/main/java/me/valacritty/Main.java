@@ -1,6 +1,6 @@
 package me.valacritty;
 
-import atlantafx.base.theme.PrimerLight;
+import atlantafx.base.theme.NordLight;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
@@ -23,7 +23,7 @@ public class Main extends Application {
 
 
     private String loadStyles() {
-        Application.setUserAgentStylesheet(new PrimerLight().getUserAgentStylesheet());
+        Application.setUserAgentStylesheet(new NordLight().getUserAgentStylesheet());
 
         String styleSheet = "";
         URL url = getClass().getResource("/styles.css");
