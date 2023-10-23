@@ -17,7 +17,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
-import me.valacritty.extensions.region.TemporalClickableRegion;
+import me.valacritty.extensions.region.TemporalClickableAnchorPane;
 import me.valacritty.models.Instructor;
 import me.valacritty.models.enums.Campus;
 import me.valacritty.models.enums.Day;
@@ -68,7 +68,7 @@ public class HomeController implements Initializable {
     public Label selectProfessorLabel;
     @FXML
     public TextField queryField;
-    private HashSet<TemporalClickableRegion> temporalRegions;
+    private HashSet<TemporalClickableAnchorPane> temporalRegions;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -116,7 +116,7 @@ public class HomeController implements Initializable {
         for (int rowIdx = 0; rowIdx < availabilitiesGrid.getColumnCount(); rowIdx++) {
             for (int colIdx = 0; colIdx < availabilitiesGrid.getRowCount(); colIdx++) {
                 Map.Entry<Day, TimeOfDay> entry = mapToDayAndTimeOfDay(rowIdx, colIdx);
-                TemporalClickableRegion region = new TemporalClickableRegion(entry);
+                TemporalClickableAnchorPane region = new TemporalClickableAnchorPane(entry);
                 if (entry.getValue() == TimeOfDay.DEFAULT)
                     continue;
                 temporalRegions.add(region);
@@ -176,8 +176,8 @@ public class HomeController implements Initializable {
 
     private void updateAvailabilities(Instructor selected) {
         availabilitiesGrid.getChildren().stream()
-                .filter(node -> node instanceof TemporalClickableRegion)
-                .map(node -> (TemporalClickableRegion) node)
+                .filter(node -> node instanceof TemporalClickableAnchorPane)
+                .map(node -> (TemporalClickableAnchorPane) node)
                 .forEach(region -> {
                     // process the nodes so they include the correct information
                     Map.Entry<Day, TimeOfDay> regionEntry = region.getTemporalEntry();
@@ -193,11 +193,11 @@ public class HomeController implements Initializable {
                 });
     }
 
-    private void handleRegionMouseClick(Instructor selected, TemporalClickableRegion region) {
+    private void handleRegionMouseClick(Instructor selected, TemporalClickableAnchorPane region) {
         showAssignmentPane(selected, region);
     }
 
-    private void showAssignmentPane(Instructor selected, TemporalClickableRegion region) {
+    private void showAssignmentPane(Instructor selected, TemporalClickableAnchorPane region) {
         assignmentBox.getChildren().removeIf(node -> node instanceof AnchorPane);
         FXMLLoader loader = ViewFinder.getLoaderFrom(ViewMap.SECTION_ASSIGNMENT);
         Parent root = new AnchorPane();

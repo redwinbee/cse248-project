@@ -2,7 +2,7 @@ package me.valacritty.controllers;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
-import me.valacritty.extensions.region.TemporalClickableRegion;
+import me.valacritty.extensions.region.TemporalClickableAnchorPane;
 import me.valacritty.models.Instructor;
 
 public class SectionAssignmentController {
@@ -19,9 +19,9 @@ public class SectionAssignmentController {
     @FXML
     public Label prefCampsLabel;
     private Instructor selected;
-    private TemporalClickableRegion region;
+    private TemporalClickableAnchorPane region;
 
-    public void setUserData(Instructor selected, TemporalClickableRegion region) {
+    public void setUserData(Instructor selected, TemporalClickableAnchorPane region) {
         this.selected = selected;
         this.region = region;
         postInit();
