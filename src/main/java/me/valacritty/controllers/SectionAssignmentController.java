@@ -2,7 +2,9 @@ package me.valacritty.controllers;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -18,12 +20,17 @@ import me.valacritty.models.enums.InstructionMethod;
 import me.valacritty.models.enums.PartOfTerm;
 import me.valacritty.persistence.Configuration;
 
-import java.util.Arrays;
 import java.util.Optional;
 import java.util.Set;
 
 public class SectionAssignmentController {
     private final ObservableList<Section> sectionData = FXCollections.observableArrayList();
+    @FXML
+    public Button courseOneButton;
+    @FXML
+    public Button courseTwoButton;
+    @FXML
+    public Button courseThreeButton;
     @FXML
     public Label firstNameLabel;
     @FXML
@@ -68,6 +75,23 @@ public class SectionAssignmentController {
         phoneLabel.setText(selected.getHomePhone());
         homeCampLabel.setText(selected.getHomeCampus().toString());
         prefCampsLabel.setText(setPreferredCampusesText(selected.getPreferredCampuses()));
+        try {
+            courseOneButton.setText(selected.getSections().get(0).getCourse().getCourseNumber());
+        } catch (IndexOutOfBoundsException ignored) {}
+        try {
+            courseTwoButton.setText(selected.getSections().get(1).getCourse().getCourseNumber());
+        } catch (IndexOutOfBoundsException ignored) {}
+        try {
+            courseThreeButton.setText(selected.getSections().get(2).getCourse().getCourseNumber());
+        } catch (IndexOutOfBoundsException ignored) {}
+        if (!selected.isCanTeachSecondCourse()) {
+            courseTwoButton.setText("Unavailable");
+            courseTwoButton.setDisable(true);
+        }
+        if (!selected.isCanTeachThirdCourse()) {
+            courseThreeButton.setText("Unavailable");
+            courseThreeButton.setDisable(true);
+        }
         configureTableView();
     }
 
@@ -99,5 +123,57 @@ public class SectionAssignmentController {
                 .toList()
         );
         sectionsView.setItems(sectionData);
+    }
+
+    @FXML
+    public void onAssignFirstCourse(ActionEvent actionEvent) {
+        assignSection(0, courseOneButton, "Assign Course #1");
+    }
+
+    @FXML
+    public void onAssignSecondCourse(ActionEvent actionEvent) {
+        assignSection(1, courseTwoButton, "Assign Course #2");
+    }
+
+    @FXML
+    public void onAssignThirdCourse(ActionEvent actionEvent) {
+        assignSection(2, courseThreeButton, "Assign Course #2");
+    }
+
+    private void assignSection(int index, Button button, String failureText) {
+        Section curr = null;
+        Section selectedSection = sectionsView.getSelectionModel().getSelectedItem();
+        if (selectedSection == null) {
+            return;
+        }
+
+        try {
+            curr = selected.getSections().get(index);
+        } catch (IndexOutOfBoundsException ignored) {
+
+        }
+
+        if (curr != null) {
+            sectionData.add(curr);
+            Configuration.getSectionManager().add(curr);
+            selected.getSections().remove(index);
+            selected.getSections().add(index, selectedSection);
+            sectionData.remove(selectedSection);
+            Configuration.getSectionManager().remove(selectedSection);
+            try {
+                button.setText(selected.getSections().get(index).getCourse().getCourseNumber());
+            } catch (NullPointerException ex) {
+                button.setText(failureText);
+            }
+        } else {
+            sectionData.remove(selectedSection);
+            Configuration.getSectionManager().remove(selectedSection);
+            try {
+                button.setText(selectedSection.getCourse().getCourseNumber());
+                selected.getSections().add(index, selectedSection);
+            } catch (IndexOutOfBoundsException ex) {
+                selected.getSections().add(selectedSection);
+            }
+        }
     }
 }

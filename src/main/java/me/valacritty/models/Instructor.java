@@ -21,6 +21,7 @@ public class Instructor implements Comparable<Instructor>, Serializable {
     private String workPhone;
     private String address;
     private LocalDate dateHired;
+    private List<Section> sections;
     private Set<Course> courses;
     private Set<Course> previousCourses;
     private Rank rank;
@@ -35,6 +36,7 @@ public class Instructor implements Comparable<Instructor>, Serializable {
         this.middleName = middleName;
         this.lastName = lastName;
         this.courses = new TreeSet<>();
+        this.sections = new LinkedList<>();
         this.preferredCampuses = EnumSet.noneOf(Campus.class);
         this.availabilities = new TreeMap<>();
         this.courseFrequencies = new TreeMap<>();
@@ -48,6 +50,7 @@ public class Instructor implements Comparable<Instructor>, Serializable {
         this.id = generateRandomId();
         this.availabilities = new TreeMap<>();
         this.courseFrequencies = new TreeMap<>();
+        this.sections = new LinkedList<>();
     }
 
     /**
@@ -153,6 +156,14 @@ public class Instructor implements Comparable<Instructor>, Serializable {
 
     public void setCourses(Set<Course> courses) {
         this.courses = courses;
+    }
+
+    public List<Section> getSections() {
+        return sections;
+    }
+
+    public void setSections(List<Section> sections) {
+        this.sections = sections;
     }
 
     public Set<Course> getPreviousCourses() {

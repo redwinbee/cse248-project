@@ -52,4 +52,12 @@ public class Manager<T extends Comparable<T>> implements Serializable {
                 .filter(predicate)
                 .findFirst();
     }
+
+    public void add(T value) {
+        managed.add(value);
+    }
+
+    public void remove(T value) {
+        managed.remove(value);
+    }
 }

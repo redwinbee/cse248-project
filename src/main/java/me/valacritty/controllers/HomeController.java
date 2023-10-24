@@ -106,7 +106,7 @@ public class HomeController implements Initializable {
         AnchorPane.setRightAnchor(assignmentPane, 0d);
 
         // set the box up
-        assignmentBox.setMaxSize(500, 500);
+        assignmentBox.setMaxSize(550, 550);
         assignmentBox.setOnClose(event -> assignmentPane.setDisplay(false));
     }
 
