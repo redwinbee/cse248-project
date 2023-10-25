@@ -57,10 +57,6 @@ public class HomeController implements Initializable {
     @FXML
     public TableColumn<Instructor, Boolean> onlCertifiedCol;
     @FXML
-    public TableColumn<Instructor, Boolean> secondCourseCol;
-    @FXML
-    public TableColumn<Instructor, Boolean> thirdCourseCol;
-    @FXML
     public VBox availabilitiesBox;
     @FXML
     public GridPane availabilitiesGrid;
@@ -80,8 +76,6 @@ public class HomeController implements Initializable {
         rankCol.setCellValueFactory(new PropertyValueFactory<>("rank"));
         homeCampusCol.setCellValueFactory(new PropertyValueFactory<>("homeCampus"));
         onlCertifiedCol.setCellValueFactory(new PropertyValueFactory<>("canTeachOnline"));
-        secondCourseCol.setCellValueFactory(new PropertyValueFactory<>("canTeachSecondCourse"));
-        thirdCourseCol.setCellValueFactory(new PropertyValueFactory<>("canTeachThirdCourse"));
 
         // configure cell value listeners
         setCellSelectionListener();

@@ -49,8 +49,6 @@
                                             <TableColumn fx:id="rankCol" prefWidth="75.0" text="Rank"/>
                                             <TableColumn fx:id="homeCampusCol" prefWidth="92.0" text=" Home Campus"/>
                                             <TableColumn fx:id="onlCertifiedCol" prefWidth="81.0" text="Online"/>
-                                            <TableColumn fx:id="secondCourseCol" prefWidth="81.0" text="2nd Course"/>
-                                            <TableColumn fx:id="thirdCourseCol" prefWidth="81.0" text="3rd Course"/>
                                         </columns>
                                         <columnResizePolicy>
                                             <TableView fx:constant="CONSTRAINED_RESIZE_POLICY"/>
