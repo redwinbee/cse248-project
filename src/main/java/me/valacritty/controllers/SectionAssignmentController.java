@@ -127,53 +127,53 @@ public class SectionAssignmentController {
 
     @FXML
     public void onAssignFirstCourse(ActionEvent actionEvent) {
-        assignSection(0, courseOneButton, "Assign Course #1");
+        assignCourse(courseOneButton);
     }
 
     @FXML
     public void onAssignSecondCourse(ActionEvent actionEvent) {
-        assignSection(1, courseTwoButton, "Assign Course #2");
+        assignCourse(courseTwoButton);
     }
 
     @FXML
     public void onAssignThirdCourse(ActionEvent actionEvent) {
-        assignSection(2, courseThreeButton, "Assign Course #2");
+        assignCourse(courseThreeButton);
     }
 
-    private void assignSection(int index, Button button, String failureText) {
-        Section curr = null;
-        Section selectedSection = sectionsView.getSelectionModel().getSelectedItem();
-        if (selectedSection == null) {
-            return;
-        }
-
-        try {
-            curr = selected.getSections().get(index);
-        } catch (IndexOutOfBoundsException ignored) {
-
-        }
-
-        if (curr != null) {
-            sectionData.add(curr);
-            Configuration.getSectionManager().add(curr);
-            selected.getSections().remove(index);
-            selected.getSections().add(index, selectedSection);
-            sectionData.remove(selectedSection);
-            Configuration.getSectionManager().remove(selectedSection);
-            try {
-                button.setText(selected.getSections().get(index).getCourse().getCourseNumber());
-            } catch (NullPointerException ex) {
-                button.setText(failureText);
-            }
+    private void assignCourse(Button courseButton) {
+        if (sectionsView.getSelectionModel().getSelectedItem() != null) {
+            // we know a section is trying to be added
+            updateSection(sectionsView.getSelectionModel().getSelectedItem(), courseOneButton);
         } else {
-            sectionData.remove(selectedSection);
-            Configuration.getSectionManager().remove(selectedSection);
-            try {
-                button.setText(selectedSection.getCourse().getCourseNumber());
-                selected.getSections().add(index, selectedSection);
-            } catch (IndexOutOfBoundsException ex) {
-                selected.getSections().add(selectedSection);
-            }
+            selected.getSections().stream()
+                    .filter(section -> section.getCourse().getCourseNumber().equalsIgnoreCase(courseOneButton.getText()))
+                    .findAny()
+                    .ifPresent(section -> {
+                        removeFromInstructor(section);
+                        courseOneButton.setText("Assign Course");
+                    });
+
         }
+    }
+
+    private void updateSection(Section selectedSection, Button courseButton) {
+        selected.getSections().stream()
+                .filter(section -> section.getCourse().getCourseNumber().equalsIgnoreCase(courseButton.getText()))
+                .findAny().ifPresent(this::removeFromInstructor);
+
+        addToInstructor(selectedSection);
+        courseButton.setText(selectedSection.getCourse().getCourseNumber());
+    }
+
+    private void removeFromInstructor(Section section) {
+        selected.getSections().remove(section);
+        Configuration.getSectionManager().add(section);
+        sectionData.add(section);
+    }
+
+    private void addToInstructor(Section section) {
+        selected.getSections().add(section);
+        Configuration.getSectionManager().remove(section);
+        sectionData.remove(section);
     }
 }

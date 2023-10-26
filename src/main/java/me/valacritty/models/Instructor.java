@@ -50,7 +50,7 @@ public class Instructor implements Comparable<Instructor>, Serializable {
         this.id = generateRandomId();
         this.availabilities = new TreeMap<>();
         this.courseFrequencies = new TreeMap<>();
-        this.sections = new LinkedList<>();
+        this.sections = new ArrayList<>(3);
     }
 
     /**

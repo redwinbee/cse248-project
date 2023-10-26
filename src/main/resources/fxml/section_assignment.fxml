@@ -72,9 +72,9 @@
                 <Separator layoutX="20.0" layoutY="91.0" />
             <VBox spacing="10.0">
                <children>
-                  <Button fx:id="courseOneButton" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#onAssignFirstCourse" text="Assign Course" />
-                  <Button fx:id="courseTwoButton" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#onAssignSecondCourse" text="Assign Course" />
-                  <Button fx:id="courseThreeButton" layoutX="10.0" layoutY="36.0" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#onAssignThirdCourse" text="Assign Course" />
+                  <Button fx:id="courseOneButton" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#onAssignFirstCourse" text="Assign Course #1" />
+                  <Button fx:id="courseTwoButton" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#onAssignSecondCourse" text="Assign Course #2" />
+                  <Button fx:id="courseThreeButton" layoutX="10.0" layoutY="36.0" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#onAssignThirdCourse" text="Assign Course #3" />
                </children>
             </VBox>
                 <TableView fx:id="sectionsView">
