@@ -151,14 +151,14 @@ public class SectionAssignmentController {
     private void assignCourse(Button courseButton) {
         if (sectionsView.getSelectionModel().getSelectedItem() != null) {
             // we know a section is trying to be added
-            updateSection(sectionsView.getSelectionModel().getSelectedItem(), courseOneButton);
+            updateSection(sectionsView.getSelectionModel().getSelectedItem(), courseButton);
         } else {
             selected.getSections().stream()
-                    .filter(section -> section.getCourse().getCourseNumber().equalsIgnoreCase(courseOneButton.getText()))
+                    .filter(section -> section.getCourse().getCourseNumber().equalsIgnoreCase(courseButton.getText()))
                     .findAny()
                     .ifPresent(section -> {
                         removeFromInstructor(section);
-                        courseOneButton.setText("Assign Course");
+                        courseButton.setText("Assign Course");
                     });
 
         }
