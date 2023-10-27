@@ -1,6 +1,7 @@
 package me.valacritty.controllers;
 
 import javafx.collections.FXCollections;
+import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -20,6 +21,7 @@ import me.valacritty.models.enums.InstructionMethod;
 import me.valacritty.models.enums.PartOfTerm;
 import me.valacritty.persistence.Configuration;
 
+import java.util.Arrays;
 import java.util.Optional;
 import java.util.Set;
 
@@ -122,6 +124,12 @@ public class SectionAssignmentController {
                 .filter(section -> section.getDaysOffered().contains(region.getTemporalEntry().getKey()))
                 .toList()
         );
+
+        sectionData.addListener((ListChangeListener<Section>) change -> {
+            System.out.printf("[section_assignment_controller]: requesting backup...%n");
+            Configuration.saveAll();
+        });
+
         sectionsView.setItems(sectionData);
     }
 
