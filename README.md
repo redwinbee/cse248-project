@@ -11,12 +11,11 @@
 
 ## Running: This project uses the maven build system. Please use `mvn javafx:run@release` to run the program normally, or `mvn javafx:run@debug` and attach a debugger.
 
-1. The data was manipulated entirely using ChatGPT where I had to explain the context of what each entry meant, and
-   how they related to each other. It took some time, but eventually I was able to have ChatGPT produce a table that
-   I could visually inspect for errors, and once it was okay, I told it to give me the data in JSON format.
+1. The original plan was to use ChatGPT to convert all the data into a JSON file and read it that way, but
+it turned out doing in that way was more cumbersome than simply trying to parse the format as-is. Therefore,
+this project actually uses the Apache Commons CSV parser to parse the data which means it's more reliable and
+refactorable.
 
-2. From the JSON it gave me, I created a project using the Maven build system and used the jackson library for
-   manipulating JSON files. I initially tried to use the annotations to have jackson automatically deserialize
-   the data for me, but the data was too complex, so I had to create a deserializer specifically for the file
-   structure and register it as a jackson deserializer. Therefore, the code that actually does the deserialization
-   is in InstructorDeserializer.
+2. The application features data persistence which is exposed via the Configuration and all data is backed up
+during any CRUD operations via application events and observable list listeners. There is also an optional generator
+built into the application which allows for generating an arbitrary number of Instructors for testing purposes.
