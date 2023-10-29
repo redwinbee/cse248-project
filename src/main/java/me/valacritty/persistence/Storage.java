@@ -2,12 +2,12 @@ package me.valacritty.persistence;
 
 import java.io.*;
 
-public class Storage<T extends Comparable<T>> {
+public class Storage {
     Storage() {
 
     }
 
-    public void backup(Manager<T> manager, File outFile) {
+    public <T extends Comparable<T>> void backup(Manager<T> manager, File outFile) {
         try (BufferedOutputStream bos = new BufferedOutputStream(new FileOutputStream(outFile));
              ObjectOutputStream oos = new ObjectOutputStream(bos)) {
             System.out.printf("[storage]: writing %d objects to disk...%n", manager.size());
@@ -18,7 +18,7 @@ public class Storage<T extends Comparable<T>> {
     }
 
     @SuppressWarnings("unchecked")
-    public Manager<T> restore(File inFile) {
+    public <T extends Comparable<T>> Manager<T> restore(File inFile) {
         Manager<T> out = new Manager<>();
         try (BufferedInputStream bis = new BufferedInputStream(new FileInputStream(inFile))) {
             ObjectInputStream ois = new ObjectInputStream(bis);

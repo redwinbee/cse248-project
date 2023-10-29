@@ -13,6 +13,7 @@ import java.util.Set;
 public class Configuration {
     private static final File INSTRUCTOR_FILE = new File("bin/instructors.dat");
     private static final File SECTION_FILE = new File("bin/sections.dat");
+    private static final Storage STORAGE = new Storage();
     private static Manager<Instructor> instructorManager;
     private static Manager<Section> sectionManager;
     private static boolean instructorsExisted = false;
@@ -22,8 +23,6 @@ public class Configuration {
 
     public static void initializeManagers() {
         System.out.printf("[configuration]: initializing managers...%n");
-        Storage<Instructor> instructorStorage = new Storage<>();
-        Storage<Section> sectionStorage = new Storage<>();
 
         if (!INSTRUCTOR_FILE.exists()) {
             instructorManager = new Manager<>(InstructorParser.getInstance("Instructors.csv").parse(false));
@@ -37,17 +36,17 @@ public class Configuration {
                             System.out.printf("[configuration::debug]: re-assigning courses for %s%n", instructor.getFullName());
                         });
             }
-            instructorStorage.backup(instructorManager, INSTRUCTOR_FILE);
+            STORAGE.backup(instructorManager, INSTRUCTOR_FILE);
         } else {
-            instructorManager = instructorStorage.restore(INSTRUCTOR_FILE);
+            instructorManager = STORAGE.restore(INSTRUCTOR_FILE);
             instructorsExisted = true;
         }
 
         if (!SECTION_FILE.exists()) {
             sectionManager = new Manager<>(SectionParser.getInstance("CourseInformation.csv").parse(true));
-            sectionStorage.backup(sectionManager, SECTION_FILE);
+            STORAGE.backup(sectionManager, SECTION_FILE);
         } else {
-            sectionManager = sectionStorage.restore(SECTION_FILE);
+            sectionManager = STORAGE.restore(SECTION_FILE);
             instructorsExisted = true;
         }
     }
@@ -62,10 +61,8 @@ public class Configuration {
 
     public static void saveAll() {
         System.out.printf("[configuration]: running a backup...%n");
-        Storage<Instructor> instructorStorage = new Storage<>();
-        Storage<Section> sectionStorage = new Storage<>();
-        instructorStorage.backup(instructorManager, INSTRUCTOR_FILE);
-        sectionStorage.backup(sectionManager, SECTION_FILE);
+        STORAGE.backup(instructorManager, INSTRUCTOR_FILE);
+        STORAGE.backup(sectionManager, SECTION_FILE);
     }
 
     public static Manager<Instructor> getInstructorManager() {
