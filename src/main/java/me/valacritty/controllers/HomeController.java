@@ -175,7 +175,7 @@ public class HomeController implements Initializable {
                 .forEach(region -> {
                     // process the nodes so they include the correct information
                     Map.Entry<Day, TimeOfDay> regionEntry = region.getTemporalEntry();
-                    region.setOnMouseClicked(event -> handleRegionMouseClick(selected, region));
+                    region.setOnMouseClicked(event -> showAssignmentPane(selected, region));
                     if (selected.getAvailabilities().entrySet().stream()
                             .anyMatch(entry -> entry.getKey() == regionEntry.getKey() && entry.getValue().contains(regionEntry.getValue()))) {
                         region.validate();
@@ -185,10 +185,6 @@ public class HomeController implements Initializable {
                         region.setDisable(true);
                     }
                 });
-    }
-
-    private void handleRegionMouseClick(Instructor selected, TemporalClickableAnchorPane region) {
-        showAssignmentPane(selected, region);
     }
 
     private void showAssignmentPane(Instructor selected, TemporalClickableAnchorPane region) {
