@@ -13,7 +13,6 @@ import java.util.Set;
 public class Configuration {
     private static final File INSTRUCTOR_FILE = new File("bin/instructors.dat");
     private static final File SECTION_FILE = new File("bin/sections.dat");
-    private static final Storage STORAGE = new Storage();
     private static Manager<Instructor> instructorManager;
     private static Manager<Section> sectionManager;
     private static boolean instructorsExisted = false;
@@ -36,17 +35,17 @@ public class Configuration {
                             System.out.printf("[configuration::debug]: re-assigning courses for %s%n", instructor.getFullName());
                         });
             }
-            STORAGE.backup(instructorManager, INSTRUCTOR_FILE);
+            Storage.backup(instructorManager, INSTRUCTOR_FILE);
         } else {
-            instructorManager = STORAGE.restore(INSTRUCTOR_FILE);
+            instructorManager = Storage.restore(INSTRUCTOR_FILE);
             instructorsExisted = true;
         }
 
         if (!SECTION_FILE.exists()) {
             sectionManager = new Manager<>(SectionParser.getInstance("CourseInformation.csv").parse(true));
-            STORAGE.backup(sectionManager, SECTION_FILE);
+            Storage.backup(sectionManager, SECTION_FILE);
         } else {
-            sectionManager = STORAGE.restore(SECTION_FILE);
+            sectionManager = Storage.restore(SECTION_FILE);
             instructorsExisted = true;
         }
     }
@@ -61,8 +60,8 @@ public class Configuration {
 
     public static void saveAll() {
         System.out.printf("[configuration]: running a backup...%n");
-        STORAGE.backup(instructorManager, INSTRUCTOR_FILE);
-        STORAGE.backup(sectionManager, SECTION_FILE);
+        Storage.backup(instructorManager, INSTRUCTOR_FILE);
+        Storage.backup(sectionManager, SECTION_FILE);
     }
 
     public static Manager<Instructor> getInstructorManager() {
